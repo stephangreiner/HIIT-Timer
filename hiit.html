@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+        <meta charset="UTF-8">
+        <title>training</title>
+       
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+      
+  <div class='Einstellungsdiv' id='Einstellungsdiv'> <h1>Wähle deine Aufgabe:</h1> 
+    <div class='EIEIdiv'>
+      <span class='text preparation'>Vorlauf:</span> 
+      <input class='range preparation' type="range"> 
+      <span class='value preparation'></span>
+    </div> 
+    <div class='EIEIdiv'>
+      <span class='text activity'>Dauer Belastung:</span> 
+      <input class='range activity' type="range"> 
+      <span class='value activity'></span>
+    </div>  
+    <div class='EIEIdiv'>
+      <span class='text rest'> Ausruhen:</span> 
+      <input class='range rest' type="range"> 
+      <span class='value rest'></span>
+    </div>
+    <div class='EIEIdiv'>
+      <span class='text rounds'> Runden: </span> 
+      <input class='range rounds' type="range"> 
+      <span class='value rounds'></span>
+    </div>
+  </div> 
+  
+<button id=startbutton>los</button>
+   
+  <div class='zeigendiv' id = "zeigendiv">
+      <div id='was'><h1></h1></div>
+      <div class='timer'> </div>
+      <div class='runde'></div>
+     
+    </div>
+<div class= "Ende" id ="Ende"></div>
+
+<button id=resetbutton>zurück</button>
+
+<script type="text/JavaScript" src="script.js"></script>
+
+</body>
+</html>

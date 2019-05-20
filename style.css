@@ -1,0 +1,89 @@
+.Einstellungsdiv {
+display : flex;
+flex-direction : column;
+justify-content : space-around;
+align-items : center;
+width : 100%;
+height : 60%;
+}
+.EIEIdiv {
+display : flex;
+flex-direction : row;
+justify-content : center;
+align-items : center;
+width : 100%;
+height : 10%;
+}
+span.text {
+  width : 30%;
+  margin : 0 auto;
+  font : 4vmin monospace;
+                }
+ input.range {
+  width : 50%;
+  height : 100%;
+  margin : 0 auto;
+  cursor : pointer;
+                }
+  span.value {
+  width : 10%;
+  margin : 0 auto;
+  font : 4vmin monospace;
+}
+#startbutton {
+height:50px; 
+width:100px;  
+position:relative;
+top:50%; 
+left:50%;
+}
+
+#resetbutton {
+margin-top: 30pt;
+height:50px; 
+width:100px;  
+position:relative;
+top:50%; 
+left:50%;   
+visibility: hidden;   
+}
+.zeigendiv {
+margin-top: 30pt;
+display : flex;
+flex-direction : column;
+justify-content : space-between;
+align-items : center;
+width : 100%;
+height : 90%;
+visibility: hidden;
+}
+.timer {
+
+margin : 5% auto;
+border-radius : 2vmin;
+font : 8vmin monospace;
+background-color: white;
+text-align: center
+}
+
+.runde {
+border-radius : 2vmin;
+font : 8vmin monospace;
+background-color: white;
+text-align: center
+}
+
+#was {
+height: 20px;
+color: white;
+font-size: 40px
+}
+
+.Ende {
+height: 20px;
+color: black;
+font-size: 40px;
+text-align: center
+}
+
+
