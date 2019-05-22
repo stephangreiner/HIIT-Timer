@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
         <title>training</title>
        
-	<link rel="stylesheet" href="style.css">
-</head>
+  </head>
 <body>
-
-      
+  <audio id="gosound" src="go.mp3" preload="auto"></audio>
+  <audio id="kurzepausesound" src="kurzepause.mp3" preload="auto"></audio>
+  <audio id="endesound" src="ende.mp3" preload="auto"></audio>
+<div class >     
   <div class='Einstellungsdiv' id='Einstellungsdiv'> <h1>Wähle deine Aufgabe:</h1> 
     <div class='EIEIdiv'>
       <span class='text preparation'>Vorlauf:</span> 
@@ -30,7 +33,7 @@
       <span class='value rounds'></span>
     </div>
   </div> 
-  
+</div> 
 <button id=startbutton>los</button>
    
   <div class='zeigendiv' id = "zeigendiv">
@@ -39,11 +42,10 @@
       <div class='runde'></div>
      
     </div>
-<div class= "Ende" id ="Ende"></div>
+<div class="Ende" id ="Ende"></div>
 
 <button id=resetbutton>zurück</button>
 
 <script type="text/JavaScript" src="script.js"></script>
-
 </body>
 </html>

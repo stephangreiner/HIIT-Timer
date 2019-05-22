@@ -16,6 +16,7 @@ var zeitanzeige = document.querySelector('.timer'),
 
 var interval;
 
+
 wertzeigen();
 wertsetzen();
 
@@ -72,7 +73,8 @@ function wertsetzen() {
       runTabata(vorlaufinput.value, belastungsinput.value, ausruhinput.value, rundeninput.value);
       document.getElementById("Einstellungsdiv").style.display = "none";
       document.getElementById("startbutton").style.display = "none";
-      document.zeigendiv.style.display = "none";
+      document.zeigendiv.body.style.display = "none";
+      
       }
 
   resetbutton.onclick = function() {
@@ -83,17 +85,18 @@ function wertsetzen() {
      clearInterval(interval); wertzeigen();
       document.getElementById("Einstellungsdiv").style.display = "";
       document.getElementById("startbutton").style.display = "";
-      document.body.style.backgroundColor = "white";
+      document.body.style.backgroundColor = "white"
+      document.getElementById("Ende").innerHTML = "";
     }
   };
 
 // Eigentlicher Tabata array
 function runTabata(preparation, activity, rest, rounds) {
-  var arrPeriods = [preparation],
+  let arrPeriods = [preparation],
       index = 0
   ;
   
-  for(var i = 0; i < rounds; i++) {
+  for(let i = 0; i < rounds; i++) {
     arrPeriods.push(activity);
     arrPeriods.push(rest);
     }
@@ -126,28 +129,35 @@ function runtimer(arrPeriods, index) {
         ende()
       }
     }
-  }, 1000);
+  },1000);
 
 
   if
-  (index === 0 ) {vorlauf(); document.getElementById("was").innerHTML = "gleich geht es los"}
- else if (index % 2 == 0 ) {ruhe(); document.getElementById("was").innerHTML = "durchatmen"}
- else if (index % 1 == 0 ) {aktiv(); document.getElementById("was").innerHTML = "los, los, los"}
-
-
+  (index === 0 ) {vorlauf()}
+  else if (index % 2 == 0 ) {setTimeout(function(){ruhe();}, 2000);}
+  else if (index % 1 == 0 ) {setTimeout(function(){aktiv();}, 2000);}
+ 
+ 
+ 
  function vorlauf(){
-    document.body.style.backgroundColor = "blue";
+    document.body.style.backgroundColor = "#36FFBE";
+    document.getElementById("was").innerHTML = "gleich geht es los"
   }
  function aktiv(){
-    document.body.style.backgroundColor = "red";
+    document.body.style.backgroundColor = "#FF4E4E";
+    document.getElementById("was").innerHTML = "GO";
+    document.getElementById('gosound').play();
  }
  function ruhe(){
-   document.body.style.backgroundColor = "cyan";
+   document.body.style.backgroundColor = "#2c687f";
+   document.getElementById("was").innerHTML = "ausruhen"
+   document.getElementById('kurzepausesound').play();
  }
 }
 function ende(){
 let elem = document.getElementById('zeigendiv');
 elem.style.visibility = 'hidden';
-document.body.style.backgroundColor = "green";
-document.getElementById("Ende").innerHTML = "geschafft"}
-
+document.body.style.backgroundColor = "#0FC2CF";
+document.getElementById("Ende").innerHTML = "Gratulation"
+document.getElementById('endesound').play();
+}
