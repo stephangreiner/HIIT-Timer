@@ -73,7 +73,6 @@ function wertsetzen() {
       runTabata(vorlaufinput.value, belastungsinput.value, ausruhinput.value, rundeninput.value);
       document.getElementById("Einstellungsdiv").style.display = "none";
       document.getElementById("startbutton").style.display = "none";
-      document.zeigendiv.body.style.display = "none";
       
       }
 
@@ -117,6 +116,8 @@ function runtimer(arrPeriods, index) {
     
     zeitanzeige.innerHTML ="Noch  " + timeDifference + "s";
       rundeAnzeige.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
+
+
     
   // Reaktionen auf Timerereignisse
 
@@ -131,33 +132,49 @@ function runtimer(arrPeriods, index) {
     }
   },1000);
 
-
   if
   (index === 0 ) {vorlauf()}
-  else if (index % 2 == 0 ) {setTimeout(function(){ruhe();}, 2000);}
-  else if (index % 1 == 0 ) {setTimeout(function(){aktiv();}, 2000);}
+  else if (index % 2 == 0 ) {setTimeout(function(){ruhe();}, 1000);clearInterval(id2)}
+  else if (index % 1 == 0 ) {setTimeout(function(){move();aktiv();}, 1000);var id2 = setInterval(function(){document.getElementById("myBar").innerHTML = timeDifference;},1000)}
  
  
  
  function vorlauf(){
     document.body.style.backgroundColor = "#36FFBE";
-    document.getElementById("was").innerHTML = "gleich geht es los"
-  }
+    document.getElementById("was").innerHTML = "gleich geht es los";
+    document.getElementById("progressdiv").style.display = "none"}
+
  function aktiv(){
     document.body.style.backgroundColor = "#FF4E4E";
-    document.getElementById("was").innerHTML = "GO";
+    document.getElementById("was").innerHTML= "GO !!"
+    document.getElementById("progressdiv").style.display = "";
+    document.getElementById("timer").style.display = "none";
     document.getElementById('gosound').play();
+  }
+    
  }
  function ruhe(){
    document.body.style.backgroundColor = "#2c687f";
-   document.getElementById("was").innerHTML = "ausruhen"
-   document.getElementById('kurzepausesound').play();
- }
-}
-function ende(){
-let elem = document.getElementById('zeigendiv');
-elem.style.visibility = 'hidden';
+   document.getElementById("timer").style.display = "";
+   document.getElementById("progressdiv").style.display = "none";
+   document.getElementById("was").style.display = "";
+   document.getElementById("was").innerHTML = "Pause";
+   document.getElementById('kurzepausesound').play(); 
+  }
+
+  function ende(){
 document.body.style.backgroundColor = "#0FC2CF";
-document.getElementById("Ende").innerHTML = "Gratulation"
+document.getElementById("myBar").innerHTML = "";
+document.getElementById("was").innerHTML = "Gratulation !!";
+document.getElementById("timer").style.display = "none";
 document.getElementById('endesound').play();
+}
+
+function move() {
+  var elem = document.getElementById("myBar");   
+  var width = 100;
+  var id = setInterval(frame, belastungsinput.value*10,10);
+  function frame() { 
+      if (width < 17) {clearInterval(id);} else { width--; elem.style.width = width + '%'; }
+  }
 }

@@ -1,7 +1,7 @@
 
 .Einstellungsdiv {
-display : flex; flex-direction : column; justify-content : space-around; align-items : center;
-max-width : 700px; margin: auto; max-height : 300px;
+max-width : 900px; margin: auto; max-height : 1500px; text-align: center;
+background-color: rgba(245, 225, 225, 0.363);border-radius: 5%;border: none;
 }
 .EIEIdiv {
 display : flex; flex-direction : row; justify-content : center; align-items : center;
@@ -24,29 +24,18 @@ span.text {
 }
 #startbutton{
 background-color:#FF4E4E; color: white;
-margin: auto; margin-top: 50px; left:50%;
-height:100px; width:100px;  
-position:relative; 
+height:100px; width:100px; margin: 30px;
 border-radius: 5%;border: none;
 cursor: pointer;}
-#startbutton:hover { color: rgb(255, 0, 0)}
-
-
-#resetbutton {
-background-color: rgba(0, 0, 0, 0.432); color: rgba(173, 173, 173, 0.884);
-margin:auto; margin-top: -40px; left:45%;
-height:50px;  width:100px; position:relative; 
-border-radius: 5%;border: none;
-cursor: pointer;
-visibility: hidden;
-}
 
 .zeigendiv {
 margin-top: 30pt;
+text-align: center;
 display : flex;flex-direction : column; justify-content : space-between;
 align-items : center;
-max-width: 700px;
+background-color: rgba(245, 225, 225, 0.363);border-radius: 5%;border: none;
 visibility: hidden;
+background-color: rgba(0, 0, 0, 0.129)
 }
 .timer {
 background-color: white;
@@ -58,6 +47,7 @@ font : 8vmin monospace; text-align: center
 .runde {
 background-color: white;
 border-radius : 2vmin;
+margin-top: 20px;
 font : 8vmin monospace; text-align: center
 }
 
@@ -67,10 +57,30 @@ margin-top: 50px; margin-bottom: 50px;
 font-size: 40px;height: 20px;
 }
 
-.Ende {
-color: black;
-font-size: 40px;text-align: center; height: 20px;
-margin: 50px;
+
+#resetbutton {
+  background-color: rgba(0, 0, 0, 0.432); color: rgba(207, 207, 207, 0.884);
+  margin-top: 20px; margin-bottom: 20px; 
+  height:50px;  width:100px;  
+  border-radius: 5%;border: none;
+  cursor: pointer;
+  visibility: hidden;
 }
 
 
+#myProgress {
+  text-align: center;
+display : flex; flex-direction : column; flex-direction: row; justify-content : space-between;
+align-items : center;
+  width: 500px;;
+}
+
+#myBar {
+font : 8vmin monospace; text-align: center;
+align-items : center;
+  width: 500px;
+  height:200px;
+  background-color: rgb(255, 255, 255);
+  color: #FF4E4E;
+  margin: auto;
+  font-size: 140px;}
