@@ -1,20 +1,20 @@
 // Deklarierung der Variablen
-var vorlaufinput = document.querySelector('input.range.preparation'),
-    belastungsinput = document.querySelector('input.range.activity'),
-    ausruhinput = document.querySelector('input.range.rest'),
-    rundeninput = document.querySelector('input.range.rounds')
+var vorlaufinput = document.querySelector('input.range.vorlauf'),
+    belastungsinput = document.querySelector('input.range.dauer'),
+    ausruhinput = document.querySelector('input.range.ruhe'),
+    rundeninput = document.querySelector('input.range.runden')
 ;
 
-var preparationSpan = document.querySelector('span.value.preparation'),
-    activitySpan = document.querySelector('span.value.activity'),
-    restSpan = document.querySelector('span.value.rest'),
-    roundsSpan = document.querySelector('span.value.rounds')
+var preparationSpan = document.querySelector('span.value.vorlauf'),
+    dauerSpan = document.querySelector('span.value.dauer'),
+    restSpan = document.querySelector('span.value.ruhe'),
+    roundsSpan = document.querySelector('span.value.runden')
 ;
 
 var zeitanzeige = document.querySelector('.timer'),
     rundeAnzeige = document.querySelector('.runde');
-
-var interval;
+    
+var intervall;
 
 
 wertzeigen();
@@ -40,7 +40,7 @@ function wertzeigen() {
   rundeninput.value = 8;
   
   preparationSpan.innerHTML = vorlaufinput.value;
-  activitySpan.innerHTML = belastungsinput.value;
+  dauerSpan.innerHTML = belastungsinput.value;
   restSpan.innerHTML = ausruhinput.value;
   roundsSpan.innerHTML = rundeninput.value;
   
@@ -54,7 +54,7 @@ function wertsetzen() {
     preparationSpan.innerHTML = vorlaufinput.value;
   };
   belastungsinput.oninput = function() {
-    activitySpan.innerHTML = belastungsinput.value;
+    dauerSpan.innerHTML = belastungsinput.value;
   };
   ausruhinput.oninput = function() {
     restSpan.innerHTML = ausruhinput.value;
@@ -66,38 +66,35 @@ function wertsetzen() {
   
 // Änderungen bei button start und zurück
   startbutton.onclick = function() {
-    let elem = document.getElementById('resetbutton');
-    elem.style.visibility = 'visible';
-    let elem2 = document.getElementById('zeigendiv');
-    elem2.style.visibility = 'visible';
-      runTabata(vorlaufinput.value, belastungsinput.value, ausruhinput.value, rundeninput.value);
-      document.getElementById("Einstellungsdiv").style.display = "none";
-      document.getElementById("startbutton").style.display = "none";
+    runTabata(vorlaufinput.value, belastungsinput.value, ausruhinput.value, rundeninput.value);
+  document.getElementById('resetbutton').style.visibility = 'visible';
+  document.getElementById('zeigendiv').style.visibility = 'visible';
+  document.getElementById("Einstellungsdiv").style.display = "none";
+    
       
       }
 
   resetbutton.onclick = function() {
-    let elem = document.getElementById('resetbutton');
-    elem.style.visibility = 'hidden';
-    let elem2 = document.getElementById('zeigendiv');
-    elem2.style.visibility = 'hidden';
      clearInterval(interval); wertzeigen();
-      document.getElementById("Einstellungsdiv").style.display = "";
-      document.getElementById("startbutton").style.display = "";
-      document.body.style.backgroundColor = "white"
-      document.getElementById("Ende").innerHTML = "";
+  document.getElementById('resetbutton').style.visibility = 'hidden';
+  document.getElementById('zeigendiv').style.visibility = 'hidden';
+  document.getElementById("Einstellungsdiv").style.display = "";
+  document.body.style.backgroundColor = "white"
+
     }
   };
 
 // Eigentlicher Tabata array
-function runTabata(preparation, activity, rest, rounds) {
-  let arrPeriods = [preparation],
+function runTabata(vorlauf, dauer, ruhe, runden) {
+  let arrPeriods = [vorlauf],
       index = 0
   ;
+
   
-  for(let i = 0; i < rounds; i++) {
-    arrPeriods.push(activity);
-    arrPeriods.push(rest);
+  
+  for(let i = 0; i < runden; i++) {
+    arrPeriods.push(dauer);
+    arrPeriods.push(ruhe);
     }
    runtimer(arrPeriods, index);
 }
@@ -105,10 +102,17 @@ function runTabata(preparation, activity, rest, rounds) {
 // Setzen des Timers
 function runtimer(arrPeriods, index) {
   let timeNow, timeFuture, timeDifference;
-  
+
+
+window.timeDifference = timeDifference
+window.arrPeriods = arrPeriods
+window.index = index
+
+
   timeFuture = new Date();
   timeFuture = timeFuture.getTime();
   timeFuture = timeFuture + arrPeriods[index] * 1000;
+
 
   interval = setInterval(function() {
     timeNow = new Date();
@@ -116,51 +120,58 @@ function runtimer(arrPeriods, index) {
     
     zeitanzeige.innerHTML ="Noch  " + timeDifference + "s";
       rundeAnzeige.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
+      document.getElementById("myBar").innerHTML = timeDifference;
 
-
-    
-  // Reaktionen auf Timerereignisse
-
-    if(timeDifference === 1) {
-      clearInterval(interval);
-      if(index < arrPeriods.length-1) {
-        index++;
-        runtimer(arrPeriods, index);
-      } else {
-        ende()
-      }
-    }
-  },1000);
-
+    if(timeDifference === 1) {clearInterval(interval);
+    if(index < arrPeriods.length-1) {index++; runtimer(arrPeriods, index);} 
+    else {ende()}
+    }},1000);
+  
+  
+  
   if
   (index === 0 ) {vorlauf()}
-  else if (index % 2 == 0 ) {setTimeout(function(){ruhe();}, 1000);clearInterval(id2)}
-  else if (index % 1 == 0 ) {setTimeout(function(){move();aktiv();}, 1000);var id2 = setInterval(function(){document.getElementById("myBar").innerHTML = timeDifference;},1000)}
- 
- 
+  else if (index % 2 == 0 &&  index == arrPeriods.length-3) {setTimeout(function(){ruhe()
+    var x = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+    if (x==1){document.getElementById('vor1').play();}
+    if (x==2){document.getElementById('vor2').play();}
+  },1000)}
+  else if (index % 2 == 0 ) {setTimeout(function(){ruhe()},1000)}
+  else if (index % 2 == 0 &&  index == arrPeriods.length-1){ende()}
+  else if (index % 1 == 0 ) {setTimeout(function(){aktiv()},1000)}
+  }
  
  function vorlauf(){
     document.body.style.backgroundColor = "#36FFBE";
     document.getElementById("was").innerHTML = "gleich geht es los";
-    document.getElementById("progressdiv").style.display = "none"}
+    document.getElementById("progressdiv").style.display = "none";
+    }
 
  function aktiv(){
-    document.body.style.backgroundColor = "#FF4E4E";
+  move()
+  document.body.style.backgroundColor = "#FF4E4E";
     document.getElementById("was").innerHTML= "GO !!"
     document.getElementById("progressdiv").style.display = "";
     document.getElementById("timer").style.display = "none";
-    document.getElementById('gosound').play();
-  }
+    var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+    if (x==1){document.getElementById('gosound1').play();}
+    if (x==2){document.getElementById('gosound2').play();}
+    if (x==3){document.getElementById('gosound3').play();}
+   }
     
- }
  function ruhe(){
+
    document.body.style.backgroundColor = "#2c687f";
    document.getElementById("timer").style.display = "";
    document.getElementById("progressdiv").style.display = "none";
-   document.getElementById("was").style.display = "";
    document.getElementById("was").innerHTML = "Pause";
-   document.getElementById('kurzepausesound').play(); 
+   var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+   if (x==1){document.getElementById('kurzepausesound1').play();}
+   if (x==2){document.getElementById('kurzepausesound2').play();}
+   if (x==3){document.getElementById('kurzepausesound3').play();}
+
   }
+
 
   function ende(){
 document.body.style.backgroundColor = "#0FC2CF";
@@ -168,13 +179,18 @@ document.getElementById("myBar").innerHTML = "";
 document.getElementById("was").innerHTML = "Gratulation !!";
 document.getElementById("timer").style.display = "none";
 document.getElementById('endesound').play();
-}
+var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+   if (x==1){document.getElementById('endesound1').play();}
+   if (x==2){document.getElementById('endesound2').play();}
+   if (x==3){document.getElementById('endesound3').play();}
+
+ }
 
 function move() {
   var elem = document.getElementById("myBar");   
   var width = 100;
   var id = setInterval(frame, belastungsinput.value*10,10);
   function frame() { 
-      if (width < 17) {clearInterval(id);} else { width--; elem.style.width = width + '%'; }
+      if (width === 1) {clearInterval(id);} else { width--; elem.style.width = width + '%';}
+                    }
   }
-}
