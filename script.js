@@ -90,8 +90,6 @@ function runTabata(vorlauf, dauer, ruhe, runden) {
       index = 0
   ;
 
-  
-  
   for(let i = 0; i < runden; i++) {
     arrPeriods.push(dauer);
     arrPeriods.push(ruhe);
@@ -101,22 +99,11 @@ function runTabata(vorlauf, dauer, ruhe, runden) {
 
 // Setzen des Timers
 function runtimer(arrPeriods, index) {
-  let timeNow, timeFuture, timeDifference;
+timeFuture = Date.now()
+timeFuture2 = timeFuture + arrPeriods[index] * 1000;
 
-
-window.timeDifference = timeDifference
-window.arrPeriods = arrPeriods
-window.index = index
-
-
-  timeFuture = new Date();
-  timeFuture = timeFuture.getTime();
-  timeFuture = timeFuture + arrPeriods[index] * 1000;
-
-
-  interval = setInterval(function() {
-    timeNow = new Date();
-    timeDifference = Math.round((timeFuture - timeNow) / 1000) + 1;
+  interval = setInterval(() => {
+     const timeDifference = Math.round((timeFuture2 - Date.now()) / 1000) + 1;
     
     zeitanzeige.innerHTML ="Noch  " + timeDifference + "s";
       rundeAnzeige.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
@@ -131,7 +118,7 @@ window.index = index
   
   if
   (index === 0 ) {vorlauf()}
-  else if (index % 2 == 0 &&  index == arrPeriods.length-3) {setTimeout(function(){ruhe()
+  else if (index % 2 == 0 &&  index == arrPeriods.length-3) {setTimeout(() =>{ruhe()
     var x = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
     if (x==1){document.getElementById('vor1').play();}
     if (x==2){document.getElementById('vor2').play();}
