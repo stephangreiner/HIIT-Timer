@@ -11,8 +11,8 @@ var preparationSpan = document.querySelector('span.value.vorlauf'),
     roundsSpan = document.querySelector('span.value.runden')
 ;
 
-var zeitanzeige = document.querySelector('.timer'),
-    rundeAnzeige = document.querySelector('.runde');
+var zeitanzeige = document.getElementById('timer'),
+    rundeAnzeige = document.getElementById('runde');
     
 var intervall;
 
@@ -50,19 +50,11 @@ function wertzeigen() {
 
 // Speichern der Auswahl in Variablen
 function wertsetzen() {
-  vorlaufinput.oninput = function() {
-    preparationSpan.innerHTML = vorlaufinput.value;
-  };
-  belastungsinput.oninput = function() {
-    dauerSpan.innerHTML = belastungsinput.value;
-  };
-  ausruhinput.oninput = function() {
-    restSpan.innerHTML = ausruhinput.value;
-  };
-  rundeninput.oninput = function() {
-    roundsSpan.innerHTML = rundeninput.value;
-  };
-
+  vorlaufinput.oninput = function() {preparationSpan.innerHTML = vorlaufinput.value;};
+  belastungsinput.oninput = function() {dauerSpan.innerHTML = belastungsinput.value;};
+  ausruhinput.oninput = function() {restSpan.innerHTML = ausruhinput.value;};
+  rundeninput.oninput = function() {roundsSpan.innerHTML = rundeninput.value;};
+ 
   
 // Änderungen bei button start und zurück
   startbutton.onclick = function() {
@@ -87,7 +79,7 @@ function wertsetzen() {
 // Eigentlicher Tabata array
 function runTabata(vorlauf, dauer, ruhe, runden) {
   let arrPeriods = [vorlauf],
-      index = 0
+  index = 0
   ;
 
   for(let i = 0; i < runden; i++) {
@@ -102,6 +94,9 @@ function runtimer(arrPeriods, index) {
 timeFuture = Date.now()
 timeFuture2 = timeFuture + arrPeriods[index] * 1000;
 
+window.index = index;
+window.arrPeriods = arrPeriods;
+
   interval = setInterval(() => {
      const timeDifference = Math.round((timeFuture2 - Date.now()) / 1000) + 1;
     
@@ -109,22 +104,17 @@ timeFuture2 = timeFuture + arrPeriods[index] * 1000;
       rundeAnzeige.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
       document.getElementById("myBar").innerHTML = timeDifference;
 
-    if(timeDifference === 1) {clearInterval(interval);
-    if(index < arrPeriods.length-1) {index++; runtimer(arrPeriods, index);} 
-    else {ende()}
+    if(timeDifference == 0) {clearInterval(interval);
+    if(index < arrPeriods.length -1) {index++; runtimer(arrPeriods, index);} 
     }},1000);
+
   
-  
+
   
   if
   (index === 0 ) {vorlauf()}
-  else if (index % 2 == 0 &&  index == arrPeriods.length-3) {setTimeout(() =>{ruhe()
-    var x = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
-    if (x==1){document.getElementById('vor1').play();}
-    if (x==2){document.getElementById('vor2').play();}
-  },1000)}
-  else if (index % 2 == 0 ) {setTimeout(function(){ruhe()},1000)}
   else if (index % 2 == 0 &&  index == arrPeriods.length-1){ende()}
+  else if (index % 2 == 0 ) {setTimeout(function(){ruhe()},1000)}
   else if (index % 1 == 0 ) {setTimeout(function(){aktiv()},1000)}
   }
  
@@ -147,31 +137,32 @@ timeFuture2 = timeFuture + arrPeriods[index] * 1000;
    }
     
  function ruhe(){
-
    document.body.style.backgroundColor = "#2c687f";
    document.getElementById("timer").style.display = "";
    document.getElementById("progressdiv").style.display = "none";
    document.getElementById("was").innerHTML = "Pause";
-   var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-   if (x==1){document.getElementById('kurzepausesound1').play();}
-   if (x==2){document.getElementById('kurzepausesound2').play();}
-   if (x==3){document.getElementById('kurzepausesound3').play();}
-
-  }
+   if (index % 2 == 0 &&  index == arrPeriods.length-3) {var x = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+       if (x==1){document.getElementById('vor1').play();}
+       if (x==2){document.getElementById('vor2').play();}}
+  else {var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+      if (x==1){document.getElementById('kurzepausesound1').play();}
+      if (x==2){document.getElementById('kurzepausesound2').play();}
+      if (x==3){document.getElementById('kurzepausesound3').play();}}    
+                }
 
 
   function ende(){
 document.body.style.backgroundColor = "#0FC2CF";
-document.getElementById("myBar").innerHTML = "";
+document.getElementById("myBar").style.display = "none";
 document.getElementById("was").innerHTML = "Gratulation !!";
 document.getElementById("timer").style.display = "none";
-document.getElementById('endesound').play();
+
 var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
    if (x==1){document.getElementById('endesound1').play();}
    if (x==2){document.getElementById('endesound2').play();}
    if (x==3){document.getElementById('endesound3').play();}
+                   }
 
- }
 
 function move() {
   var elem = document.getElementById("myBar");   
@@ -180,4 +171,4 @@ function move() {
   function frame() { 
       if (width === 1) {clearInterval(id);} else { width--; elem.style.width = width + '%';}
                     }
-  }
+                }
