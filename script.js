@@ -125,8 +125,9 @@ window.arrPeriods = arrPeriods;
     }
 
  function aktiv(){
-  move()
+  moveaktiv()
   document.body.style.backgroundColor = "#FF4E4E";
+  document.getElementById("myBar").style.color = "#FF4E4E";
     document.getElementById("was").innerHTML= "GO !!"
     document.getElementById("progressdiv").style.display = "";
     document.getElementById("timer").style.display = "none";
@@ -137,9 +138,10 @@ window.arrPeriods = arrPeriods;
    }
     
  function ruhe(){
-   document.body.style.backgroundColor = "#2c687f";
-   document.getElementById("timer").style.display = "";
-   document.getElementById("progressdiv").style.display = "none";
+  moveruhe(),
+   document.body.style.backgroundColor = "#2c687f";   
+   document.getElementById("myBar").style.color = "#2c687f";
+  document.getElementById("timer").style.display = "none";
    document.getElementById("was").innerHTML = "Pause";
    if (index % 2 == 0 &&  index == arrPeriods.length-3) {var x = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
        if (x==1){document.getElementById('vor1').play();}
@@ -148,6 +150,7 @@ window.arrPeriods = arrPeriods;
       if (x==1){document.getElementById('kurzepausesound1').play();}
       if (x==2){document.getElementById('kurzepausesound2').play();}
       if (x==3){document.getElementById('kurzepausesound3').play();}}    
+      
                 }
 
 
@@ -164,11 +167,19 @@ var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
                    }
 
 
-function move() {
+function moveaktiv() {
   var elem = document.getElementById("myBar");   
   var width = 100;
-  var id = setInterval(frame, belastungsinput.value*10,10);
+  var id = setInterval(frame, belastungsinput.value*10,1000);
   function frame() { 
       if (width === 1) {clearInterval(id);} else { width--; elem.style.width = width + '%';}
+                    }
+                }
+function moveruhe() {
+  var elem = document.getElementById("myBar");   
+  var width = 1;
+  var id = setInterval(frame, ausruhinput.value*10,1000);
+  function frame() { 
+      if (width >= 100) {clearInterval(id);} else { width++; elem.style.width = width + '%';}
                     }
                 }
