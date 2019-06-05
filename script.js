@@ -143,9 +143,10 @@ window.arrPeriods = arrPeriods;
    document.getElementById("myBar").style.color = "#2c687f";
   document.getElementById("timer").style.display = "none";
    document.getElementById("was").innerHTML = "Pause";
-   if (index % 2 == 0 &&  index == arrPeriods.length-3) {var x = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+   if (index % 2 == 0 &&  index == arrPeriods.length-3) {var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
        if (x==1){document.getElementById('vor1').play();}
-       if (x==2){document.getElementById('vor2').play();}}
+       if (x==2){document.getElementById('vor2').play();}
+       if (x==2){document.getElementById('vor3').play();}}
   else {var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
       if (x==1){document.getElementById('kurzepausesound1').play();}
       if (x==2){document.getElementById('kurzepausesound2').play();}
@@ -168,18 +169,17 @@ var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
 
 
 function moveaktiv() {
-  var elem = document.getElementById("myBar");   
-  var width = 100;
+  var w = 100;
   var id = setInterval(frame, belastungsinput.value*10,1000);
-  function frame() { 
-      if (width === 1) {clearInterval(id);} else { width--; elem.style.width = width + '%';}
-                    }
-                }
+  function frame()
+  {if (w === 1) {clearInterval(id);} 
+  else { w= w-1; document.getElementById("myBar").style.width = w + '%';}}
+                     }
 function moveruhe() {
-  var elem = document.getElementById("myBar");   
-  var width = 1;
+  var w = 1;
   var id = setInterval(frame, ausruhinput.value*10,1000);
   function frame() { 
-      if (width >= 100) {clearInterval(id);} else { width++; elem.style.width = width + '%';}
+  if (w === 100) {clearInterval(id);}
+   else {w = w+1}; document.getElementById("myBar").style.width = w + '%';}
                     }
-                }
+              
