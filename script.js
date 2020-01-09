@@ -131,10 +131,11 @@ window.arrPeriods = arrPeriods;
     document.getElementById("was").innerHTML= "GO !!"
     document.getElementById("progressdiv").style.display = "";
     document.getElementById("timer").style.display = "none";
-    var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+    var x = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
     if (x==1){document.getElementById('gosound1').play();}
     if (x==2){document.getElementById('gosound2').play();}
     if (x==3){document.getElementById('gosound3').play();}
+    if (x==4){document.getElementById('gosound4').play();}
    }
     
  function ruhe(){
@@ -143,14 +144,20 @@ window.arrPeriods = arrPeriods;
    document.getElementById("myBar").style.color = "#2c687f";
   document.getElementById("timer").style.display = "none";
    document.getElementById("was").innerHTML = "Pause";
-   if (index % 2 == 0 &&  index == arrPeriods.length-3) {var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+   if (index % 2 == 0 &&  index == arrPeriods.length-3) {var x = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
        if (x==1){document.getElementById('vor1').play();}
        if (x==2){document.getElementById('vor2').play();}
-       if (x==2){document.getElementById('vor3').play();}}
-  else {var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+       if (x==3){document.getElementById('vor3').play();}
+       if (x==4){document.getElementById('vor4').play();}
+       if (x==5){document.getElementById('vor5').play();}
+      }
+
+  else {var x = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
       if (x==1){document.getElementById('kurzepausesound1').play();}
       if (x==2){document.getElementById('kurzepausesound2').play();}
-      if (x==3){document.getElementById('kurzepausesound3').play();}}    
+      if (x==3){document.getElementById('kurzepausesound3').play();}
+      if (x==4){document.getElementById('kurzepausesound4').play();}
+    }    
       
                 }
 
@@ -161,10 +168,11 @@ document.getElementById("myBar").style.display = "none";
 document.getElementById("was").innerHTML = "Gratulation !!";
 document.getElementById("timer").style.display = "none";
 
-var x = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+var x = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
    if (x==1){document.getElementById('endesound1').play();}
    if (x==2){document.getElementById('endesound2').play();}
    if (x==3){document.getElementById('endesound3').play();}
+   if (x==4){document.getElementById('endesound4').play();}
                    }
 
 
