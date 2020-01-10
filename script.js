@@ -119,13 +119,14 @@ window.arrPeriods = arrPeriods;
   }
  
  function vorlauf(){
-    document.body.style.backgroundColor = "#36FFBE";
+    document.body.style.backgroundColor = "#2c687f";
     document.getElementById("was").innerHTML = "gleich geht es los";
     document.getElementById("progressdiv").style.display = "none";
     }
-
+      
  function aktiv(){
   moveaktiv()
+  document.body.style.backgroundImage = "none";
   document.body.style.backgroundColor = "#FF4E4E";
   document.getElementById("myBar").style.color = "#FF4E4E";
     document.getElementById("was").innerHTML= "GO !!"
@@ -140,7 +141,7 @@ window.arrPeriods = arrPeriods;
     
  function ruhe(){
   moveruhe(),
-   document.body.style.backgroundColor = "#2c687f";   
+   document.body.style.background = "#2c687f url('image/vorlaufbild.jpg') no-repeat center",  
    document.getElementById("myBar").style.color = "#2c687f";
   document.getElementById("timer").style.display = "none";
    document.getElementById("was").innerHTML = "Pause";
