@@ -115,13 +115,24 @@ window.arrPeriods = arrPeriods;
   else if (index % 2 == 0 ) {setTimeout(function(){ruhe()},1000)}
   else if (index % 1 == 0 ) {setTimeout(function(){aktiv()},1000)}
   }
- 
+
+  var schalter = document.getElementById('toggleswitch');
+  window.mediaV = 5
+   
+
+  schalter.addEventListener('change',function(){
+    if(this.checked) {
+      window.mediaV = Math.floor(Math.random() * (4 - 1 + 1)) + 1; ;
+    } 
+});
+
+
  function vorlauf(){
     document.body.style.backgroundColor = "#2c687f";
     document.getElementById("was").innerHTML = "gleich geht es los";
     document.getElementById("progressdiv").style.display = "none";
     }
-      
+       
  function aktiv(){
   moveaktiv()
   document.body.style.backgroundImage = "none";
@@ -130,37 +141,39 @@ window.arrPeriods = arrPeriods;
     document.getElementById("was").innerHTML= "GO !!"
     document.getElementById("progressdiv").style.display = "";
     document.getElementById("timer").style.display = "none";
-    var x = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-    if (x==1){document.getElementById('gosound1').play();}
-    if (x==2){document.getElementById('gosound2').play();}
-    if (x==3){document.getElementById('gosound3').play();}
-    if (x==4){document.getElementById('gosound4').play();}
+    if (mediaV==5){document.getElementById('gongsound').play();}
+    if (mediaV==1){document.getElementById('gosound1').play();}
+    if (mediaV==2){document.getElementById('gosound2').play();}
+    if (mediaV==3){document.getElementById('gosound3').play();}
+    if (mediaV==4){document.getElementById('gosound4').play();}
    }
-    
+  
  function ruhe(){
   moveruhe(),
    document.body.style.background = "#2c687f",  
    document.getElementById("myBar").style.color = "#2c687f";
   document.getElementById("timer").style.display = "none";
    document.getElementById("was").innerHTML = "Pause";
-   if (index % 2 == 0 &&  index == arrPeriods.length-3) 
-   {var x = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
-       if (x==1){document.getElementById('vor1').play()
+   if (index % 2 == 0 &&  index == arrPeriods.length-3)
+
+   { if (mediaV==5){document.getElementById('gongsound').play();}
+     if (mediaV==1){document.getElementById('vor1').play()
        document.body.style.background = "#2c687f url('image/vor1.jpg') no-repeat center";}
-       if (x==2){document.getElementById('vor2').play()
+       if (mediaV==2){document.getElementById('vor2').play()
        document.body.style.background = "#2c687f url('image/vor2.jpg') no-repeat center";;}
-       if (x==3){document.getElementById('vor3').play();}
-       if (x==4){document.getElementById('vor4').play();}
-       if (x==5){document.getElementById('vor5').play();}
+       if (mediaV==3){document.getElementById('vor3').play();}
+       if (mediaV==4){document.getElementById('vor4').play();}
+     
       }
-  else {var x = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-      if (x==1){document.getElementById('kurzepausesound1').play()
+  else {
+     if (mediaV==5){document.getElementById('gongsound').play();}
+      if (mediaV==1){document.getElementById('kurzepausesound1').play()
       document.body.style.background = "#2c687f url('image/ruhe1.jpg') no-repeat center";}
-      if (x==2){document.getElementById('kurzepausesound2').play()
+      if (mediaV==2){document.getElementById('kurzepausesound2').play()
       document.body.style.background = "#2c687f url('image/ruhe2.jpg') no-repeat center";}
-      if (x==3){document.getElementById('kurzepausesound3').play();
+      if (mediaV==3){document.getElementById('kurzepausesound3').play();
       document.body.style.background = "#2c687f url('image/ruhe3.jpg') no-repeat center"}
-      if (x==4){document.getElementById('kurzepausesound4').play()
+      if (mediaV==4){document.getElementById('kurzepausesound4').play()
       document.body.style.background = "#2c687f url('image/ruhe4.jpg') no-repeat center";}
     }    
                 }
@@ -172,14 +185,14 @@ document.getElementById("myBar").style.display = "none";
 document.getElementById("was").innerHTML = "Gratulation !!";
 document.getElementById("timer").style.display = "none";
 
-var x = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-   if (x==1){document.getElementById('endesound1').play() 
+   if (mediaV==5){document.getElementById('gongsound').play();}
+   if (mediaV==1){document.getElementById('endesound1').play() 
    document.body.style.background = "#2c687f url('image/ende1.jpg') no-repeat center";}
-   if (x==2){document.getElementById('endesound2').play()
+   if (mediaV==2){document.getElementById('endesound2').play()
    document.body.style.background = "#2c687f url('image/ende2.jpg') no-repeat center";}
-   if (x==3){document.getElementById('endesound3').play()
+   if (mediaV==3){document.getElementById('endesound3').play()
    document.body.style.background = "#2c687f url('image/ende3.jpg') no-repeat center";}
-   if (x==4){document.getElementById('endesound3').play()
+   if (mediaV==4){document.getElementById('endesound3').play()
    document.body.style.background = "#2c687f url('image/ende4.jpg') no-repeat center";}
                    }
 
@@ -198,4 +211,4 @@ function moveruhe() {
   if (w === 100) {clearInterval(id);}
    else {w = w+1}; document.getElementById("myBar").style.width = w + '%';}
                     }
-              
+    
