@@ -1,8 +1,8 @@
 // Deklarierung der Variablen
-var vorlaufinput = document.querySelector('input.range.vorlauf'),
-    belastungsinput = document.querySelector('input.range.dauer'),
-    ausruhinput = document.querySelector('input.range.ruhe'),
-    rundeninput = document.querySelector('input.range.runden')
+var vorlaufeingabe = document.querySelector('input.range.vorlauf')
+    belastungseingabe = document.querySelector('input.range.dauer'),
+    ausruheingabe = document.querySelector('input.range.ruhe'),
+    rundeneingabe = document.querySelector('input.range.runden')
 ;
 
 var preparationSpan = document.querySelector('span.value.vorlauf'),
@@ -11,7 +11,7 @@ var preparationSpan = document.querySelector('span.value.vorlauf'),
     roundsSpan = document.querySelector('span.value.runden')
 ;
 
-var zeitanzeige = document.getElementById('timer'),
+var zeitanzeige = document.getElementById('uhr'),
     rundeAnzeige = document.getElementById('runde');
     
 var intervall;
@@ -24,25 +24,25 @@ wertsetzen();
 // Anzeigen der Auswahlmöglichkeiten
 function wertzeigen() {
   
-  vorlaufinput.min = 1;
-  belastungsinput.min = 1;
-  ausruhinput.min = 1;
-  rundeninput.min = 1;
+  vorlaufeingabe.min = 1;
+  belastungseingabe.min = 1;
+  ausruheingabe.min = 1;
+  rundeneingabe.min = 1;
   
-  vorlaufinput.max = 60;
-  belastungsinput.max = 60;
-  ausruhinput.max = 60;
-  rundeninput.max = 20;
+  vorlaufeingabe.max = 6
+  belastungseingabe.max = 60;
+  ausruheingabe.max = 60;
+  rundeneingabe.max = 20;
   
-  vorlaufinput.value = 5;
-  belastungsinput.value = 20;
-  ausruhinput.value = 10;
-  rundeninput.value = 8;
+  vorlaufeingabe.value = 5;
+  belastungseingabe.value = 20;
+  ausruheingabe.value = 10;
+  rundeneingabe.value = 8;
   
-  preparationSpan.innerHTML = vorlaufinput.value;
-  dauerSpan.innerHTML = belastungsinput.value;
-  restSpan.innerHTML = ausruhinput.value;
-  roundsSpan.innerHTML = rundeninput.value;
+  preparationSpan.innerHTML = vorlaufeingabe.value;
+  dauerSpan.innerHTM =belastungseingabe.value;
+  restSpan.innerHTML = ausruheingabe.value;
+  roundsSpan.innerHTML = rundeneingabe.value;
   
   zeitanzeige.innerHTML = "-----";
   rundeAnzeige.innerHTML = '0 / 0';
@@ -50,23 +50,23 @@ function wertzeigen() {
 
 // Speichern der Auswahl in Variablen
 function wertsetzen() {
-  vorlaufinput.oninput = function() {preparationSpan.innerHTML = vorlaufinput.value;};
-  belastungsinput.oninput = function() {dauerSpan.innerHTML = belastungsinput.value;};
-  ausruhinput.oninput = function() {restSpan.innerHTML = ausruhinput.value;};
-  rundeninput.oninput = function() {roundsSpan.innerHTML = rundeninput.value;};
- 
+  vorlaufeingabe.oninput = function() {preparationSpan.innerHTML = vorlaufeingabe.value;
+  belastungseingabe.oninput = function() {dauerSpan.innerHTM =belastungseingabe.value;};
+  ausruheingabe.oninput = function() {restSpan.innerHTML = ausruheingabe.value;};
+  rundeneingabe.oninput = function() {roundsSpan.innerHTML = rundeneingabe.value;};
+}
   
 // Änderungen bei button start und zurück
-  startbutton.onclick = function() {
-    runTabata(vorlaufinput.value, belastungsinput.value, ausruhinput.value, rundeninput.value);
-  document.getElementById('resetbutton').style.visibility = 'visible';
+  startknopf.onclick = function() {
+    runTabata(vorlaufeingabe.value, belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
+  document.getElementById('zurückknopf').style.visibility = 'visible';
   document.getElementById('zeigendiv').style.visibility = 'visible';
   document.getElementById("Einstellungsdiv").style.display = "none"; 
       }
 
-  resetbutton.onclick = function() {
+  zurückknopf.onclick = function() {
      clearInterval(interval); wertzeigen();
-  document.getElementById('resetbutton').style.visibility = 'hidden';
+  document.getElementById('zurückknopf').style.visibility = 'hidden';
   document.getElementById('zeigendiv').style.visibility = 'hidden';
   document.getElementById("Einstellungsdiv").style.display = "";
   document.body.style.backgroundColor = "white"
@@ -100,7 +100,7 @@ window.arrPeriods = arrPeriods;
     
     zeitanzeige.innerHTML ="Noch  " + timeDifference + "s";
       rundeAnzeige.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
-      document.getElementById("myBar").innerHTML = timeDifference;
+      document.getElementById("meinbalken").innerHTML = timeDifference;
 
     if(timeDifference == 0) {clearInterval(interval);
     if(index < arrPeriods.length -1) {index++; runtimer(arrPeriods, index);} 
@@ -116,11 +116,13 @@ window.arrPeriods = arrPeriods;
   else if (index % 1 == 0 ) {setTimeout(function(){aktiv()},1000)}
   }
 
-  var schalter = document.getElementById('toggleswitch');
+  //Inhalt des Schalters wird in einer globalen variablen gespeichert
+  var schalterV = document.getElementById('schalterid');
   window.mediaV = 5
    
 
-  schalter.addEventListener('change',function(){
+//der Eventlistener schaut auf die schalterV und wartet auf event Change um die funktion auszuführen
+  schalterV.addEventListener('change',function(){
     if(this.checked) {
       window.mediaV = Math.floor(Math.random() * (4 - 1 + 1)) + 1; ;
     } 
@@ -129,7 +131,7 @@ window.arrPeriods = arrPeriods;
 
  function vorlauf(){
     document.body.style.backgroundColor = "#2c687f";
-    document.getElementById("was").innerHTML = "gleich geht es los";
+    document.getElementById("textwasid").innerHTML = "gleich geht es los";
     document.getElementById("progressdiv").style.display = "none";
     }
        
@@ -137,10 +139,10 @@ window.arrPeriods = arrPeriods;
   moveaktiv()
   document.body.style.backgroundImage = "none";
   document.body.style.backgroundColor = "#FF4E4E";
-  document.getElementById("myBar").style.color = "#FF4E4E";
-    document.getElementById("was").innerHTML= "GO !!"
+  document.getElementById("meinbalken").style.color = "";
+    document.getElementById("textwasid").innerHTML= "GO !!"
     document.getElementById("progressdiv").style.display = "";
-    document.getElementById("timer").style.display = "none";
+    document.getElementById("uhr").style.display = "none";
     if (mediaV==5){document.getElementById('gongsound').play();}
     if (mediaV==1){document.getElementById('gosound1').play();}
     if (mediaV==2){document.getElementById('gosound2').play();}
@@ -151,9 +153,9 @@ window.arrPeriods = arrPeriods;
  function ruhe(){
   moveruhe(),
    document.body.style.background = "#2c687f",  
-   document.getElementById("myBar").style.color = "#2c687f";
-  document.getElementById("timer").style.display = "none";
-   document.getElementById("was").innerHTML = "Pause";
+   document.getElementById("meinbalken").style.color = "#2c687f";
+  document.getElementById("uhr").style.display = "none";
+   document.getElementById("textwasid").innerHTML = "Pause";
    if (index % 2 == 0 &&  index == arrPeriods.length-3)
 
    { if (mediaV==5){document.getElementById('gongsound').play();}
@@ -181,9 +183,9 @@ window.arrPeriods = arrPeriods;
 
   function ende(){ 
 document.body.style.backgroundColor = "#0FC2CF";
-document.getElementById("myBar").style.display = "none";
-document.getElementById("was").innerHTML = "Gratulation !!";
-document.getElementById("timer").style.display = "none";
+document.getElementById("meinbalken").style.display = "none";
+document.getElementById("textwasid").innerHTML = "Gratulation !!";
+document.getElementById("uhr").style.display = "none";
 
    if (mediaV==5){document.getElementById('gongsound').play();}
    if (mediaV==1){document.getElementById('endesound1').play() 
@@ -199,16 +201,15 @@ document.getElementById("timer").style.display = "none";
 
 function moveaktiv() {
   var w = 100;
-  var id = setInterval(frame, belastungsinput.value*10,1000);
+  var id = setInterval(frame,belastungseingabe.value*10,1000);
   function frame()
   {if (w === 1) {clearInterval(id);} 
-  else { w= w-1; document.getElementById("myBar").style.width = w + '%';}}
+  else { w= w-1; document.getElementById("meinbalken").style.width = w + '%';}}
                      }
 function moveruhe() {
   var w = 1;
-  var id = setInterval(frame, ausruhinput.value*10,1000);
+  var id = setInterval(frame, ausruheingabe.value*10,1000);
   function frame() { 
   if (w === 100) {clearInterval(id);}
-   else {w = w+1}; document.getElementById("myBar").style.width = w + '%';}
-                    }
-    
+   else {w = w+1}; document.getElementById("meinbalken").style.width = w + '%';
+  }}

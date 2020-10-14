@@ -7,6 +7,7 @@
        
 </head>
 <body>
+<!--die Audiodatein werde vorgeladen-->
   <audio id="gongsound" src="audio/gongsound.mp3" preload="auto"></audio>
   
   <audio id="gosound1" src="audio/go1.mp3" preload="auto"></audio>
@@ -31,7 +32,7 @@
   <audio id="vor4" src="audio/vor4.mp3" preload= "auto"></audio>
   
 
-
+<!--die Einsteuungsmöglichkeiten werde aufgespannt-->
  <div class='Einstellungsdiv' id='Einstellungsdiv'> <h3>Wähle deine Aufgabe:</h3> 
   
     <div class='EIEIdiv'>
@@ -53,23 +54,27 @@
       <span class='text'> Runden: </span> 
       <input class='range runden' type="range"> 
       <span class='value runden'></span>
-    </div><button id=startbutton>los</button>
-   <div class='EIEIdiv'>
-    <label class="toggle"> mit Marnie Medien
-      <input id="toggleswitch" type="checkbox">
-      <span class="roundbutton"></span>
-    </label>
-</div>  
-  </div> 
-  
-  <div class='zeigendiv' id = "zeigendiv">
-    <div id='was'><h1></h1></div>
-    <div id="progressdiv">
-      <div id="myProgress"></div> <div id="myBar"></div>
     </div>
-    <div class='timer' id ="timer"> </div>
+   <div class='EIEIdiv'>
+    <span class='text'> dong </span> 
+    <label class="toggle"> 
+      <input id="schalterid" type="checkbox"><span class="roundbutton"></span>
+    </label> 
+    <span class='text'> Marnie </span>
+  
+  </div>  
+     <button id=startknopf>los</button>
+  </div> 
+  <!--die Anzeige während der Übung-->
+  <div class='zeigendiv' id = "zeigendiv">
+    <div id='textwasid'><h1></h1></div>
+    <div id="progressdiv">
+      <div id="myProgress"></div> <div id="meinbalken"></div>
+    </div>
+    <div class='uhr' id ="uhr"> </div>
     <div class='runde' id ="runde"> </div>
-    <button id=resetbutton>zurück</button>
+
+    <button id=zurückknopf>zurück</button>
   </div>
 
 </div>
