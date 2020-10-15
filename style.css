@@ -84,50 +84,7 @@ align-items : center;
     font-size: 140px;}
 
 
-  
-  .toggle {
-      margin:0 0 0 2rem;
-      position: relative;
-      display: inline-block;
-      width: 6rem;
-      height: 3.4rem;
-  }
-  
 
-  
-  .roundbutton {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      width: 100%;
-      background-color: #d8dee6;
-      display: block;
-      transition: all 0.3s;
-      border-radius: 3.4rem;
-      cursor: pointer;
-  }
-  
-  .roundbutton:before {
-    align-self: center;  
-    position: absolute;
-      content: "";
-      height: 2.4rem;
-      width: 2.5rem;
-      border-radius: 100%;
-      display: block;
-      left: 0.5rem;
-      bottom: 0.5rem;
-      background-color: white;
-      transition: all 0.3s;
-  }
-  
-  input:checked + .roundbutton {
-      background-color: #4eff48;
-  }
-  
-  input:checked + .roundbutton:before  {
-      transform: translate(2.6rem, 0);
-  }
+
+
   

@@ -3,7 +3,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
-        <title>training</title>
+        <title>HIIT Timer</title>
        
 </head>
 <body>
@@ -33,7 +33,7 @@
   
 
 <!--die Einsteuungsmöglichkeiten werde aufgespannt-->
- <div class='Einstellungsdiv' id='Einstellungsdiv'> <h3>Wähle deine Aufgabe:</h3> 
+ <div class='Einstellungsdiv' id='Einstellungsdiv'> <h3>Auf was hast du heute Lust ?:</h3> 
   
     <div class='EIEIdiv'>
       <span class='text'>Vorlauf:</span> 
@@ -41,7 +41,7 @@
       <span class='value vorlauf'></span>
     </div> 
     <div class='EIEIdiv'>
-      <span class='text'>Dauer Belastung:</span> 
+      <span class='text'>Dauer:</span> 
       <input class='range dauer' type="range"> 
       <span class='value dauer'></span>
     </div>  
@@ -56,13 +56,14 @@
       <span class='value runden'></span>
     </div>
    <div class='EIEIdiv'>
-    <span class='text'> dong </span> 
-    <label class="toggle"> 
-      <input id="schalterid" type="checkbox"><span class="roundbutton"></span>
-    </label> 
-    <span class='text'> Marnie </span>
-  
+    <select id="selector">
+      <option value="1">simple gong</option>
+      <option value="2">medien option</media>
+    </select>
   </div>  
+    
+
+ 
      <button id=startknopf>los</button>
   </div> 
   <!--die Anzeige während der Übung-->

@@ -1,5 +1,5 @@
 // Deklarierung der Variablen
-var vorlaufeingabe = document.querySelector('input.range.vorlauf')
+var vorlaufeingabe = document.querySelector('input.range.vorlauf'),
     belastungseingabe = document.querySelector('input.range.dauer'),
     ausruheingabe = document.querySelector('input.range.ruhe'),
     rundeneingabe = document.querySelector('input.range.runden')
@@ -29,7 +29,7 @@ function wertzeigen() {
   ausruheingabe.min = 1;
   rundeneingabe.min = 1;
   
-  vorlaufeingabe.max = 6
+  vorlaufeingabe.max = 60;
   belastungseingabe.max = 60;
   ausruheingabe.max = 60;
   rundeneingabe.max = 20;
@@ -40,9 +40,10 @@ function wertzeigen() {
   rundeneingabe.value = 8;
   
   preparationSpan.innerHTML = vorlaufeingabe.value;
-  dauerSpan.innerHTM =belastungseingabe.value;
+  dauerSpan.innerHTM = belastungseingabe.value;
   restSpan.innerHTML = ausruheingabe.value;
-  roundsSpan.innerHTML = rundeneingabe.value;
+  roundsSpan.innerHTML = rundeneingabe.value
+
   
   zeitanzeige.innerHTML = "-----";
   rundeAnzeige.innerHTML = '0 / 0';
@@ -50,11 +51,12 @@ function wertzeigen() {
 
 // Speichern der Auswahl in Variablen
 function wertsetzen() {
-  vorlaufeingabe.oninput = function() {preparationSpan.innerHTML = vorlaufeingabe.value;
-  belastungseingabe.oninput = function() {dauerSpan.innerHTM =belastungseingabe.value;};
-  ausruheingabe.oninput = function() {restSpan.innerHTML = ausruheingabe.value;};
-  rundeneingabe.oninput = function() {roundsSpan.innerHTML = rundeneingabe.value;};
+  vorlaufeingabe.oninput = function() {preparationSpan.innerHTML = vorlaufeingabe.value};
+  belastungseingabe.oninput = function() {dauerSpan.innerHTM = belastungseingabe.value};
+  ausruheingabe.oninput = function() {restSpan.innerHTML = ausruheingabe.value};
+  rundeneingabe.oninput = function() {roundsSpan.innerHTML = rundeneingabe.value};
 }
+
   
 // Änderungen bei button start und zurück
   startknopf.onclick = function() {
@@ -72,7 +74,7 @@ function wertsetzen() {
   document.body.style.backgroundColor = "white"
 
     }
-  };
+  ;
 
 // Eigentlicher Tabata array
 function runTabata(vorlauf, dauer, ruhe, runden) {
@@ -117,16 +119,16 @@ window.arrPeriods = arrPeriods;
   }
 
   //Inhalt des Schalters wird in einer globalen variablen gespeichert
-  var schalterV = document.getElementById('schalterid');
-  window.mediaV = 5
-   
 
-//der Eventlistener schaut auf die schalterV und wartet auf event Change um die funktion auszuführen
-  schalterV.addEventListener('change',function(){
-    if(this.checked) {
-      window.mediaV = Math.floor(Math.random() * (4 - 1 + 1)) + 1; ;
-    } 
-});
+window.mediaV = 5
+var a = document.getElementById("selector");
+
+
+a.addEventListener("change", function() {
+    if(a.value == "1"){window.mediaV = 5}
+    if(a.value == "2"){window.mediaV = Math.floor(Math.random() * (4 - 1 + 1)) + 1}
+})
+  
 
 
  function vorlauf(){
