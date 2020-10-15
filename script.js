@@ -116,12 +116,12 @@ window.arrPeriods = arrPeriods;
   else if (index % 1 == 0 ) {setTimeout(function(){aktiv()},1000)}
   }
 
-  window.mediaV = 0
+  window.mediaV = 5
 var a = document.getElementById("selector");
 
 
 a.addEventListener("change", function() {
-    if(a.value == "1"){window.mediaV = 0}
+    if(a.value == "1"){window.mediaV = 5}
     if(a.value == "2"){window.mediaV = Math.floor(Math.random() * (4 - 1 + 1)) + 1}
 })
 
@@ -184,7 +184,7 @@ document.getElementById("myBar").style.display = "none";
 document.getElementById("was").innerHTML = "Gratulation !!";
 document.getElementById("timer").style.display = "none";
 
-   if (mediaV==5){document.getElementById('gongsound').play();}
+   if (mediaV==0){document.getElementById('gongsound').play();}
    if (mediaV==1){document.getElementById('endesound1').play() 
    document.body.style.background = "#2c687f url('image/ende1.jpg') no-repeat center";}
    if (mediaV==2){document.getElementById('endesound2').play()
