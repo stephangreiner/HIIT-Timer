@@ -64,14 +64,7 @@ function wertsetzen() {
   document.getElementById("Einstellungsdiv").style.display = "none"; 
       }
 
-  resetbutton.onclick = function() {
-     clearInterval(interval); wertzeigen();
-  document.getElementById('resetbutton').style.visibility = 'hidden';
-  document.getElementById('zeigendiv').style.visibility = 'hidden';
-  document.getElementById("Einstellungsdiv").style.display = "";
-  document.body.style.backgroundColor = "white"
-
-    }
+  resetbutton.onclick = function(){location.reload()}
   };
 
 // Eigentlicher Tabata array
@@ -102,27 +95,23 @@ window.arrPeriods = arrPeriods;
       rundeAnzeige.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
       document.getElementById("myBar").innerHTML = timeDifference;
 
-    if(timeDifference == 0) {clearInterval(interval);
-    if(index < arrPeriods.length -1) {index++; runtimer(arrPeriods, index);} 
-    }},1000);
-
-  
-
-  
-  if
-  (index === 0 ) {vorlauf()}
+  if(timeDifference == 0) {clearInterval(interval);
+  if(index < arrPeriods.length -1) {index++; runtimer(arrPeriods, index);} }},1000);  
+  if (index === 0 ) {vorlauf()}
   else if (index % 2 == 0 &&  index == arrPeriods.length-1){ende()}
   else if (index % 2 == 0 ) {setTimeout(function(){ruhe()},1000)}
   else if (index % 1 == 0 ) {setTimeout(function(){aktiv()},1000)}
   }
 
-  window.mediaV = 5
+// deklarierung der Globalen Medienvariablen
+
 var a = document.getElementById("selector");
-
-
+var mediaV = 1
+//  beobachtung der  von a und Anpassung der mediaV
 a.addEventListener("change", function() {
-    if(a.value == "1"){window.mediaV = 5}
-    if(a.value == "2"){window.mediaV = Math.floor(Math.random() * (4 - 1 + 1)) + 1}
+    if(a.value == "1"){window.mediaV = 1}
+    if(a.value == "2"){window.mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1}
+    if(a.value == "3"){window.mediaV = 6}
 })
 
 
@@ -140,58 +129,62 @@ a.addEventListener("change", function() {
     document.getElementById("was").innerHTML= "GO !!"
     document.getElementById("progressdiv").style.display = "";
     document.getElementById("timer").style.display = "none";
-    if (mediaV==5){document.getElementById('gongsound').play();}
-    if (mediaV==1){document.getElementById('gosound1').play();}
-    if (mediaV==2){document.getElementById('gosound2').play();}
-    if (mediaV==3){document.getElementById('gosound3').play();}
-    if (mediaV==4){document.getElementById('gosound4').play();}
+    if (mediaV==1){document.getElementById('gongsound').play();}
+    if (mediaV==2){document.getElementById('gosound1').play();}
+    if (mediaV==3){document.getElementById('gosound2').play();}
+    if (mediaV==4){document.getElementById('gosound3').play();}
+    if (mediaV==5){document.getElementById('gosound4').play();}
+    if (mediaV==6){document.getElementById('m1').play();}
    }
   
  function ruhe(){
   moveruhe(),
+   document.getElementById('m1').pause();
    document.body.style.background = "#2c687f",  
    document.getElementById("myBar").style.color = "#2c687f";
   document.getElementById("timer").style.display = "none";
    document.getElementById("was").innerHTML = "Pause";
    if (index % 2 == 0 &&  index == arrPeriods.length-3)
 
-   { if (mediaV==5){document.getElementById('gongsound').play();}
-     if (mediaV==1){document.getElementById('vor1').play()
+   { if (mediaV==1){document.getElementById('gongsound').play();}
+     if (mediaV==2){document.getElementById('vor1').play()
        document.body.style.background = "#2c687f url('image/vor1.jpg') no-repeat center";}
-       if (mediaV==2){document.getElementById('vor2').play()
+       if (mediaV==3){document.getElementById('vor2').play()
        document.body.style.background = "#2c687f url('image/vor2.jpg') no-repeat center";;}
-       if (mediaV==3){document.getElementById('vor3').play();}
-       if (mediaV==4){document.getElementById('vor4').play();}
-     
+       if (mediaV==4){document.getElementById('vor3').play();}
+       if (mediaV==5){document.getElementById('vor4').play();}
+       if (mediaV==5){document.getElementById('vor4').play();}
+       if (mediaV==6) {document.getElementById('m1').pause();}   
       }
   else {
-     if (mediaV==5){document.getElementById('gongsound').play();}
-      if (mediaV==1){document.getElementById('kurzepausesound1').play()
+     if (mediaV==1){document.getElementById('gongsound').play();}
+      if (mediaV==2){document.getElementById('kurzepausesound1').play()
       document.body.style.background = "#2c687f url('image/ruhe1.jpg') no-repeat center";}
-      if (mediaV==2){document.getElementById('kurzepausesound2').play()
+      if (mediaV==3){document.getElementById('kurzepausesound2').play()
       document.body.style.background = "#2c687f url('image/ruhe2.jpg') no-repeat center";}
-      if (mediaV==3){document.getElementById('kurzepausesound3').play();
+      if (mediaV==4){document.getElementById('kurzepausesound3').play();
       document.body.style.background = "#2c687f url('image/ruhe3.jpg') no-repeat center"}
-      if (mediaV==4){document.getElementById('kurzepausesound4').play()
+      if (mediaV==5){document.getElementById('kurzepausesound4').play()
       document.body.style.background = "#2c687f url('image/ruhe4.jpg') no-repeat center";}
-    }    
+      if (mediaV==6) {document.getElementById('m1').pause();}
+    }  
                 }
 
 
-  function ende(){ 
+function ende(){ 
 document.body.style.backgroundColor = "#0FC2CF";
 document.getElementById("myBar").style.display = "none";
 document.getElementById("was").innerHTML = "Gratulation !!";
 document.getElementById("timer").style.display = "none";
 
-   if (mediaV==0){document.getElementById('gongsound').play();}
-   if (mediaV==1){document.getElementById('endesound1').play() 
+   if (mediaV==1){document.getElementById('gongsound').play();}
+   if (mediaV==2){document.getElementById('endesound1').play() 
    document.body.style.background = "#2c687f url('image/ende1.jpg') no-repeat center";}
-   if (mediaV==2){document.getElementById('endesound2').play()
+   if (mediaV==3){document.getElementById('endesound2').play()
    document.body.style.background = "#2c687f url('image/ende2.jpg') no-repeat center";}
-   if (mediaV==3){document.getElementById('endesound3').play()
-   document.body.style.background = "#2c687f url('image/ende3.jpg') no-repeat center";}
    if (mediaV==4){document.getElementById('endesound3').play()
+   document.body.style.background = "#2c687f url('image/ende3.jpg') no-repeat center";}
+   if (mediaV==5){document.getElementById('endesound3').play()
    document.body.style.background = "#2c687f url('image/ende4.jpg') no-repeat center";}
                    }
 
@@ -210,4 +203,4 @@ function moveruhe() {
   if (w === 100) {clearInterval(id);}
    else {w = w+1}; document.getElementById("myBar").style.width = w + '%';}
                     }
-    
+  
