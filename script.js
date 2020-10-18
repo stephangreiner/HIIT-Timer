@@ -57,14 +57,14 @@ function wertsetzen() {
  
   
 // Änderungen bei button start und zurück
-  startbutton.onclick = function() {
-    runTabata(vorlaufinput.value, belastungsinput.value, ausruhinput.value, rundeninput.value);
-  document.getElementById('resetbutton').style.visibility = 'visible';
+  startknopf.onclick = function() {
+  runTabata(vorlaufinput.value, belastungsinput.value, ausruhinput.value, rundeninput.value);
+  document.getElementById('zurückknopf').style.visibility = 'visible';
   document.getElementById('zeigendiv').style.visibility = 'visible';
   document.getElementById("Einstellungsdiv").style.display = "none"; 
       }
 
-  resetbutton.onclick = function(){location.reload()}
+  zurückknopf.onclick = function(){location.reload()}
   };
 
 // Eigentlicher Tabata array
