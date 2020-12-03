@@ -1,69 +1,63 @@
-// Deklarierung der Variablen
-var vorlaufinput = document.querySelector('input.range.vorlauf'),
-    belastungsinput = document.querySelector('input.range.dauer'),
-    ausruhinput = document.querySelector('input.range.ruhe'),
-    rundeninput = document.querySelector('input.range.runden')
-;
+// Speicherung der eingegebenen Dauerangaben in Variablen
+var vorlaufeingabe = document.querySelector('input.bereich.vorlauf');
+var belastungseingabe = document.querySelector('input.bereich.dauer');
+var ausruheingabe = document.querySelector('input.bereich.ruhe');
+var rundeneingabe = document.querySelector('input.bereich.runden');
 
-var preparationSpan = document.querySelector('span.value.vorlauf'),
-    dauerSpan = document.querySelector('span.value.dauer'),
-    restSpan = document.querySelector('span.value.ruhe'),
-    roundsSpan = document.querySelector('span.value.runden')
-;
-
-var zeitanzeige = document.getElementById('timer'),
-    rundeAnzeige = document.getElementById('runde');
+// Benennung der Anzeigeortes in Variablen, um diese später zu füllen
+var zeitanzeige = document.getElementById('timer');
+var rundeAnzeige = document.getElementById('runde');
     
-var intervall;
-
-
+// Starten des Programms durch ausführen von Funktionen
 wertzeigen();
 wertsetzen();
 
 
 // Anzeigen der Auswahlmöglichkeiten
 function wertzeigen() {
+  vorlaufeingabe.min = 1;
+  belastungseingabe.min = 1;
+  ausruheingabe.min = 1;
+  rundeneingabe.min = 1;
   
-  vorlaufinput.min = 1;
-  belastungsinput.min = 1;
-  ausruhinput.min = 1;
-  rundeninput.min = 1;
+  vorlaufeingabe.max = 60;
+  belastungseingabe.max = 60;
+  ausruheingabe.max = 60;
+  rundeneingabe.max = 20;
   
-  vorlaufinput.max = 60;
-  belastungsinput.max = 60;
-  ausruhinput.max = 60;
-  rundeninput.max = 20;
+  vorlaufeingabe.value = 5;
+  belastungseingabe.value = 20;
+  ausruheingabe.value = 10;
+  rundeneingabe.value = 8;
   
-  vorlaufinput.value = 5;
-  belastungsinput.value = 20;
-  ausruhinput.value = 10;
-  rundeninput.value = 8;
-  
-  preparationSpan.innerHTML = vorlaufinput.value;
-  dauerSpan.innerHTML = belastungsinput.value;
-  restSpan.innerHTML = ausruhinput.value;
-  roundsSpan.innerHTML = rundeninput.value;
-  
+  // Anzeige der eingegebenen Werte schon bevor Wertsetzenfunktion ausgeführt wird
+  document.querySelector('span.wert.vorlauf').innerHTML = vorlaufeingabe.value;
+  document.querySelector('span.wert.dauer').innerHTML = belastungseingabe.value;
+  document.querySelector('span.wert.ruhe').innerHTML = ausruheingabe.value;
+  document.querySelector('span.wert.runden').innerHTML = rundeneingabe.value;
+
+  // Grundanzeige vor Änderung der Variablen 
   zeitanzeige.innerHTML = "-----";
   rundeAnzeige.innerHTML = '0 / 0';
 }
 
 // Speichern der Auswahl in Variablen
 function wertsetzen() {
-  vorlaufinput.oninput = function() {preparationSpan.innerHTML = vorlaufinput.value;};
-  belastungsinput.oninput = function() {dauerSpan.innerHTML = belastungsinput.value;};
-  ausruhinput.oninput = function() {restSpan.innerHTML = ausruhinput.value;};
-  rundeninput.oninput = function() {roundsSpan.innerHTML = rundeninput.value;};
+  vorlaufeingabe.oninput = function() {document.querySelector('span.wert.vorlauf').innerHTML = vorlaufeingabe.value;};
+  belastungseingabe.oninput = function() {document.querySelector('span.wert.dauer').innerHTML = belastungseingabe.value;};
+  ausruheingabe.oninput = function() {document.querySelector('span.wert.ruhe').innerHTML = ausruheingabe.value;};
+  rundeneingabe.oninput = function() {document.querySelector('span.wert.runden').innerHTML = rundeneingabe.value;};
  
   
 // Änderungen bei button start und zurück
   startknopf.onclick = function() {
-  runTabata(vorlaufinput.value, belastungsinput.value, ausruhinput.value, rundeninput.value);
+  runTabata(vorlaufeingabe.value, belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
   document.getElementById('zurückknopf').style.visibility = 'visible';
   document.getElementById('zeigendiv').style.visibility = 'visible';
   document.getElementById("Einstellungsdiv").style.display = "none"; 
       }
 
+// zurückknopf Seite ganz neu Laden
   zurückknopf.onclick = function(){location.reload()}
   };
 
@@ -107,13 +101,14 @@ window.arrPeriods = arrPeriods;
 
 var a = document.getElementById("selector");
 var mediaV = 1
-//  beobachtung der  von a und Anpassung der mediaV
+
+//  beobachtung der  von a und Anpassung der mediaV ACHTUNG Math flour wird so nur einmal ausgeführt und bleibt dann bei allen Runden
+// gleich. 
 a.addEventListener("change", function() {
     if(a.value == "1"){window.mediaV = 1;}
     else if(a.value == "2"){window.mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
     else if(a.value == "3"){window.mediaV = 6}
 })
-
 
  function vorlauf(){
     document.body.style.backgroundColor = "#2c687f";
@@ -192,14 +187,14 @@ document.getElementById("timer").style.display = "none";
 
 function moveaktiv() {
   var w = 100;
-  var id = setInterval(frame, belastungsinput.value*10,1000);
+  var id = setInterval(frame, belastungseingabe.value*10,1000);
   function frame()
   {if (w === 1) {clearInterval(id);} 
   else { w= w-1; document.getElementById("myBar").style.width = w + '%';}}
                      }
 function moveruhe() {
   var w = 1;
-  var id = setInterval(frame, ausruhinput.value*10,1000);
+  var id = setInterval(frame, ausruheingabe.value*10,1000);
   function frame() { 
   if (w === 100) {clearInterval(id);}
    else {w = w+1}; document.getElementById("myBar").style.width = w + '%';}
