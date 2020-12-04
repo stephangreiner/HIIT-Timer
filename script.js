@@ -1,20 +1,13 @@
 // Speicherung der eingegebenen Dauerangaben in Variablen
-var vorlaufeingabe = document.querySelector('input.bereich.vorlauf');
-var belastungseingabe = document.querySelector('input.bereich.dauer');
-var ausruheingabe = document.querySelector('input.bereich.ruhe');
-var rundeneingabe = document.querySelector('input.bereich.runden');
+const vorlaufeingabe = document.querySelector('input.bereich.vorlauf');
+const belastungseingabe = document.querySelector('input.bereich.dauer');
+const ausruheingabe = document.querySelector('input.bereich.ruhe');
+const rundeneingabe = document.querySelector('input.bereich.runden');
 
 // Benennung der Anzeigeortes in Variablen, um diese später zu füllen
-var zeitanzeige = document.getElementById('timer');
-var rundeAnzeige = document.getElementById('runde');
+const ZA = document.getElementById('ZA');
+const RA = document.getElementById('RA');
     
-// Starten des Programms durch ausführen von Funktionen
-wertzeigen();
-wertsetzen();
-
-
-// Anzeigen der Auswahlmöglichkeiten
-function wertzeigen() {
   vorlaufeingabe.min = 1;
   belastungseingabe.min = 1;
   ausruheingabe.min = 1;
@@ -29,7 +22,7 @@ function wertzeigen() {
   belastungseingabe.value = 20;
   ausruheingabe.value = 10;
   rundeneingabe.value = 8;
-  
+
   // Anzeige der eingegebenen Werte schon bevor Wertsetzenfunktion ausgeführt wird
   document.querySelector('span.wert.vorlauf').innerHTML = vorlaufeingabe.value;
   document.querySelector('span.wert.dauer').innerHTML = belastungseingabe.value;
@@ -37,10 +30,10 @@ function wertzeigen() {
   document.querySelector('span.wert.runden').innerHTML = rundeneingabe.value;
 
   // Grundanzeige vor Änderung der Variablen 
-  zeitanzeige.innerHTML = "-----";
-  rundeAnzeige.innerHTML = '0 / 0';
-}
+  ZA.innerHTML = "-----";
+  RA.innerHTML = '0 / 0';
 
+wertsetzen();  
 // Speichern der Auswahl in Variablen
 function wertsetzen() {
   vorlaufeingabe.oninput = function() {document.querySelector('span.wert.vorlauf').innerHTML = vorlaufeingabe.value;};
@@ -51,46 +44,57 @@ function wertsetzen() {
   
 // Änderungen bei button start und zurück
   startknopf.onclick = function() {
-  runTabata(vorlaufeingabe.value, belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
+  los(vorlaufeingabe.value, belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
   document.getElementById('zurückknopf').style.visibility = 'visible';
   document.getElementById('zeigendiv').style.visibility = 'visible';
-  document.getElementById("Einstellungsdiv").style.display = "none"; 
+  document.getElementById("Einstellung").style.display = "none"; 
       }
 
-// zurückknopf Seite ganz neu Laden
-  zurückknopf.onclick = function(){location.reload()}
-  };
+var  a = document.getElementById("selector");
 
-// Eigentlicher Tabata array
-function runTabata(vorlauf, dauer, ruhe, runden) {
-  let arrPeriods = [vorlauf],
-  index = 0
-  ;
 
+//  beobachtung der  von a und Anpassung der mediaV ACHTUNG Math flour wird so nur einmal ausgeführt und bleibt dann bei allen Runden
+// gleich. 
+a.addEventListener("change", function() {
+  window.mediaV = 1
+    if(a.value == "1"){window.mediaV = 1;}
+    else if(a.value == "2"){window.mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
+    else if(a.value == "3"){window.mediaV = 6
+    }
+})
+
+
+
+//Tabata mit 4 Argumente, dann neuer Array mit einem Inhalt
+//las  
+const index = 0;
+const arrPeriods = 0;
+
+function los(vorlauf, dauer, ruhe, runden) {
+let arrPeriods = [vorlauf];
+//neue Variable i solange i kleiner ist als Runden, wird der array verlängert
   for(let i = 0; i < runden; i++) {
     arrPeriods.push(dauer);
     arrPeriods.push(ruhe);
     }
-   runtimer(arrPeriods, index);
+   zeit(arrPeriods, index);
 }
 
 // Setzen des Timers
-function runtimer(arrPeriods, index) {
+function zeit(arrPeriods, index) {
 timeFuture = Date.now()
 timeFuture2 = timeFuture + arrPeriods[index] * 1000;
 
-window.index = index;
-window.arrPeriods = arrPeriods;
 
-  interval = setInterval(() => {
+interval = setInterval(() => {
      const timeDifference = Math.round((timeFuture2 - Date.now()) / 1000) + 1;
     
-    zeitanzeige.innerHTML ="Noch  " + timeDifference + "s";
-      rundeAnzeige.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
+    ZA.innerHTML ="Noch  " + timeDifference + "s";
+    RA.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
       document.getElementById("myBar").innerHTML = timeDifference;
 
   if(timeDifference == 0) {clearInterval(interval);
-  if(index < arrPeriods.length -1) {index++; runtimer(arrPeriods, index);} }},1000);  
+  if(index < arrPeriods.length -1) {index++; zeit(arrPeriods, index);} }},1000);  
   if (index === 0 ) {vorlauf()}
   else if (index % 2 == 0 &&  index == arrPeriods.length-1){ende()}
   else if (index % 2 == 0 ) {setTimeout(function(){ruhe()},1000)}
@@ -99,16 +103,6 @@ window.arrPeriods = arrPeriods;
 
 // deklarierung der Globalen Medienvariablen
 
-var a = document.getElementById("selector");
-var mediaV = 1
-
-//  beobachtung der  von a und Anpassung der mediaV ACHTUNG Math flour wird so nur einmal ausgeführt und bleibt dann bei allen Runden
-// gleich. 
-a.addEventListener("change", function() {
-    if(a.value == "1"){window.mediaV = 1;}
-    else if(a.value == "2"){window.mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
-    else if(a.value == "3"){window.mediaV = 6}
-})
 
  function vorlauf(){
     document.body.style.backgroundColor = "#2c687f";
@@ -121,9 +115,9 @@ a.addEventListener("change", function() {
   document.body.style.backgroundImage = "none";
   document.body.style.backgroundColor = "#FF4E4E";
   document.getElementById("myBar").style.color = "#FF4E4E";
-    document.getElementById("was").innerHTML= "GO !!"
-    document.getElementById("progressdiv").style.display = "";
-    document.getElementById("timer").style.display = "none";
+  document.getElementById("was").innerHTML= "GO !!"
+  document.getElementById("progressdiv").style.display = "";
+    ZA.style.display = "none";
     if (mediaV==1){document.getElementById('gongsound').play();}
     else if (mediaV==2){document.getElementById('gosound1').play();}
     else if (mediaV==3){document.getElementById('gosound2').play();}
@@ -137,7 +131,7 @@ a.addEventListener("change", function() {
    document.getElementById('m1').pause();
    document.body.style.background = "#2c687f",  
    document.getElementById("myBar").style.color = "#2c687f";
-   document.getElementById("timer").style.display = "none";
+   ZA.style.display = "none";
    document.getElementById("was").innerHTML = "Pause";
    if (index % 2 == 0 &&  index == arrPeriods.length-3){vorletztepause()}
 else {normalepause()}  
@@ -172,7 +166,7 @@ function ende(){
 document.body.style.backgroundColor = "#0FC2CF";
 document.getElementById("myBar").style.display = "none";
 document.getElementById("was").innerHTML = "Gratulation !!";
-document.getElementById("timer").style.display = "none";
+document.getElementById("ZA").style.display = "none";
    if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('endesound1').play() 
    document.body.style.background = "#2c687f url('image/ende1.jpg') no-repeat center";}
@@ -186,17 +180,20 @@ document.getElementById("timer").style.display = "none";
 
 
 function moveaktiv() {
-  var w = 100;
-  var id = setInterval(frame, belastungseingabe.value*10,1000);
+  let w = 100;
+  let id = setInterval(frame, belastungseingabe.value*10,1000);
   function frame()
   {if (w === 1) {clearInterval(id);} 
   else { w= w-1; document.getElementById("myBar").style.width = w + '%';}}
                      }
 function moveruhe() {
-  var w = 1;
-  var id = setInterval(frame, ausruheingabe.value*10,1000);
+  let w = 1;
+  let id = setInterval(frame, ausruheingabe.value*10,1000);
   function frame() { 
   if (w === 100) {clearInterval(id);}
    else {w = w+1}; document.getElementById("myBar").style.width = w + '%';}
                     }
-  
+
+  // zurückknopf Seite ganz neu Laden
+  zurückknopf.onclick = function(){location.reload()}
+  };
