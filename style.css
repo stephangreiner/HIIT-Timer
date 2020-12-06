@@ -33,15 +33,9 @@ align-items : center;border-radius: 5%;border: none;
 visibility: hidden;
 background-color: rgba(0, 0, 0, 0.129)
 }
-.timer {
-background-color: white;
-margin : 5% auto;
-border-radius : 2vmin;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-font-size: 6vmin; text-align: center
-}
 
-.runde {
+
+#Rundenanzeige {
 background-color: white;
 border-radius : 2vmin;
 margin-top: 20px;
@@ -49,12 +43,19 @@ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 font-size: 6vmin; text-align: center
 }
 
-#was {
+#Textanzeige {
 color: rgba(0, 0, 0, 0.404);
 margin-top: 50px; margin-bottom: 50px;
 font-size: 40px;height: 20px;
 }
 
+#Uhr{
+background-color: white;
+margin : 5% auto;
+border-radius : 2vmin;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+font-size: 6vmin; text-align: center
+}
 
 #zurückknopf {
   background-color: rgba(0, 0, 0, 0.432); color: rgb(182, 182, 182) ;
@@ -66,14 +67,14 @@ font-size: 40px;height: 20px;
 }
 
 
-#myProgress {
+#Gesamtbalken {
   text-align: center;
 display : flex; flex-direction : column; flex-direction: row; justify-content : space-between;
 align-items : center;
   width: 500px;;
 }
 
-#myBar {
+#Balkenbeweger {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 10vmin; 
   align-items:center;
     width: 500px;

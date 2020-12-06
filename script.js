@@ -1,20 +1,24 @@
-// der Input von html wir in variablen gespeichert
+// html Wörterbuch die folgenden Contanten zeigen lediglich auf html Elemente
+// der Input von html 
 const vorlaufeingabe = document.querySelector('input.bereich.vorlauf');
 const belastungseingabe = document.querySelector('input.bereich.dauer');
 const ausruheingabe = document.querySelector('input.bereich.ruhe');
 const rundeneingabe = document.querySelector('input.bereich.runden');
-var a = document.getElementById("selector");
+const medienwahl = document.getElementById("Medienwahl");
 
-// der Ausgang zu html wird in variablen gespeichert
-const zeitanzeige = document.getElementById('timer');
-const rundeAnzeige = document.getElementById('runde');
-    
+// der Ausgang zu html 
+const ZA = document.getElementById('Zeitanzeige');
+const RA = document.getElementById('Rundenanzeige');
+const TA = document.getElementById('Textanzeige');
+const BB = document.getElementById("Balkenbeweger")
+
+
 // Starten des Programms durch ausführen von Funktionen
 wertzeigen();
 wertsetzen();
 
 
-// Anzeigen der Auswahlmöglichkeiten
+// 
 function wertzeigen() {
   vorlaufeingabe.min = 1;
   belastungseingabe.min = 1;
@@ -38,8 +42,8 @@ function wertzeigen() {
   document.querySelector('span.wert.runden').innerHTML = rundeneingabe.value;
 
   // Grundanzeige vor Änderung der Variablen 
-  zeitanzeige.innerHTML = "-----";
-  rundeAnzeige.innerHTML = '0 / 0';
+  ZA.innerHTML = "-----";
+  RA.innerHTML = '0 / 0';
 }
 
 // Speichern der Auswahl in Variablen
@@ -84,11 +88,11 @@ window.index = index;
 window.arrPeriods = arrPeriods;
 
   interval = setInterval(() => {
-     const timeDifference = Math.round((timeFuture2 - Date.now()) / 1000) + 1;
+     var timeDifference = Math.round((timeFuture2 - Date.now()) / 1000) + 1;
     
-    zeitanzeige.innerHTML ="Noch  " + timeDifference + "s";
-      rundeAnzeige.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
-      document.getElementById("myBar").innerHTML = timeDifference;
+    ZA.innerHTML ="Noch  " + timeDifference + "s";
+      RA.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
+      BB.innerHTML = timeDifference;
 
   if(timeDifference == 0) {clearInterval(interval);
   if(index < arrPeriods.length -1) {index++; runtimer(arrPeriods, index);} }},1000);  
@@ -98,50 +102,45 @@ window.arrPeriods = arrPeriods;
   else if (index % 1 == 0 ) {setTimeout(function(){aktiv()},1000)}
   }
 
-// deklarierung der Globalen Medienvariablen
 
-
+//  Es wird eine globale mediaV eingeführt, die je nach Stand des Selektors geändert wird
 var mediaV = 1
-
-//  beobachtung der  von a und Anpassung der mediaV ACHTUNG Math flour wird so nur einmal ausgeführt und bleibt dann bei allen Runden
-// gleich. 
-a.addEventListener("change", function() {
-    if(a.value == "1"){window.mediaV = 1;}
-    else if(a.value == "2"){window.mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
-    else if(a.value == "3"){window.mediaV = 6}
+medienwahl.addEventListener("change", function() {
+    if(medienwahl.value == "1"){mediaV = 1;}
+    else if(medienwahl.value == "2"){mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
+    else if(medienwahl.value == "3"){mediaV = 6}
 })
 
  function vorlauf(){
     document.body.style.backgroundColor = "#2c687f";
-    document.getElementById("was").innerHTML = "gleich geht es los";
     document.getElementById("progressdiv").style.display = "none";
-    }
+    TA.innerHTML = "gleich geht es los";}
        
  function aktiv(){
   moveaktiv()
   document.body.style.backgroundImage = "none";
   document.body.style.backgroundColor = "#FF4E4E";
-  document.getElementById("myBar").style.color = "#FF4E4E";
-    document.getElementById("was").innerHTML= "GO !!"
-    document.getElementById("progressdiv").style.display = "";
-    document.getElementById("timer").style.display = "none";
-    if (mediaV==1){document.getElementById('gongsound').play();}
-    else if (mediaV==2){document.getElementById('gosound1').play();}
-    else if (mediaV==3){document.getElementById('gosound2').play();}
-    else if (mediaV==4){document.getElementById('gosound3').play();}
-    else if (mediaV==5){document.getElementById('gosound4').play();}
-    else if (mediaV==6){document.getElementById('m1').play();}
+  document.getElementById("progressdiv").style.display = "";
+  BB.style.color = "#FF4E4E";
+  TA.innerHTML= "GO !!" 
+  ZA.style.display = "none";
+  if (mediaV==1){document.getElementById('gongsound').play();}
+  else if (mediaV==2){document.getElementById('gosound1').play();}
+  else if (mediaV==3){document.getElementById('gosound2').play();}
+  else if (mediaV==4){document.getElementById('gosound3').play();}
+  else if (mediaV==5){document.getElementById('gosound4').play();}
+  else if (mediaV==6){document.getElementById('m1').play();}
    }
   
  function ruhe(){
   moveruhe(),
    document.getElementById('m1').pause();
-   document.body.style.background = "#2c687f",  
-   document.getElementById("myBar").style.color = "#2c687f";
-   document.getElementById("timer").style.display = "none";
-   document.getElementById("was").innerHTML = "Pause";
+   document.body.style.background = "#2c687f";  
+   BB.style.color = "#2c687f";
+   ZA.style.display = "none";
+   TA.innerHTML = "Pause";
    if (index % 2 == 0 &&  index == arrPeriods.length-3){vorletztepause()}
-else {normalepause()}  
+   else {normalepause()}  
 }
 function  normalepause(){
 if (mediaV==1){document.getElementById('gongsound').play();}
@@ -171,9 +170,9 @@ function vorletztepause()
 
 function ende(){ 
 document.body.style.backgroundColor = "#0FC2CF";
-document.getElementById("myBar").style.display = "none";
-document.getElementById("was").innerHTML = "Gratulation !!";
-document.getElementById("timer").style.display = "none";
+BB.style.display = "none";
+TA.innerHTML = "Gratulation !!";
+ZA.style.display = "none";
    if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('endesound1').play() 
    document.body.style.background = "#2c687f url('image/ende1.jpg') no-repeat center";}
@@ -191,13 +190,13 @@ function moveaktiv() {
   var id = setInterval(frame, belastungseingabe.value*10,1000);
   function frame()
   {if (w === 1) {clearInterval(id);} 
-  else { w= w-1; document.getElementById("myBar").style.width = w + '%';}}
+  else { w= w-1; BB.style.width = w + '%';}}
                      }
 function moveruhe() {
   var w = 1;
   var id = setInterval(frame, ausruheingabe.value*10,1000);
   function frame() { 
   if (w === 100) {clearInterval(id);}
-   else {w = w+1}; document.getElementById("myBar").style.width = w + '%';}
+   else {w = w+1}; BB.style.width = w + '%';}
                     }
   
