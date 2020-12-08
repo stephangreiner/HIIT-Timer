@@ -1,102 +1,108 @@
-.Einstellungsdiv {
-max-width : 900px; margin: auto; max-height : 1500px; text-align: center;
-background-color: rgba(245, 225, 225, 0.363);border-radius: 5%;border: none;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 4vmin; 
-}
-.Zeilediv {
-display : flex; flex-direction : row; justify-content : center; align-items : center;
-width : 100%; height : 10%;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 4vmin; 
-}
-.text {
-  width : 30%;
-  margin : 0 auto;}
-.bereich {
-  width : 50%; height : 100%;
-  margin : 0 auto;
-  cursor : pointer;}
-.wert {
-  width : 10%;
-  margin : 0 auto;}
+/* Das Einstellungsdiv ist am Anfang sichtbar und wird dann mit JS unsichtbar */ 
 
-#startknopf{
-background-color: rgba(245, 109, 109, 0.678); color: rgb(31, 22, 22) ;
-height:90px; width:100px; margin: 30px;
-border-radius: 5%;border: none;
-cursor: pointer;}
+#Einstellungsdiv {
+   max-width : 900px; margin: auto; max-height : 1500px; text-align: center;
+   background-color: rgba(245, 225, 225, 0.363);border-radius: 5%;border: none;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 4vmin; 
+   }
 
-.zeigendiv {
-margin-top: 30pt;
-text-align: center;
-display : flex;flex-direction : column; justify-content : space-between;
-align-items : center;border-radius: 5%;border: none;
-visibility: hidden;
-background-color: rgba(0, 0, 0, 0.129)
-}
+ .Zeilediv {
+    display : flex; flex-direction : row; justify-content : center; align-items : center;
+    width : 100%; height : 10%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 4vmin; 
+    }
+   .text {
+     width : 30%;
+     margin : 0 auto;
+     text-align: right;
+     }
+    .bereich {
+     width : 50%; height : 100%;
+     margin : 0 auto;
+     cursor : pointer;}
+    .wert {
+      width : 10%;
+      margin : 0 auto;}
 
+ #startknopf{
+    background-color: rgba(245, 109, 109, 0.678); color: rgb(31, 22, 22) ;
+    height:90px; width:100px; margin: 30px;
+    border-radius: 5%;border: none;
+    cursor: pointer;}
 
-#Rundenanzeige {
-background-color: white;
-border-radius : 2vmin;
-margin-top: 20px;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-font-size: 6vmin; text-align: center
-}
-
-#Textanzeige {
-color: rgba(0, 0, 0, 0.404);
-margin-top: 50px; margin-bottom: 50px;
-font-size: 40px;height: 20px;
-}
-
-#Uhr{
-background-color: white;
-margin : 5% auto;
-border-radius : 2vmin;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-font-size: 6vmin; text-align: center
-}
-
-#zurückknopf {
-  background-color: rgba(0, 0, 0, 0.432); color: rgb(182, 182, 182) ;
-  margin-top: 20px; margin-bottom: 20px; 
-  height:50px;  width:100px;  
-  border-radius: 5%;border: none;
-  cursor: pointer;
-  visibility: hidden;
-}
-
-
-#Gesamtbalken {
-  text-align: center;
-display : flex; flex-direction : column; flex-direction: row; justify-content : space-between;
-align-items : center;
-  width: 500px;;
-}
-
-#Balkenbeweger {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 10vmin; 
-  align-items:center;
-    width: 500px;
-    height:200px;
-    background-color: rgb(255, 255, 255);
-    color: #FF4E4E;
-    margin: auto;
-    font-size: 140px;}
-
-    #selector {
-      /* irrelevante Eigenschaften gekürzt */
-      padding:.75em 1em .5em 1em;
-      background-color: rgba(0, 0, 0, 0.232); color: rgb(182, 182, 182) ;;
-      color:rgb(0, 0, 0);
-      float: left;
-      margin-left: 30px;
-      margin-top: 30px;
+ #Medienwahl {
+    padding:.75em 1em .5em 1em;
+    background-color: rgba(0, 0, 0, 0.25); color: rgb(182, 182, 182) ;;
+    color:rgb(0, 0, 0);
+    float: left;
+    margin-left: 30px;
+    margin-top: 30px;
     }
     
-    option {
-      background: rgba(0, 0, 0, 0.232); color: rgb(49, 33, 33);
-    }
+
+
+/* Ab hier am Anfang unsichtbar */ 
+
+#zeigendiv {
+   margin-top: 30pt;
+   text-align: center;
+   display : flex;flex-direction : column; justify-content : space-between;
+   align-items : center;border-radius: 5%;border: none;
+   visibility: hidden;
+   background-color: rgba(0, 0, 0, 0.129)
+   }
+
+ #Textanzeige {
+   color: rgba(0, 0, 0, 0.404);
+   margin-top: 50px; margin-bottom: 50px;
+   font-size: 40px;height: 20px;
+   }
+
+ #Rundenanzeige {
+  background-color: white;
+  border-radius : 2vmin;
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 6vmin; text-align: center
+ }
+
+
+ #Zeitanzeige {
+   background-color: white;
+   margin : 5% auto;
+   border-radius : 2vmin;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   font-size: 6vmin; text-align: center
+   }
+
+ #zurückknopf {
+   background-color: rgba(0, 0, 0, 0.432); color: rgb(182, 182, 182) ;
+   margin-top: 20px; margin-bottom: 20px; 
+   height:50px;  width:100px;  
+   border-radius: 5%;border: none;
+   cursor: pointer;
+   }
+
+
+ #Gesamtbalken {
+   text-align: center;
+   display : flex; flex-direction : column; flex-direction: row; justify-content : space-between;
+   align-items : center;
+   width: 500px;;
+   }
+
+ #Balkenbeweger {
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 10vmin; 
+   align-items:center;
+   width: 500px;
+   height:200px;
+   background-color: rgb(255, 255, 255);
+   color: #FF4E4E;
+   margin: auto;
+   font-size: 140px;
+   }
+
+ 
 
 
   

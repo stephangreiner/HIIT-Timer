@@ -17,7 +17,6 @@ const BB = document.getElementById("Balkenbeweger")
 wertzeigen();
 wertsetzen();
 
-
 // 
 function wertzeigen() {
   vorlaufeingabe.min = 1;
@@ -57,7 +56,7 @@ function wertsetzen() {
 // Änderungen bei button start und zurück
   startknopf.onclick = function() {
   runTabata(vorlaufeingabe.value, belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
-  document.getElementById('zurückknopf').style.visibility = 'visible';
+  
   document.getElementById('zeigendiv').style.visibility = 'visible';
   document.getElementById("Einstellungsdiv").style.display = "none"; 
       }
@@ -69,34 +68,33 @@ function wertsetzen() {
 // Eigentlicher Tabata array
 function runTabata(vorlauf, dauer, ruhe, runden) {
   let arrPeriods = [vorlauf],
-  index = 0
-  ;
-
+  index = 0;
   for(let i = 0; i < runden; i++) {
     arrPeriods.push(dauer);
     arrPeriods.push(ruhe);
     }
-   runtimer(arrPeriods, index);
+   uhrwerk(arrPeriods, index);
 }
 
 // Setzen des Timers
-function runtimer(arrPeriods, index) {
-timeFuture = Date.now()
-timeFuture2 = timeFuture + arrPeriods[index] * 1000;
+function uhrwerk(arrPeriods, index) {
+  jetzt = Date.now()
+  dann = jetzt + arrPeriods[index] * 1000;
+  window.index = index;
+  window.arrPeriods = arrPeriods;
 
-window.index = index;
-window.arrPeriods = arrPeriods;
+ // Die setintervall Methode ruft die funtion x alle 1000ms auf. sie ist an l gekoppelt 
+ //um mit der clearIntervall Methode gestoppt werden zu können
+   l = setInterval(function x() {
+    var zeitunterschied = Math.round((dann - Date.now()) / 1000) + 1;
+    ZA.innerHTML ="Noch  " + zeitunterschied + "s";
+    RA.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
+    BB.innerHTML = zeitunterschied;
+    if(zeitunterschied == 0) {clearInterval(l);
+    if(index < arrPeriods.length -1) {index++; uhrwerk(arrPeriods, index);} }
+    },1000); 
 
-  interval = setInterval(() => {
-     var timeDifference = Math.round((timeFuture2 - Date.now()) / 1000) + 1;
-    
-    ZA.innerHTML ="Noch  " + timeDifference + "s";
-      RA.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
-      BB.innerHTML = timeDifference;
-
-  if(timeDifference == 0) {clearInterval(interval);
-  if(index < arrPeriods.length -1) {index++; runtimer(arrPeriods, index);} }},1000);  
-  if (index === 0 ) {vorlauf()}
+ if (index === 0 ) {vorlauf()}
   else if (index % 2 == 0 &&  index == arrPeriods.length-1){ende()}
   else if (index % 2 == 0 ) {setTimeout(function(){ruhe()},1000)}
   else if (index % 1 == 0 ) {setTimeout(function(){aktiv()},1000)}
@@ -111,29 +109,29 @@ medienwahl.addEventListener("change", function() {
     else if(medienwahl.value == "3"){mediaV = 6}
 })
 
- function vorlauf(){
+function vorlauf(){
     document.body.style.backgroundColor = "#2c687f";
-    document.getElementById("progressdiv").style.display = "none";
+    document.getElementById("Balkendiv").style.display = "none";
     TA.innerHTML = "gleich geht es los";}
        
- function aktiv(){
-  moveaktiv()
-  document.body.style.backgroundImage = "none";
-  document.body.style.backgroundColor = "#FF4E4E";
-  document.getElementById("progressdiv").style.display = "";
-  BB.style.color = "#FF4E4E";
-  TA.innerHTML= "GO !!" 
-  ZA.style.display = "none";
-  if (mediaV==1){document.getElementById('gongsound').play();}
-  else if (mediaV==2){document.getElementById('gosound1').play();}
-  else if (mediaV==3){document.getElementById('gosound2').play();}
-  else if (mediaV==4){document.getElementById('gosound3').play();}
-  else if (mediaV==5){document.getElementById('gosound4').play();}
-  else if (mediaV==6){document.getElementById('m1').play();}
+function aktiv(){
+   balkenschrumpfer()
+   document.body.style.backgroundImage = "none";
+   document.body.style.backgroundColor = "#FF4E4E";
+   document.getElementById("Balkendiv").style.display = "";
+   BB.style.color = "#FF4E4E";
+   TA.innerHTML= "GO !!" 
+   ZA.style.display = "none";
+   if (mediaV==1){document.getElementById('gongsound').play();}
+   else if (mediaV==2){document.getElementById('gosound1').play();}
+   else if (mediaV==3){document.getElementById('gosound2').play();}
+   else if (mediaV==4){document.getElementById('gosound3').play();}
+   else if (mediaV==5){document.getElementById('gosound4').play();}
+   else if (mediaV==6){document.getElementById('m1').play();}
    }
   
- function ruhe(){
-  moveruhe(),
+function ruhe(){
+   balkenwachser(),
    document.getElementById('m1').pause();
    document.body.style.background = "#2c687f";  
    BB.style.color = "#2c687f";
@@ -142,37 +140,38 @@ medienwahl.addEventListener("change", function() {
    if (index % 2 == 0 &&  index == arrPeriods.length-3){vorletztepause()}
    else {normalepause()}  
 }
+
 function  normalepause(){
-if (mediaV==1){document.getElementById('gongsound').play();}
-      else if (mediaV==2){document.getElementById('kurzepausesound1').play()
-      document.body.style.background = "#2c687f url('image/ruhe1.jpg') no-repeat center";}
-      else if (mediaV==3){document.getElementById('kurzepausesound2').play()
-      document.body.style.background = "#2c687f url('image/ruhe2.jpg') no-repeat center";}
-      else if (mediaV==4){document.getElementById('kurzepausesound3').play();
-      document.body.style.background = "#2c687f url('image/ruhe3.jpg') no-repeat center"}
-     else if (mediaV==5){document.getElementById('kurzepausesound4').play()
-      document.body.style.background = "#2c687f url('image/ruhe4.jpg') no-repeat center";}
-     else if (mediaV==6) {document.getElementById('m1').pause();}
+  if (mediaV==1){document.getElementById('gongsound').play();}
+  else if (mediaV==2){document.getElementById('kurzepausesound1').play()
+  document.body.style.background = "#2c687f url('image/ruhe1.jpg') no-repeat center";}
+  else if (mediaV==3){document.getElementById('kurzepausesound2').play()
+  document.body.style.background = "#2c687f url('image/ruhe2.jpg') no-repeat center";}
+  else if (mediaV==4){document.getElementById('kurzepausesound3').play();
+  document.body.style.background = "#2c687f url('image/ruhe3.jpg') no-repeat center"}
+  else if (mediaV==5){document.getElementById('kurzepausesound4').play()
+  document.body.style.background = "#2c687f url('image/ruhe4.jpg') no-repeat center";}
+  else if (mediaV==6) {document.getElementById('m1').pause();}
 }
 
 
-function vorletztepause()
-   {if (mediaV==1){document.getElementById('gongsound').play();}
-     else if (mediaV==2){document.getElementById('vor1').play()
-       document.body.style.background = "#2c687f url('image/vor1.jpg') no-repeat center";}
-       else if (mediaV==3){document.getElementById('vor2').play()
-       document.body.style.background = "#2c687f url('image/vor2.jpg') no-repeat center";;}
-       else if (mediaV==4){document.getElementById('vor3').play();}
-       else if (mediaV==5){document.getElementById('vor4').play();}
-       else if (mediaV==5){document.getElementById('vor4').play();}
-       else if (mediaV==6) {document.getElementById('m1').pause();}   
+function vorletztepause(){
+  if (mediaV==1){document.getElementById('gongsound').play();}
+  else if (mediaV==2){document.getElementById('vor1').play()
+  document.body.style.background = "#2c687f url('image/vor1.jpg') no-repeat center";}
+  else if (mediaV==3){document.getElementById('vor2').play()
+  document.body.style.background = "#2c687f url('image/vor2.jpg') no-repeat center";;}
+  else if (mediaV==4){document.getElementById('vor3').play();}
+  else if (mediaV==5){document.getElementById('vor4').play();}
+  else if (mediaV==5){document.getElementById('vor4').play();}
+  else if (mediaV==6) {document.getElementById('m1').pause();}   
       }
 
 function ende(){ 
-document.body.style.backgroundColor = "#0FC2CF";
-BB.style.display = "none";
-TA.innerHTML = "Gratulation !!";
-ZA.style.display = "none";
+   document.body.style.backgroundColor = "#0FC2CF";
+   BB.style.display = "none";
+   TA.innerHTML = "Gratulation !!";
+   ZA.style.display = "none";
    if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('endesound1').play() 
    document.body.style.background = "#2c687f url('image/ende1.jpg') no-repeat center";}
@@ -185,18 +184,19 @@ ZA.style.display = "none";
                    }
 
 
-function moveaktiv() {
-  var w = 100;
-  var id = setInterval(frame, belastungseingabe.value*10,1000);
-  function frame()
-  {if (w === 1) {clearInterval(id);} 
-  else { w= w-1; BB.style.width = w + '%';}}
+// eigene Uhrwerke (setInterval) für das wachsen und schrumpfen des Balkens
+function balkenschrumpfer() {
+  var Ausganswert = 100;
+  var id = setInterval(was, belastungseingabe.value*10,1000);
+  function was()
+  {if (Ausganswert === 1) {clearInterval(id);} 
+  else { Ausganswert= Ausganswert-1; BB.style.width = Ausganswert + '%';}}
                      }
-function moveruhe() {
-  var w = 1;
-  var id = setInterval(frame, ausruheingabe.value*10,1000);
-  function frame() { 
-  if (w === 100) {clearInterval(id);}
-   else {w = w+1}; BB.style.width = w + '%';}
+function balkenwachser() {
+  var Ausgangswert = 1;
+  var id = setInterval(was, ausruheingabe.value*10,1000);
+  function was() { 
+  if (Ausgangswert === 100) {clearInterval(id);}
+  else {Ausgangswert = Ausgangswert+1}; BB.style.width = Ausgangswert + '%';}
                     }
   
