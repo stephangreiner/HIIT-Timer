@@ -10,7 +10,7 @@ const medienwahl = document.getElementById("Medienwahl");
 const ZA = document.getElementById('Zeitanzeige');
 const RA = document.getElementById('Rundenanzeige');
 const TA = document.getElementById('Textanzeige');
-const BB = document.getElementById("Balkenbeweger")
+const BB = document.getElementById("Balkenzeit")
 
 
 // Starten des Programms durch ausführen von Funktionen
@@ -90,6 +90,9 @@ function uhrwerk(arrPeriods, index) {
     ZA.innerHTML ="Noch  " + zeitunterschied + "s";
     RA.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
     BB.innerHTML = zeitunterschied;
+  // 5 Sekunden vor Zeitablauf verschwindet die Zeitanzeige
+    if (zeitunterschied < 5) {BB.innerHTML= ""}
+  // Bei Zeitablauf wird das Intervall beendet und ein Index hochgezählt
     if(zeitunterschied == 0) {clearInterval(l);
     if(index < arrPeriods.length -1) {index++; uhrwerk(arrPeriods, index);} }
     },1000); 
@@ -116,6 +119,7 @@ function vorlauf(){
        
 function aktiv(){
    balkenschrumpfer()
+   document.getElementById("zurückknopf").style.display = "none"
    document.body.style.backgroundImage = "none";
    document.body.style.backgroundColor = "#FF4E4E";
    document.getElementById("Balkendiv").style.display = "";
@@ -168,6 +172,7 @@ function vorletztepause(){
       }
 
 function ende(){ 
+  document.getElementById("zurückknopf").style.display = "none"
    document.body.style.backgroundColor = "#0FC2CF";
    BB.style.display = "none";
    TA.innerHTML = "Gratulation !!";
