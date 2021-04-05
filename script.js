@@ -113,6 +113,7 @@ medienwahl.addEventListener("change", function() {
 })
 
 function vorlauf(){
+
     document.body.style.backgroundColor = "#2c687f";
     document.getElementById("Balkendiv").style.display = "none";
     TA.innerHTML = "gleich geht es los";}
@@ -205,3 +206,73 @@ function balkenwachser() {
   else {Ausgangswert = Ausgangswert+1}; BB.style.width = Ausgangswert + '%';}
                     }
   
+  
+                    
+// Fotoapp____________________________________________
+
+// das Gesamt Fotodiv urspünglich nicht anzeigen
+
+const GFD = document.getElementById("Gesamtfotodiv")
+GFD.style.display="none"
+//Bei Auswahl, doch anzeigen und Camera Starten
+
+const Foto = document.getElementById("Fotomodus");
+Foto.addEventListener("change", function() {
+    if(Foto.value == "1"){GFD.style.display="none"}
+    else if(Foto.value == "2"){GFD.style.display="",cameraStart()}
+  
+})
+
+//  constraints für Videostream festlegen,
+var constraints = { video: { facingMode: "user" }, audio: false };
+var track = null;
+
+
+const Streamansicht = document.getElementById("streamansicht");
+const Bildcanvas = document.getElementById("bildcanvas");
+
+const Ausloeser = document.getElementById("Fotomachenknopf");
+
+
+
+// Access camera und stream zur Streamansicht
+Ausloeser.style.display='none'
+document.getElementById("cameraaus").style.display='none'
+document.getElementById("herunterladenknopf").style.display='none'
+
+function cameraStart() {
+Ausloeser.style.display=''
+document.getElementById("cameraaus").style.display='';
+
+
+    navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(function(stream) {
+            track = stream.getTracks()[0];
+            Streamansicht.srcObject = stream;
+                            })
+        .catch(function(error) {
+            console.error("Etwas hat nicht geklappt", error);
+                            });
+}
+ // der track wird gestoppt, theoretisch muss jeder Einzelne Track gestopt werden. Anders kann der Kamerazugriff nicht beendet werden
+function cameraStop(){
+track.stop()
+document.getElementById("Fotomachenknopf").style.display='none'; };
+
+function fotomachen()  {
+    document.getElementById("herunterladenknopf").style.display=''; 
+    // der Stream hat eine andere größe, als das Bild, was man davon machen will, deshab muss man gleichsetzen
+    Bildcanvas.width = Streamansicht.videoWidth;
+    Bildcanvas.height = Streamansicht.videoHeight;
+    Bildcanvas.getContext("2d").drawImage(Streamansicht, 0, 0);
+    
+};
+
+function bildherunterladen() {
+    const canvas =  Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    window.location.href=canvas;
+  }
+ 
+
+
