@@ -84,22 +84,18 @@
     <div id ="Zeitanzeige"> </div>
     <div id ="Rundenanzeige"> </div>
     <button id=zurückknopf>zurück</button>
-  <!-- Fotohtml -->
 
+
+  <!-- Fotohtml -->
   <div id="Gesamtfotodiv">
- 
-<button id="cameraaus" onclick=cameraStop()>
-			Camerastop
-			  </button>
     <div id="Videoaufnahme">
       <!-- sol könnte man auch ein img Bild produzieren, wenn man das wollte
          <img src="//:0" id="img"> -->
       <video id="streamansicht" autoplay></video>   	 
       <canvas id="bildcanvas"></canvas>
       </div>
-        
-      <button id="Fotomachenknopf" onclick=fotomachen()>Aufnehmen</button>
-      <button id="herunterladenknopf" onclick=bildherunterladen()> herunterladen</button>
+          
+      <button id="herunterladenknopf" onclick=bildherunterladen() download="bild1.png" > herunterladen</button>
 </div>
 </div>
 

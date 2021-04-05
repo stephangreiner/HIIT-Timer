@@ -29,7 +29,7 @@ function wertzeigen() {
   ausruheingabe.max = 60;
   rundeneingabe.max = 20;
   
-  vorlaufeingabe.value = 5;
+  vorlaufeingabe.value = 15;
   belastungseingabe.value = 20;
   ausruheingabe.value = 10;
   rundeneingabe.value = 8;
@@ -111,15 +111,17 @@ medienwahl.addEventListener("change", function() {
     else if(medienwahl.value == "2"){mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
     else if(medienwahl.value == "3"){mediaV = 6}
 })
-
+//  10 Sekunden nach Start des Vorlaufes wird so jedes mal die Camera ausgelöst.
+// wenn camera nicht an geht der Auslöser einfach  ins leerer kann
 function vorlauf(){
-
+    setTimeout(function(){fotomachen(); }, 10000);
     document.body.style.backgroundColor = "#2c687f";
     document.getElementById("Balkendiv").style.display = "none";
-    TA.innerHTML = "gleich geht es los";}
+    TA.innerHTML = "gleich geht es los";
+  }
        
 function aktiv(){
-   balkenschrumpfer()
+   balkenschrumpfer();
    document.getElementById("zurückknopf").style.display = "none"
    document.body.style.backgroundImage = "none";
    document.body.style.backgroundColor = "#FF4E4E";
@@ -136,6 +138,9 @@ function aktiv(){
    }
   
 function ruhe(){
+  //die Kamera wird mit der ersten Ruhephase gestoppt. Wenn sie nicht läuft,
+  // geht es ins leere. kann man sicher ebsser machen  
+   cameraStop();
    balkenwachser(),
    document.getElementById('m1').pause();
    document.body.style.background = "#2c687f";  
@@ -158,7 +163,6 @@ function  normalepause(){
   document.body.style.background = "#2c687f url('image/ruhe4.jpg') no-repeat center";}
   else if (mediaV==6) {document.getElementById('m1').pause();}
 }
-
 
 function vorletztepause(){
   if (mediaV==1){document.getElementById('gongsound').play();}
@@ -185,7 +189,7 @@ function ende(){
    document.body.style.background = "#2c687f url('image/ende2.jpg') no-repeat center";}
    else if (mediaV==4){document.getElementById('endesound3').play()
    document.body.style.background = "#2c687f url('image/ende3.jpg') no-repeat center";}
-   else if (mediaV==5){document.getElementById('endesound3').play()
+   else if (mediaV==5){document.getElementById('endesound4').play()
    document.body.style.background = "#2c687f url('image/ende4.jpg') no-repeat center";}
                    }
 
@@ -205,46 +209,28 @@ function balkenwachser() {
   if (Ausgangswert === 100) {clearInterval(id);}
   else {Ausgangswert = Ausgangswert+1}; BB.style.width = Ausgangswert + '%';}
                     }
-  
-  
-                    
+                
 // Fotoapp____________________________________________
-
 // das Gesamt Fotodiv urspünglich nicht anzeigen
-
 const GFD = document.getElementById("Gesamtfotodiv")
 GFD.style.display="none"
-//Bei Auswahl, doch anzeigen und Camera Starten
 
+// Camera wird gestopt, wenn 1.Alt ausgewählt wird. Wenn 2.Alt nie ausgewählt geht es ins leere.
 const Foto = document.getElementById("Fotomodus");
 Foto.addEventListener("change", function() {
-    if(Foto.value == "1"){GFD.style.display="none"}
+    if(Foto.value == "1"){GFD.style.display="none",cameraStop()}
     else if(Foto.value == "2"){GFD.style.display="",cameraStart()}
-  
-})
+  })
 
-//  constraints für Videostream festlegen,
+//  constraints für Videostream und Konstanten festlegen
 var constraints = { video: { facingMode: "user" }, audio: false };
 var track = null;
-
-
 const Streamansicht = document.getElementById("streamansicht");
 const Bildcanvas = document.getElementById("bildcanvas");
 
-const Ausloeser = document.getElementById("Fotomachenknopf");
-
-
-
-// Access camera und stream zur Streamansicht
-Ausloeser.style.display='none'
-document.getElementById("cameraaus").style.display='none'
+// zugriff auf camera und stream zur Streamansicht
 document.getElementById("herunterladenknopf").style.display='none'
-
 function cameraStart() {
-Ausloeser.style.display=''
-document.getElementById("cameraaus").style.display='';
-
-
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function(stream) {
@@ -256,9 +242,7 @@ document.getElementById("cameraaus").style.display='';
                             });
 }
  // der track wird gestoppt, theoretisch muss jeder Einzelne Track gestopt werden. Anders kann der Kamerazugriff nicht beendet werden
-function cameraStop(){
-track.stop()
-document.getElementById("Fotomachenknopf").style.display='none'; };
+function cameraStop(){track.stop() };
 
 function fotomachen()  {
     document.getElementById("herunterladenknopf").style.display=''; 
@@ -270,8 +254,8 @@ function fotomachen()  {
 };
 
 function bildherunterladen() {
-    const canvas =  Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    window.location.href=canvas;
+const canvas =  Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+window.location.href=canvas;
   }
  
 
