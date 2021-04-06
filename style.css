@@ -128,7 +128,7 @@
    }
 
  /* Foto */   
- /* Alle Knöpfe wie folgt: */
+ /* Alle Knöpfe bis auf die mit Extraregeln wie Start wie folgt: */
 button {
   background-color: #000000; 
   border: none;
@@ -136,18 +136,16 @@ button {
   padding: 15px 32px;
   text-align: center;
 }
-
-/* der Stream soll nicht angezeigt werden, Ansonsten mit der Defaultauflösung */
+#Videoaufnahme{
+   text-align: center;
+   display : flex;flex-direction : column; justify-content : space-between;
+   background-color: rgba(0, 0, 0, 0.129)
+}
+/* der Stream soll nicht angezeigt werden, Ansonsten mit der häfte der Defaulaulösung von 640/480 */
 #streamansicht{
   display: none;
-  width: 640;
-  height: 480;
 }
-/* das gemachte Bild sollmit mit der Defaultauflösung angeigt werden */
-#bildcanvas{
-  width: 640;
-  height: 480;
-}
+
 
 
   

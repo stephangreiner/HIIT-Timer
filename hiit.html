@@ -71,7 +71,7 @@
       <option value="2">mit Foto</option>
     </select>
  </div> 
-  <button id=startknopf>los</button>
+  <button id=startknopf onklick=runtabata()>los</button>
 
 </div> 
   
@@ -88,14 +88,15 @@
 
   <!-- Fotohtml -->
   <div id="Gesamtfotodiv">
-    <div id="Videoaufnahme">
       <!-- sol könnte man auch ein img Bild produzieren, wenn man das wollte
          <img src="//:0" id="img"> -->
-      <video id="streamansicht" autoplay></video>   	 
-      <canvas id="bildcanvas"></canvas>
+         <!-- width and hight kann man hier hinzufügen, aber bildcanvas wird immer mit 640x280 angezeigt.  -->
+      <video id="streamansicht"  autoplay></video>   	 
+      <canvas id="bildcanvas" ></canvas>
+       <button id="herunterladenknopf" onclick=bildherunterladen() download="bild1.png" > herunterladen</button>
       </div>
           
-      <button id="herunterladenknopf" onclick=bildherunterladen() download="bild1.png" > herunterladen</button>
+     
 </div>
 </div>
 

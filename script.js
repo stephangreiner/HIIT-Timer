@@ -1,5 +1,4 @@
-// html Wörterbuch die folgenden Contanten zeigen lediglich auf html Elemente
-// der Input von html 
+// html Wörterbuch die folgenden Contanten zeigen lediglich auf html Elemente der Input von html 
 const vorlaufeingabe = document.querySelector('input.bereich.vorlauf');
 const belastungseingabe = document.querySelector('input.bereich.dauer');
 const ausruheingabe = document.querySelector('input.bereich.ruhe');
@@ -29,7 +28,7 @@ function wertzeigen() {
   ausruheingabe.max = 60;
   rundeneingabe.max = 20;
   
-  vorlaufeingabe.value = 15;
+  vorlaufeingabe.value = 5;
   belastungseingabe.value = 20;
   ausruheingabe.value = 10;
   rundeneingabe.value = 8;
@@ -56,7 +55,6 @@ function wertsetzen() {
 // Änderungen bei button start und zurück
   startknopf.onclick = function() {
   runTabata(vorlaufeingabe.value, belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
-  
   document.getElementById('zeigendiv').style.visibility = 'visible';
   document.getElementById("Einstellungsdiv").style.display = "none"; 
       }
@@ -83,8 +81,7 @@ function uhrwerk(arrPeriods, index) {
   window.index = index;
   window.arrPeriods = arrPeriods;
 
- // Die setintervall Methode ruft die funtion x alle 1000ms auf. sie ist an l gekoppelt 
- //um mit der clearIntervall Methode gestoppt werden zu können
+ // Die setintervall Methode ruft die funtion x alle 1000ms auf. sie ist an l gekoppelt um mit der clearIntervall Methode gestoppt werden zu können
    l = setInterval(function x() {
     var zeitunterschied = Math.round((dann - Date.now()) / 1000) + 1;
     ZA.innerHTML ="Noch  " + zeitunterschied + "s";
@@ -96,8 +93,8 @@ function uhrwerk(arrPeriods, index) {
     if(zeitunterschied == 0) {clearInterval(l);
     if(index < arrPeriods.length -1) {index++; uhrwerk(arrPeriods, index);} }
     },1000); 
-
- if (index === 0 ) {vorlauf()}
+ // Prüfung index (Arraydurchgänge 0 , gerade und vorletze, nirmalgerade , ungerade Reihenfolge
+ if (index == 0 ) {vorlauf()}
   else if (index % 2 == 0 &&  index == arrPeriods.length-1){ende()}
   else if (index % 2 == 0 ) {setTimeout(function(){ruhe()},1000)}
   else if (index % 1 == 0 ) {setTimeout(function(){aktiv()},1000)}
@@ -111,24 +108,23 @@ medienwahl.addEventListener("change", function() {
     else if(medienwahl.value == "2"){mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
     else if(medienwahl.value == "3"){mediaV = 6}
 })
-//  10 Sekunden nach Start des Vorlaufes wird so jedes mal die Camera ausgelöst.
-// wenn camera nicht an geht der Auslöser einfach  ins leerer kann
+//  Bei der Hälfte der eingegebenen Vorlaufzeit wird die Camera ausgelöst wenn camera nicht an geht der Auslöser einfach  ins leerer kann
 function vorlauf(){
-    setTimeout(function(){fotomachen(); }, 10000);
     document.body.style.backgroundColor = "#2c687f";
     document.getElementById("Balkendiv").style.display = "none";
     TA.innerHTML = "gleich geht es los";
   }
        
 function aktiv(){
-   balkenschrumpfer();
+  balkenschrumpfer();
+  // Erzeugt eine Zufallszahl zwischen 0 und 3. Wenn Zufallszahl 0 dann mach bei Ende der häfteBelastungszeit ein Foto
+  var fotorand = Math.floor(Math.random() * 4 );
+  if (fotorand == 0) {setTimeout(function(){fotomachen()},(belastungseingabe.value*1000/2))};
    document.getElementById("zurückknopf").style.display = "none"
    document.body.style.backgroundImage = "none";
    document.body.style.backgroundColor = "#FF4E4E";
    document.getElementById("Balkendiv").style.display = "";
-   BB.style.color = "#FF4E4E";
-   TA.innerHTML= "GO !!" 
-   ZA.style.display = "none";
+   BB.style.color = "#FF4E4E";ZA.style.display = "none";TA.innerHTML= "GO !!" 
    if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('gosound1').play();}
    else if (mediaV==3){document.getElementById('gosound2').play();}
@@ -138,15 +134,11 @@ function aktiv(){
    }
   
 function ruhe(){
-  //die Kamera wird mit der ersten Ruhephase gestoppt. Wenn sie nicht läuft,
-  // geht es ins leere. kann man sicher ebsser machen  
-   cameraStop();
+  //die Kamera wird mit der ersten Ruhephase gestoppt. Wenn sie nicht läuft, geht es ins leere. kann man sicher ebsser machen  
    balkenwachser(),
    document.getElementById('m1').pause();
    document.body.style.background = "#2c687f";  
-   BB.style.color = "#2c687f";
-   ZA.style.display = "none";
-   TA.innerHTML = "Pause";
+   BB.style.color = "#2c687f";ZA.style.display = "none";TA.innerHTML = "Pause";
    if (index % 2 == 0 &&  index == arrPeriods.length-3){vorletztepause()}
    else {normalepause()}  
 }
@@ -177,11 +169,10 @@ function vorletztepause(){
       }
 
 function ende(){ 
-  document.getElementById("zurückknopf").style.display = "none"
+  cameraStop();
+   document.getElementById("zurückknopf").style.display = "none";
    document.body.style.backgroundColor = "#0FC2CF";
-   BB.style.display = "none";
-   TA.innerHTML = "Gratulation !!";
-   ZA.style.display = "none";
+   BB.style.display = "none";TA.innerHTML = "Gratulation !!";ZA.style.display = "none";
    if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('endesound1').play() 
    document.body.style.background = "#2c687f url('image/ende1.jpg') no-repeat center";}
