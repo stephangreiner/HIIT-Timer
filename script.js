@@ -120,6 +120,7 @@ function aktiv(){
   // Erzeugt eine Zufallszahl zwischen 0 und 3. Wenn Zufallszahl 0 dann mach bei Ende der häfteBelastungszeit ein Foto
   var fotorand = Math.floor(Math.random() * 4 );
   if (fotorand == 0) {setTimeout(function(){fotomachen()},(belastungseingabe.value*1000/2))};
+  console.log(fotorand)
    document.getElementById("zurückknopf").style.display = "none"
    document.body.style.backgroundImage = "none";
    document.body.style.backgroundColor = "#FF4E4E";
@@ -168,8 +169,9 @@ function vorletztepause(){
   else if (mediaV==6) {document.getElementById('m1').pause();}   
       }
 
+      // die Camera wird erst 9 Sekunden nach der Endefunktion geschlosen, damit der Fehler wenn die Kamera nie offen war erst nach Ende des HIIT Auftriit
 function ende(){ 
-  cameraStop();
+   setTimeout(function(){cameraStop()},9000);
    document.getElementById("zurückknopf").style.display = "none";
    document.body.style.backgroundColor = "#0FC2CF";
    BB.style.display = "none";TA.innerHTML = "Gratulation !!";ZA.style.display = "none";
@@ -213,9 +215,12 @@ Foto.addEventListener("change", function() {
     else if(Foto.value == "2"){GFD.style.display="",cameraStart()}
   })
 
-//  constraints für Videostream und Konstanten festlegen
-var constraints = { video: { facingMode: "user" }, audio: false };
+// constraints für Videostream festlegen hier fullhd Auflösung selbscamer und kein Audio
+// alternative 4K video: {width: {exact: 3840}, height: {exact: 2160}}
+// höchste   video: {width: {exact: 7680}, height: {exact: 4320}}
+var constraints = { video: {width: {exact: 1920}, height: {exact: 1080}, facingMode: "user" }, audio: false };
 var track = null;
+
 const Streamansicht = document.getElementById("streamansicht");
 const Bildcanvas = document.getElementById("bildcanvas");
 
