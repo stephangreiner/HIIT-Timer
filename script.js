@@ -117,11 +117,10 @@ function vorlauf(){
        
 function aktiv(){
   balkenschrumpfer();
-  // Erzeugt eine Zufallszahl zwischen 0 und 3. Wenn Zufallszahl 0 dann mach bei Ende der häfteBelastungszeit ein Foto
+  // Erzeugt eine Zufallszahl zwischen 0 und 3. Wenn Zufallszahl 0 und die Camera noch an ist, dann mach bei Ende der häfteBelastungszeit ein Foto
   var fotorand = Math.floor(Math.random() * 4 );
-  if (fotorand == 0) {setTimeout(function(){fotomachen()},(belastungseingabe.value*1000/2))};
-  console.log(fotorand)
-  
+  if (fotorand == 0 && Streamansicht.srcObject != null) {setTimeout(function(){fotomachen()},
+  (belastungseingabe.value*1000/2)), setTimeout(function(){cameraStop()},belastungseingabe.value*1000)};
    document.getElementById("zurückknopf").style.display = "none"
    document.body.style.backgroundImage = "none";
    document.body.style.backgroundColor = "#FF4E4E";
@@ -133,6 +132,7 @@ function aktiv(){
    else if (mediaV==4){document.getElementById('gosound3').play();}
    else if (mediaV==5){document.getElementById('gosound4').play();}
    else if (mediaV==6){document.getElementById('m1').play();}
+   console.log(Streamansicht.srcObject)
    }
   
 function ruhe(){
@@ -170,9 +170,10 @@ function vorletztepause(){
   else if (mediaV==6) {document.getElementById('m1').pause();}   
       }
 
-      // die Camera wird erst 9 Sekunden nach der Endefunktion geschlosen, damit der Fehler wenn die Kamera nie offen war erst nach Ende des HIIT Auftriit
+      // 
 function ende(){ 
-   setTimeout(function(){cameraStop()},9000);
+  // Wenn Camera noch an aus machen
+  if (Streamansicht.srcObject != null) {cameraStop()};
    document.getElementById("zurückknopf").style.display = "none";
    document.body.style.backgroundColor = "#0FC2CF";
    BB.style.display = "none";TA.innerHTML = "Gratulation !!";ZA.style.display = "none";
@@ -238,8 +239,8 @@ function cameraStart() {
             console.error("Etwas hat nicht geklappt", error);
                             });
 }
- // der track wird gestoppt, theoretisch muss jeder Einzelne Track gestopt werden. Anders kann der Kamerazugriff nicht beendet werden
-function cameraStop(){track.stop() };
+ // der track wird gestoppt, und die src auf null zuückgesetzt
+function cameraStop(){track.stop(),Streamansicht.srcObject = null };
 
 function fotomachen()  {
     document.getElementById("herunterladenknopf").style.display=''; 
