@@ -121,6 +121,7 @@ function aktiv(){
   var fotorand = Math.floor(Math.random() * 4 );
   if (fotorand == 0) {setTimeout(function(){fotomachen()},(belastungseingabe.value*1000/2))};
   console.log(fotorand)
+  
    document.getElementById("zurückknopf").style.display = "none"
    document.body.style.backgroundImage = "none";
    document.body.style.backgroundColor = "#FF4E4E";
@@ -216,9 +217,9 @@ Foto.addEventListener("change", function() {
   })
 
 // constraints für Videostream festlegen hier fullhd Auflösung selbscamer und kein Audio
-// alternative 4K video: {width: {exact: 3840}, height: {exact: 2160}}
-// höchste   video: {width: {exact: 7680}, height: {exact: 4320}}
-var constraints = { video: {width: {exact: 1920}, height: {exact: 1080}, facingMode: "user" }, audio: false };
+// alternative 4K video: {width: {exact: }, height: {exact: }}
+// ideal : auflöung wenn möglich wie angegeben
+var constraints = { video: {width: {ideal: 3840}, height: {ideal: 2160}, facingMode: "user" }, audio: false };
 var track = null;
 
 const Streamansicht = document.getElementById("streamansicht");
@@ -248,11 +249,14 @@ function fotomachen()  {
     Bildcanvas.getContext("2d").drawImage(Streamansicht, 0, 0);
     
 };
-
+//Zum Download data URL durch actet stream ersetzen. Da browser download nur über html link in body erlauben wird temporärer link erschaffen
 function bildherunterladen() {
-const canvas =  Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-window.location.href=canvas;
-  }
+const canvas =  Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
+var tmpLink = document.createElement( 'a' );  
+  tmpLink.download = 'HIITBild.png'; 
+  tmpLink.href = canvas;   
+  document.body.appendChild( tmpLink );  
+  tmpLink.click();  
+  document.body.removeChild( tmpLink );
+ }
  
-
-
