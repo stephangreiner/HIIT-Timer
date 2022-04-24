@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Stehiit</title>
+</head>
+
+
+<body>
+  <!--IDen und vorladen audio 1 -->
+  <audio id="gongsound" src="audio/gongsound.mp3" preload="auto"></audio>
+  <!--IDen und vorladen audio 2 -->
+  <audio id="gosound1" src="audio/go1.mp3" preload="auto"></audio>
+  <audio id="gosound2" src="audio/go2.mp3" preload="auto"></audio>
+  <audio id="gosound3" src="audio/go3.mp3" preload="auto"></audio>
+  <audio id="gosound4" src="audio/go4.mp3" preload="auto"></audio>
+  
+  <audio id="kurzepausesound1" src="audio/kurzepause1.mp3" preload="auto"></audio>
+  <audio id="kurzepausesound2" src="audio/kurzepause2.mp3" preload="auto"></audio>
+  <audio id="kurzepausesound3" src="audio/kurzepause3.mp3" preload="auto"></audio>
+  <audio id="kurzepausesound4" src="audio/kurzepause4.mp3" preload="auto"></audio>
+
+  <audio id="endesound1" src="audio/ende1.mp3" preload="auto"></audio> 
+  <audio id="endesound2" src="audio/ende2.mp3" preload="auto"></audio> 
+  <audio id="endesound3" src="audio/ende3.mp3" preload="auto"></audio> 
+  <audio id="endesound4" src="audio/ende4.mp3" preload="auto"></audio> 
+
+
+  <audio id="vor1" src="audio/vor1.mp3" preload= "auto"></audio>
+  <audio id="vor2" src="audio/vor2.mp3" preload= "auto"></audio>
+  <audio id="vor3" src="audio/vor3.mp3" preload= "auto"></audio>
+  <audio id="vor4" src="audio/vor4.mp3" preload= "auto"></audio>
+
+  <!--IDen und vorladen audio 3 -->
+  <audio id="m1" src="audio/m1.mp3" preload="auto"></audio>
+  
+
+
+<div id='Einstellungsdiv'> <h3>HIIT</h3>  
+    <div class='Zeilediv'>
+      <span class='text'>Vorlauf:</span> 
+      <input class='bereich vorlauf' type="range"> 
+      <span class='wert vorlauf'></span>
+    </div> 
+    <div class='Zeilediv'>
+      <span class='text'>Dauer:</span> 
+      <input class='bereich dauer' type="range"> 
+      <span class='wert dauer'></span>
+    </div>  
+    <div class='Zeilediv'>
+      <span class='text'> Ausruhen:</span> 
+      <input class='bereich ruhe' type="range"> 
+      <span class='wert ruhe'></span>
+    </div>
+    <div class='Zeilediv'>
+      <span class='text'> Runden: </span> 
+      <input class='bereich runden' type="range"> 
+      <span class='wert runden'></span>
+    </div>
+   <div >
+      <select id="Medienwahl">
+        <option value="1">Gong</option>
+        <option value="2">Marniemedia</option>
+        <option value="3">Musik</option>
+      </select>
+   </div> 
+   <div >
+    <select id="Fotomodus">
+      <option value="1">ohne Foto</option>
+      <option value="2">mit Foto</option>
+    </select>
+ </div> 
+  <button id=startknopf onklick=runtabata()>los</button>
+
+</div> 
+  
+<div id = "zeigendiv">
+    <div id='Textanzeige'><h1></h1></div>
+    <div id="Balkendiv">
+      <div id="Gesamtbalken"></div> 
+      <div id="Balkenzeit"></div>
+    </div>
+    <div id ="Zeitanzeige"> </div>
+    <div id ="Rundenanzeige"> </div>
+    <button id=zurückknopf>zurück</button>
+
+
+  <!-- Fotohtml -->
+  <div id="Gesamtfotodiv">
+ <!-- width and hight kann man hier hinzufügen,aber sobald video ankommt wird es in der Anzeige der contraints angzeigt -->
+      <video id="streamansicht" autoplay></video>   	 
+      <canvas id="bildcanvas"></canvas>
+      </div>
+       <button id="herunterladenknopf" onclick=bildherunterladen() download="bild1.png" > herunterladen</button>   
+     
+</div>
+</div>
+
+
+<script type="text/JavaScript" src="script.js"></script>
+
+</body>
+
+</html>
