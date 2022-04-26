@@ -1,5 +1,4 @@
 // html Wörterbuch die folgenden Contanten zeigen lediglich auf html Elemente der Input von html 
-const vorlaufeingabe = document.querySelector('input.bereich.vorlauf');
 const belastungseingabe = document.querySelector('input.bereich.dauer');
 const ausruheingabe = document.querySelector('input.bereich.ruhe');
 const rundeneingabe = document.querySelector('input.bereich.runden');
@@ -18,23 +17,22 @@ wertsetzen();
 
 // 
 function wertzeigen() {
-  vorlaufeingabe.min = 1;
+
   belastungseingabe.min = 1;
   ausruheingabe.min = 1;
   rundeneingabe.min = 1;
   
-  vorlaufeingabe.max = 60;
+
   belastungseingabe.max = 60;
   ausruheingabe.max = 60;
   rundeneingabe.max = 20;
   
-  vorlaufeingabe.value = 5;
+
   belastungseingabe.value = 20;
   ausruheingabe.value = 10;
   rundeneingabe.value = 8;
   
   // Anzeige der eingegebenen Werte schon bevor Wertsetzenfunktion ausgeführt wird
-  document.querySelector('span.wert.vorlauf').innerHTML = vorlaufeingabe.value;
   document.querySelector('span.wert.dauer').innerHTML = belastungseingabe.value;
   document.querySelector('span.wert.ruhe').innerHTML = ausruheingabe.value;
   document.querySelector('span.wert.runden').innerHTML = rundeneingabe.value;
@@ -46,7 +44,6 @@ function wertzeigen() {
 
 // Speichern der Auswahl in Variablen
 function wertsetzen() {
-  vorlaufeingabe.oninput = function() {document.querySelector('span.wert.vorlauf').innerHTML = vorlaufeingabe.value;};
   belastungseingabe.oninput = function() {document.querySelector('span.wert.dauer').innerHTML = belastungseingabe.value;};
   ausruheingabe.oninput = function() {document.querySelector('span.wert.ruhe').innerHTML = ausruheingabe.value;};
   rundeneingabe.oninput = function() {document.querySelector('span.wert.runden').innerHTML = rundeneingabe.value;};
@@ -54,7 +51,7 @@ function wertsetzen() {
   
 // Änderungen bei button start und zurück
   startknopf.onclick = function() {
-  runTabata(vorlaufeingabe.value, belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
+  runTabata( 5 , belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
   document.getElementById('zeigendiv').style.visibility = 'visible';
   document.getElementById("Einstellungsdiv").style.display = "none"; 
       }
@@ -110,7 +107,7 @@ medienwahl.addEventListener("change", function() {
 })
 //  Bei der Hälfte der eingegebenen Vorlaufzeit wird die Camera ausgelöst wenn camera nicht an geht der Auslöser einfach  ins leerer kann
 function vorlauf(){
-    document.body.style.backgroundColor = "#2c687f";
+    document.body.style.backgroundColor = "black";
     document.getElementById("Balkendiv").style.display = "none";
     TA.innerHTML = "gleich geht es los";
   }
@@ -123,9 +120,9 @@ function aktiv(){
   (belastungseingabe.value*1000/2)), setTimeout(function(){cameraStop()},belastungseingabe.value*1000)};
    document.getElementById("zurückknopf").style.display = "none"
    document.body.style.backgroundImage = "none";
-   document.body.style.backgroundColor = "#FF4E4E";
+   document.body.style.backgroundColor = "#00ff00";
    document.getElementById("Balkendiv").style.display = "";
-   BB.style.color = "#FF4E4E";ZA.style.display = "none";TA.innerHTML= "GO !!" 
+   BB.style.color = "black"; ZA.style.display = "none"; TA.innerHTML= "GO !!" 
    if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('gosound1').play();}
    else if (mediaV==3){document.getElementById('gosound2').play();}
@@ -139,31 +136,25 @@ function ruhe(){
   //die Kamera wird mit der ersten Ruhephase gestoppt. Wenn sie nicht läuft, geht es ins leere. kann man sicher ebsser machen  
    balkenwachser(),
    document.getElementById('m1').pause();
-   document.body.style.background = "#2c687f";  
-   BB.style.color = "#2c687f";ZA.style.display = "none";TA.innerHTML = "Pause";
+   document.body.style.background = "black";  
+   BB.style.color = "black";ZA.style.display = "none";TA.innerHTML = "Pause";
    if (index % 2 == 0 &&  index == arrPeriods.length-3){vorletztepause()}
    else {normalepause()}  
 }
 
 function  normalepause(){
   if (mediaV==1){document.getElementById('gongsound').play();}
-  else if (mediaV==2){document.getElementById('kurzepausesound1').play()
-  document.body.style.background = "#2c687f url('image/ruhe1.jpg') no-repeat center";}
-  else if (mediaV==3){document.getElementById('kurzepausesound2').play()
-  document.body.style.background = "#2c687f url('image/ruhe2.jpg') no-repeat center";}
-  else if (mediaV==4){document.getElementById('kurzepausesound3').play();
-  document.body.style.background = "#2c687f url('image/ruhe3.jpg') no-repeat center"}
-  else if (mediaV==5){document.getElementById('kurzepausesound4').play()
-  document.body.style.background = "#2c687f url('image/ruhe4.jpg') no-repeat center";}
+  else if (mediaV==2){document.getElementById('kurzepausesound1').play()}
+  else if (mediaV==3){document.getElementById('kurzepausesound2').play()}
+  else if (mediaV==4){document.getElementById('kurzepausesound3').play()}
+  else if (mediaV==5){document.getElementById('kurzepausesound4').play()}
   else if (mediaV==6) {document.getElementById('m1').pause();}
 }
 
 function vorletztepause(){
   if (mediaV==1){document.getElementById('gongsound').play();}
-  else if (mediaV==2){document.getElementById('vor1').play()
-  document.body.style.background = "#2c687f url('image/vor1.jpg') no-repeat center";}
-  else if (mediaV==3){document.getElementById('vor2').play()
-  document.body.style.background = "#2c687f url('image/vor2.jpg') no-repeat center";;}
+  else if (mediaV==2){document.getElementById('vor1').play();}
+  else if (mediaV==3){document.getElementById('vor2').play();}
   else if (mediaV==4){document.getElementById('vor3').play();}
   else if (mediaV==5){document.getElementById('vor4').play();}
   else if (mediaV==5){document.getElementById('vor4').play();}
@@ -175,17 +166,13 @@ function ende(){
   // Wenn Camera noch an aus machen
   if (Streamansicht.srcObject != null) {cameraStop()};
    document.getElementById("zurückknopf").style.display = "none";
-   document.body.style.backgroundColor = "#0FC2CF";
+   document.body.style.backgroundColor = "blue";
    BB.style.display = "none";TA.innerHTML = "Gratulation !!";ZA.style.display = "none";
    if (mediaV==1){document.getElementById('gongsound').play();}
-   else if (mediaV==2){document.getElementById('endesound1').play() 
-   document.body.style.background = "#2c687f url('image/ende1.jpg') no-repeat center";}
-   else if (mediaV==3){document.getElementById('endesound2').play()
-   document.body.style.background = "#2c687f url('image/ende2.jpg') no-repeat center";}
-   else if (mediaV==4){document.getElementById('endesound3').play()
-   document.body.style.background = "#2c687f url('image/ende3.jpg') no-repeat center";}
-   else if (mediaV==5){document.getElementById('endesound4').play()
-   document.body.style.background = "#2c687f url('image/ende4.jpg') no-repeat center";}
+   else if (mediaV==2){document.getElementById('endesound1').play()}
+   else if (mediaV==3){document.getElementById('endesound2').play()}
+   else if (mediaV==4){document.getElementById('endesound3').play()}
+   else if (mediaV==5){document.getElementById('endesound4').play()}
                    }
 
 
@@ -253,11 +240,11 @@ function fotomachen()  {
 //Zum Download data URL durch actet stream ersetzen. Da browser download nur über html link in body erlauben wird temporärer link erschaffen
 function bildherunterladen() {
 const canvas =  Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
-var tmpLink = document.createElement( 'a' );  
-  tmpLink.download = 'HIITBild.png'; 
-  tmpLink.href = canvas;   
-  document.body.appendChild( tmpLink );  
-  tmpLink.click();  
-  document.body.removeChild( tmpLink );
+var l = document.createElement( 'a' );  
+  l.download = 'HIITBild.png'; 
+  l.href = canvas;   
+  document.body.appendChild( l );  
+  l.click();  
+  document.body.removeChild( l );
  }
  
