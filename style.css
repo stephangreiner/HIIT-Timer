@@ -23,13 +23,14 @@
      text-align: right;
      color: #ffffff;
      }
-    .bereich {
+     
+    #eindauer,#einruhe,#einrunden {
      width : 50%; height : 100%;
      margin : 0 auto;
      cursor : pointer;
   
     }
-    .wert {
+    #dauer,#ruhe,#runden {
       width : 10%;
       margin : 0 auto;
     color: white

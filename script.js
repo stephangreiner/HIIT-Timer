@@ -1,9 +1,8 @@
-// html Wörterbuch die folgenden Contanten zeigen lediglich auf html Elemente der Input von html 
-const belastungseingabe = document.querySelector('input.bereich.dauer');
-const ausruheingabe = document.querySelector('input.bereich.ruhe');
-const rundeneingabe = document.querySelector('input.bereich.runden');
+// Contanten zeigen lediglich auf html Elemente der Input von html 
+const belastungseingabe = document.getElementById('eindauer');
+const ausruheingabe = document.getElementById('einruhe');
+const rundeneingabe = document.getElementById('einrunden');
 const medienwahl = document.getElementById("Medienwahl");
-
 // der Ausgang zu html 
 const ZA = document.getElementById('Zeitanzeige');
 const RA = document.getElementById('Rundenanzeige');
@@ -13,53 +12,39 @@ const BB = document.getElementById("Balkenzeit")
 
 // Starten des Programms durch ausführen von Funktionen
 wertzeigen();
-wertsetzen();
-
-// 
 function wertzeigen() {
-
   belastungseingabe.min = 1;
   ausruheingabe.min = 1;
   rundeneingabe.min = 1;
-  
-
   belastungseingabe.max = 60;
   ausruheingabe.max = 60;
   rundeneingabe.max = 20;
-  
-
   belastungseingabe.value = 20;
   ausruheingabe.value = 10;
   rundeneingabe.value = 8;
-  
   // Anzeige der eingegebenen Werte schon bevor Wertsetzenfunktion ausgeführt wird
-  document.querySelector('span.wert.dauer').innerHTML = belastungseingabe.value;
-  document.querySelector('span.wert.ruhe').innerHTML = ausruheingabe.value;
-  document.querySelector('span.wert.runden').innerHTML = rundeneingabe.value;
-
+  document.getElementById('dauer').innerHTML = belastungseingabe.value;
+  document.getElementById('ruhe').innerHTML = ausruheingabe.value;
+  document.getElementById('runden').innerHTML = rundeneingabe.value;
   // Grundanzeige vor Änderung der Variablen 
-  ZA.innerHTML = "-----";
-  RA.innerHTML = '0 / 0';
+  belastungseingabe.oninput = function() {document.getElementById('dauer').innerHTML = belastungseingabe.value;};
+  ausruheingabe.oninput = function() {document.getElementById('ruhe').innerHTML = ausruheingabe.value;};
+  rundeneingabe.oninput = function() {document.getElementById('runden').innerHTML = rundeneingabe.value;};
 }
 
-// Speichern der Auswahl in Variablen
-function wertsetzen() {
-  belastungseingabe.oninput = function() {document.querySelector('span.wert.dauer').innerHTML = belastungseingabe.value;};
-  ausruheingabe.oninput = function() {document.querySelector('span.wert.ruhe').innerHTML = ausruheingabe.value;};
-  rundeneingabe.oninput = function() {document.querySelector('span.wert.runden').innerHTML = rundeneingabe.value;};
- 
-  
+
+ZA.innerHTML = "-----";
+RA.innerHTML = '0 / 0';
+zurueckknopf.onclick = function(){location.reload()}
+
 // Änderungen bei button start und zurück
-  startknopf.onclick = function() {
+startknopf.onclick = function() {
   runTabata( 5 , belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
   document.getElementById('zeigendiv').style.visibility = 'visible';
   document.getElementById("Einstellungsdiv").style.display = "none"; 
       }
 
-// zurückknopf Seite ganz neu Laden
-  zurückknopf.onclick = function(){location.reload()}
-  };
-
+  
 // Eigentlicher Tabata array
 function runTabata(vorlauf, dauer, ruhe, runden) {
   let arrPeriods = [vorlauf],
@@ -118,7 +103,7 @@ function aktiv(){
   var fotorand = Math.floor(Math.random() * 4 );
   if (fotorand == 0 && Streamansicht.srcObject != null) {setTimeout(function(){fotomachen()},
   (belastungseingabe.value*1000/2)), setTimeout(function(){cameraStop()},belastungseingabe.value*1000)};
-   document.getElementById("zurückknopf").style.display = "none"
+   document.getElementById("zurueckknopf").style.display = "none"
    document.body.style.backgroundImage = "none";
    document.body.style.backgroundColor = "#00ff00";
    document.getElementById("Balkendiv").style.display = "";
@@ -165,7 +150,7 @@ function vorletztepause(){
 function ende(){ 
   // Wenn Camera noch an aus machen
   if (Streamansicht.srcObject != null) {cameraStop()};
-   document.getElementById("zurückknopf").style.display = "none";
+   document.getElementById("zurueckknopf").style.display = "none";
    document.body.style.backgroundColor = "blue";
    BB.style.display = "none";TA.innerHTML = "Gratulation !!";ZA.style.display = "none";
    if (mediaV==1){document.getElementById('gongsound').play();}
