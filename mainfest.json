@@ -1,0 +1,27 @@
+{
+    "name": "HIIT",
+    "short_name": "hiit",
+    "version":1,
+    "icons": [
+      {
+        "src": "./audio/HIIT48x48.png",
+        "sizes": "425x425",
+        "type": "image/png"
+       
+      },
+      {
+        "src": "./audio/HIIT250x250.png",
+        "sizes": "250x250",
+        "type": "image/png"
+       
+      }  
+
+
+
+    ],
+    "theme_color": "#DEDEDE",
+    "background_color": "#DDDDDD",
+    "start_url": "/liste/",
+    "display": "standalone",
+    "orientation": "portrait"
+  }
