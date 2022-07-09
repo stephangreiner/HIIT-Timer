@@ -12,7 +12,7 @@
         "src": "./audio/HIIT250x250.png",
         "sizes": "250x250",
         "type": "image/png" 
-      }  
+      },  
           {
         "src": "./audio/HIIT400x400.png",
         "sizes": "400x400",
