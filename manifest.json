@@ -1,7 +1,7 @@
 {
     "name": "HIIT",
     "short_name": "hiit",
-    "version":1,
+    "version":2,
     "icons": [
       {
         "src": "./audio/HIIT48x48.png",
