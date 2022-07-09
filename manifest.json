@@ -5,7 +5,7 @@
     "icons": [
       {
         "src": "./audio/HIIT48x48.png",
-        "sizes": "425x425",
+        "sizes": "48x48",
         "type": "image/png"
        
       },
