@@ -1,5 +1,5 @@
 module.exports = {
-	globDirectory: 'Desktop/',
+	globDirectory: './',
 	globPatterns: [
 		'**/*.{ini,mp3,png,html,json,js,css,crdownload,msi,lnk}'
 	],
