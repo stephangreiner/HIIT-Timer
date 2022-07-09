@@ -7,13 +7,16 @@
         "src": "./audio/HIIT48x48.png",
         "sizes": "48x48",
         "type": "image/png"
-       
       },
       {
         "src": "./audio/HIIT250x250.png",
         "sizes": "250x250",
-        "type": "image/png"
-       
+        "type": "image/png" 
+      }  
+          {
+        "src": "./audio/HIIT400x400.png",
+        "sizes": "400x400",
+        "type": "image/png" 
       }  
 
 
