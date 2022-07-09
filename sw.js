@@ -1,2 +1,61 @@
-if(!self.define){let e,r={};const i=(i,m)=>(i=new URL(i+".js",m).href,r[i]||new Promise((r=>{if("document"in self){const e=document.createElement("script");e.src=i,e.onload=r,document.head.appendChild(e)}else e=i,importScripts(i),r()})).then((()=>{let e=r[i];if(!e)throw new Error(`Module ${i} didn’t register its module`);return e})));self.define=(m,a)=>{const s=e||("document"in self?document.currentScript.src:"")||location.href;if(r[s])return;let I={};const T=e=>i(e,s),d={module:{uri:s},exports:I,require:T};r[s]=Promise.all(m.map((e=>d[e]||T(e)))).then((e=>(a(...e),I)))}}define(["./workbox-efdbabe8"],(function(e){"use strict";self.addEventListener("message",(e=>{e.data&&"SKIP_WAITING"===e.data.type&&self.skipWaiting()})),e.precacheAndRoute([{url:"HIIT-Timer-master/HIIT-Timer-master/audio/ende1.mp3",revision:"e66d1b7fe4b67fa1ab95e885c8f7e65f"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/ende2.mp3",revision:"aa998dfb0cb620c8fa310d4fb7cae935"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/ende3.mp3",revision:"1f8b0bdf3d86571a1e658491d769b8ea"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/ende4.mp3",revision:"1f8b0bdf3d86571a1e658491d769b8ea"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/go1.mp3",revision:"a94b31d6edf3099594a40ba7f439195b"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/go2.mp3",revision:"689be3313701b195690ef20c79677ffb"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/go3.mp3",revision:"bb678b31bc170361a088e0d8f51a8cbf"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/go4.mp3",revision:"502681695b619961a632985023f65ffe"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/gongsound.mp3",revision:"ea87cdd814d376170570dc4629c01241"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/HIIT250x250.png",revision:"1b16bbc2de31cd6f5cc41d57f68ea4e6"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/HIIT48x48.png",revision:"7ba97f2bf3ce4d57a545310603cab4be"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/kurzepause1.mp3",revision:"66c1679e443378dc7816c1c8a51bce5a"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/kurzepause2.mp3",revision:"64e0cd983144a7d495050dbb53b46b48"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/kurzepause3.mp3",revision:"90ba5f56794967fa384ad43dd420d2a7"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/kurzepause4.mp3",revision:"5f4572c51024b6e62a7df25ec379814e"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/vor1.mp3",revision:"27d4d11b1f30735a2351d425881e5652"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/vor2.mp3",revision:"b467d0efa46aa1c2ee3f34a355360bf1"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/vor3.mp3",revision:"9221c895a9ac48892c4af94bca78d376"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/vor4.mp3",revision:"5b2ebfb25052434557e8bbd64ec3f61c"},{url:"HIIT-Timer-master/HIIT-Timer-master/audio/vor5.mp3",revision:"5febb58760d20486b720d874920fa36d"},{url:"HIIT-Timer-master/HIIT-Timer-master/index.html",revision:"8bd4ce2403a02f83e48f3be51f8b8fa6"},{url:"HIIT-Timer-master/HIIT-Timer-master/manifest.json",revision:"10c2a90dfa445d62b354e78b08887319"},{url:"HIIT-Timer-master/HIIT-Timer-master/script.js",revision:"0ccf775a3bc1ba80ae6079d3b9946438"},{url:"HIIT-Timer-master/HIIT-Timer-master/style.css",revision:"047a4a105af6310fdf9eaf2c647ee3fd"},{url:"HIIT-Timer-master/HIIT-Timer-master/sw.js",revision:"288752f2c1649c5b8c8566694d0cfe71"}],{ignoreURLParametersMatching:[/^utm_/,/^fbclid$/]})}));
-//# sourceMappingURL=sw.js.map
+// Names of the two caches used in this version of the service worker.
+// Change to v2, etc. when you update any of the local resources, which will
+// in turn trigger the install event again.
+const PRECACHE = 'precache-v1';
+const RUNTIME = 'runtime';
+
+// A list of local resources we always want to be cached.
+const PRECACHE_URLS = [
+  'index.html',
+  './', // Alias for index.html
+  'styles.css',
+
+];
+
+// The install handler takes care of precaching the resources we always need.
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(PRECACHE)
+      .then(cache => cache.addAll(PRECACHE_URLS))
+      .then(self.skipWaiting())
+  );
+});
+
+// The activate handler takes care of cleaning up old caches.
+self.addEventListener('activate', event => {
+  const currentCaches = [PRECACHE, RUNTIME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
+    }).then(cachesToDelete => {
+      return Promise.all(cachesToDelete.map(cacheToDelete => {
+        return caches.delete(cacheToDelete);
+      }));
+    }).then(() => self.clients.claim())
+  );
+});
+
+// The fetch handler serves responses for same-origin resources from a cache.
+// If no response is found, it populates the runtime cache with the response
+// from the network before returning it to the page.
+self.addEventListener('fetch', event => {
+  // Skip cross-origin requests, like those for Google Analytics.
+  if (event.request.url.startsWith(self.location.origin)) {
+    event.respondWith(
+      caches.match(event.request).then(cachedResponse => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return caches.open(RUNTIME).then(cache => {
+          return fetch(event.request).then(response => {
+            // Put a copy of the response in the runtime cache.
+            return cache.put(event.request, response.clone()).then(() => {
+              return response;
+            });
+          });
+        });
+      })
+    );
+  }
+});
