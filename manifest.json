@@ -21,7 +21,7 @@
     ],
     "theme_color": "#DEDEDE",
     "background_color": "#DDDDDD",
-    "start_url": "/liste/",
+    "start_url": "/HIIT/",
     "display": "standalone",
     "orientation": "portrait"
   }
