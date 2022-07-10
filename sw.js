@@ -1,9 +1,8 @@
 var cacheName = 'geeks-cache-v1';
 var cacheAssets = [
-	'/assets/pages/offline-page.html',
-	'/assets/styles/offline-page.css',
-	'/assets/script/offline-page.js',
-
+  '/HIIT-Timer/sw2.js',
+    "/HIIT-Timer/index.html",
+    "/HIIT-Timer/script.js",
 ];
 
 // Call install Event
