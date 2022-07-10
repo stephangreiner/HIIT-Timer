@@ -3,6 +3,7 @@ var cacheAssets = [
   '/HIIT-Timer/sw2.js',
     "/HIIT-Timer/index.html",
     "/HIIT-Timer/script.js",
+    "/HIIT-Timer/audio/m1.mp3",
 ];
 
 // Call install Event
