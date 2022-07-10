@@ -1,4 +1,4 @@
-var cacheName = 'stephan-v1';
+var cacheName = 'geeks-cache-v1';
 var cacheAssets = [
  
     "/HIIT-Timer/index.html",
