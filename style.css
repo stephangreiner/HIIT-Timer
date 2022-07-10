@@ -1,7 +1,8 @@
 /* Das Einstellungsdiv ist am Anfang sichtbar und wird dann mit JS unsichtbar */ 
 
 #Einstellungsdiv {
-   max-width : 900px; margin: auto; max-height : 1500px;
+   max-width : auto; 
+   margin: auto;
    text-align: center;
    background-color: rgba(12, 11, 11, 0.842);
    border-radius: 5%;border: none;
