@@ -1,25 +1,25 @@
 {
     "name": "HIIT",
     "short_name": "hiit",
-    "version":2,
+    "version":1,
     "icons": [
       {
-        "src": "./audio/HIIT48x48.png",
+        "src": "./bilder/HIIT48x48.png",
         "sizes": "48x48",
         "type": "image/png"
       },
       {
-        "src": "./audio/HIIT250x250.png",
+        "src": "./bilder/HIIT250x250.png",
         "sizes": "250x250",
         "type": "image/png" 
       },  
           {
-        "src": "./audio/HIIT400x400.png",
+        "src": "./bilder/HIIT400x400.png",
         "sizes": "400x400",
         "type": "image/png" 
       },
       {
-        "src": "./audio/favicon",
+        "src": "./bilder/favicon.ico",
         "type":  "image/vnd.microsoft.icon"
       }
       
