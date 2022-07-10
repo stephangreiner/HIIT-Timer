@@ -6,6 +6,7 @@ let urlsToCache = [
     '/HIIT-Timer/sw2.js',
     "/HIIT-Timer/index.html",
     "/HIIT-Timer/script.js",
+    "audio/gongsound.mp3"
 
 
     ];
