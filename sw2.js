@@ -1,8 +1,9 @@
 // Perform install steps
 let CACHE_NAME = 'my-cache';
 let urlsToCache = [
- 
-    "/HIIT-Timer/index.html",
+  "/HIIT-Timer/script.js",
+  "/HIIT-Timer/index.html",
+  "/HIIT-Timer/style.css",
 
 
     ];
