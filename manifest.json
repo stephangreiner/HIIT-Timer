@@ -19,7 +19,7 @@
         "type": "image/png" 
       },
       {
-        "src": "./audio/flavicon",
+        "src": "./audio/favicon",
         "type":  "image/vnd.microsoft.icon"
       }
       
