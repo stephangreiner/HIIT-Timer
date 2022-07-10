@@ -5,16 +5,12 @@
     <script>
   
 if (navigator.serviceWorker) {
-  // Start registration process on every page load
   window.addEventListener('load', () => {
       navigator.serviceWorker
-          // The register function takes as argument
-          // the file path to the worker's file
-          .register('/HIIT-Timer/sw2.js')
-          // Gives us registration object
-          .then(reg => console.log('Service Worker Registered'))
+          .register('/HIIT-Timer/sw.js')
+          .then(reg => console.log('Service Worker registriert'))
           .catch(swErr => console.log(
-                `Service Worker Installation Error: ${swErr}}`));
+                `Service Worker Installationsfehler: ${swErr}}`));
     });
 }
       </script>
