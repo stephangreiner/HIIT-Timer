@@ -20,13 +20,13 @@
       },
       {
         "src": "./bilder/favicon.ico",
-        "sizes": "48x48 128x128 256x256"
+        "sizes": "48x48"
       }
       
 
 
     ],
-    "theme_color": "#DC143C",
+    "theme_color": "#DEDEDE",
     "background_color": "#000000",
     "start_url": "/HIIT-Timer/",
     "display": "standalone",
