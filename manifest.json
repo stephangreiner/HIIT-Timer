@@ -20,14 +20,14 @@
       },
       {
         "src": "./bilder/favicon.ico",
-        "type":  "image/vnd.microsoft.icon"
+        "sizes": "72x72 96x96 128x128 256x256"
       }
       
 
 
     ],
-    "theme_color": "#DEDEDE",
-    "background_color": "#DDDDDD",
+    "theme_color": "#000000",
+    "background_color": "#DC143C",
     "start_url": "/HIIT-Timer/",
     "display": "standalone",
     "orientation": "portrait"
