@@ -1,4 +1,4 @@
-var cacheName = 'HIIT-cache-v1';
+var cacheName = 'geeks-cache-v1';
 var cacheAssets = [
  // die kleinen dateien scheinen automatisch imn den cache gelade zu werden. Die Audiodateien müssen benannt werden zu testzwecken bewusst keine offlinefähigkeiten für marniemedia bis auf go
     "/HIIT-Timer/index.html",
@@ -50,7 +50,7 @@ self.addEventListener('activate', e => {
 	);
 })
 
-var cacheName = 'HIIT-cache-v1';
+var cacheName = 'geeks-cache-v1';
 
 // Call Fetch Event
 self.addEventListener('fetch', e => {
