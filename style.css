@@ -1,10 +1,11 @@
 /* Das Einstellungsdiv ist am Anfang sichtbar und wird dann mit JS unsichtbar */ 
+body{background-color: #000000;}
 
 #Einstellungsdiv {
    max-width : auto; 
    margin: auto;
    text-align: center;
-   background-color: rgba(12, 11, 11, 0.842);
+   background-color: rgba(63, 63, 63, 0.611);
    border-radius: 5%;border: none;
    font-size: 20px; 
    color: rgba(255, 255, 255, 0.7);

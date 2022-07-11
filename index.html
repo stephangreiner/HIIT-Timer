@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/vnd.microsoft.icon" href="bilder/favicon.ico">
+    <link rel="icon" href="bilder/favicon.ico">
     <script>
   
 if (navigator.serviceWorker) {
@@ -74,7 +75,8 @@ if (navigator.serviceWorker) {
 </div>
 
 <div>
-  <!--IDen und vorladen audio 1 die unterschiedlichen preload Einstellungen sind ein test -->
+  <!--preload auto versucht die Datein erlaubt die Datein vorzuladen bevor sie angefordert werde. Bei auto entsteht in Verbindung mir sw.js ein allerdings Folgenloser Fehler von anfang an, weil die Antwort nur 
+  ein Teil ist 206. Bei none kein fehler von Anfang an, aber beim Anfordern kann er den link nicht finden und die Datei läd  nicht.-->
   <audio id="gongsound" src="audio/gongsound.mp3" type="audio/mpeg" preload="auto" ></audio>
   <!--IDen und vorladen audio 2 -->
   <audio id="gosound1" src="audio/go1.mp3" type="audio/mpeg" preload="auto"></audio>
