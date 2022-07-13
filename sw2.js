@@ -3,7 +3,7 @@ import {CacheFirst} from 'workbox-strategies';
 import {RangeRequestsPlugin} from 'workbox-range-requests';
 
 registerRoute(
-  ({url}) => url.pathname.endsWith('.mp4'),
+  ({url}) => url.pathname.endsWith('.mp3'),
   new CacheFirst({
     plugins: [
       new RangeRequestsPlugin(),
