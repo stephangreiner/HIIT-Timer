@@ -1,6 +1,6 @@
-var cacheName = 'HIIT-cache-v1';
+var cacheName = 'geeks-cache-v1';
 var cacheAssets = [
- // die kleinen dateien scheinen automatisch imn den cache gelade zu werden. Die Audiodateien müssen benannt werden zu testzwecken bewusst keine offlinefähigkeiten für marniemedia bis auf go
+ 
     "/HIIT-Timer/index.html",
      "/HIIT-Timer/style.css",
     "/HIIT-Timer/script.js",
@@ -50,7 +50,7 @@ self.addEventListener('activate', e => {
 	);
 })
 
-var cacheName = 'HIIT-cache-v1';
+var cacheName = 'geeks-cache-v1';
 
 // Call Fetch Event
 self.addEventListener('fetch', e => {
@@ -67,7 +67,6 @@ self.addEventListener('fetch', e => {
 			caches.open(cacheName)
 				.then(cache => {
 					// Add response to cache
-					// zumindest wenn schon einmal was in cache geladen. gibt es einen 206 Fehler. Scheint was mit Teilabruf zu tun zu haben. Scheint aber folgenlos zu bleiben.
 					cache.put(e.request, resClone);
 				});
 			return res;
@@ -77,5 +76,3 @@ self.addEventListener('fetch', e => {
 		)
 	);
 });
-
-//müsste für eine statische Seite ausreichend sein. 

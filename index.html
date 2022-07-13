@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,8 +42,8 @@ if (navigator.serviceWorker) {
         <option value="2">Marniemedia</option>
         <option value="3">Musik</option>
       </select>
-      </div>
-<div>
+   </div> 
+   <div >
     <select title ="Bildmachen" id="Fotomodus">
        <option value="1">ohne Foto</option>
        <option value="2">mit Foto</option>
@@ -68,7 +67,7 @@ if (navigator.serviceWorker) {
   <!-- Fotohtml -->
   <div id="Gesamtfotodiv">
     <!-- width and hight kann man hier hinzufügen,aber sobald video ankommt wird es in der Anzeige der contraints angzeigt -->
-         <video id="streamansicht" noneplay></video>   	 
+         <video id="streamansicht" autoplay></video>   	 
          <canvas id="bildcanvas"></canvas>
      </div>
           <button id="herunterladenknopf" onclick=bildherunterladen() download="bild1.png" > herunterladen</button>   
@@ -76,30 +75,29 @@ if (navigator.serviceWorker) {
 </div>
 
 <div>
-  <!--preload auto versucht die Datein erlaubt die Datein vorzuladen bevor sie angefordert werde. Bei auto entsteht in Verbindung mir sw.js ein allerdings Folgenloser Fehler von anfang an, weil die Antwort nur 
-  ein Teil ist 206. Bei none kein fehler von Anfang an, aber beim Anfordern kann er den link nicht finden und die Datei läd  nicht.-->
-  <audio id="gongsound" src="audio/gongsound.mp3" type="audio/mpeg" preload="auto" ></audio>
+  <!--IDen und vorladen audio 1 die unterschiedlichen preload Einstellungen sind ein test -->
+  <audio id="gongsound" src="audio/gongsound.mp3" type="audio/mpeg" preload="none" ></audio>
   <!--IDen und vorladen audio 2 -->
   <audio id="gosound1" src="audio/go1.mp3" type="audio/mpeg" preload="auto"></audio>
   <audio id="gosound2" src="audio/go2.mp3" type="audio/mpeg" preload="auto"></audio>
   <audio id="gosound3" src="audio/go3.mp3" type="audio/mpeg" preload="auto"></audio>
   <audio id="gosound4" src="audio/go4.mp3" type="audio/mpeg" preload="auto"></audio>
   
-  <audio id="kurzepausesound1" src="audio/kurzepause1.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="kurzepausesound2" src="audio/kurzepause2.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="kurzepausesound3" src="audio/kurzepause3.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="kurzepausesound4" src="audio/kurzepause4.mp3" type="audio/mpeg" preload="auto"></audio>
+  <audio id="kurzepausesound1" src="audio/kurzepause1.mp3" type="audio/mpeg" preload="none"></audio>
+  <audio id="kurzepausesound2" src="audio/kurzepause2.mp3" type="audio/mpeg" preload="none"></audio>
+  <audio id="kurzepausesound3" src="audio/kurzepause3.mp3" type="audio/mpeg" preload="none"></audio>
+  <audio id="kurzepausesound4" src="audio/kurzepause4.mp3" type="audio/mpeg" preload="none"></audio>
 
-  <audio id="endesound1" src="audio/ende1.mp3" type="audio/mpeg" preload="auto"></audio> 
-  <audio id="endesound2" src="audio/ende2.mp3" type="audio/mpeg" preload="auto"></audio> 
-  <audio id="endesound3" src="audio/ende3.mp3" type="audio/mpeg" preload="auto"></audio> 
-  <audio id="endesound4" src="audio/ende4.mp3" type="audio/mpeg" preload="auto"></audio> 
+  <audio id="endesound1" src="audio/ende1.mp3" type="audio/mpeg" preload="metadata"></audio> 
+  <audio id="endesound2" src="audio/ende2.mp3" type="audio/mpeg" preload="metadata"></audio> 
+  <audio id="endesound3" src="audio/ende3.mp3" type="audio/mpeg" preload="metadata"></audio> 
+  <audio id="endesound4" src="audio/ende4.mp3" type="audio/mpeg" preload="metadata"></audio> 
 
 
-  <audio id="vor1" src="audio/vor1.mp3" type="audio/mpeg" preload= "auto"></audio>
-  <audio id="vor2" src="audio/vor2.mp3" type="audio/mpeg" preload= "auto"></audio>
-  <audio id="vor3" src="audio/vor3.mp3" type="audio/mpeg" preload= "auto"></audio>
-  <audio id="vor4" src="audio/vor4.mp3" type="audio/mpeg" preload= "auto"></audio>
+  <audio id="vor1" src="audio/vor1.mp3" type="audio/mpeg" preload= "metadata"></audio>
+  <audio id="vor2" src="audio/vor2.mp3" type="audio/mpeg" preload= "metadata"></audio>
+  <audio id="vor3" src="audio/vor3.mp3" type="audio/mpeg" preload= "metadata"></audio>
+  <audio id="vor4" src="audio/vor4.mp3" type="audio/mpeg" preload= "metadata"></audio>
 
   <!--IDen und vorladen audio 3 -->
   <audio id="m1" src="audio/m1.mp3" type="audio/mpeg" preload="auto"></audio>
