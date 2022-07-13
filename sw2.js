@@ -4,17 +4,7 @@ var cacheName = 'v1';
 // Default files to always cache
 var cacheFiles = [
 	
-	"/HIIT-Timer/index.html",
-	"/HIIT-Timer/style.css",
-   "/HIIT-Timer/script.js",
-	'/HIIT-Timer/sw.js',
-   '/HIIT-Timer/manifest.json',
-   '/HIIT-Timer/audio/m1.mp3',
-	"/HIIT-Timer/audio/gongsound.mp3",
-	"/HIIT-Timer/audio/go1.mp3",
-	"/HIIT-Timer/audio/go2.mp3",
-	"/HIIT-Timer/audio/go3.mp3",
-	"/HIIT-Timer/audio/go4.mp3",
+
 ]
 
 
