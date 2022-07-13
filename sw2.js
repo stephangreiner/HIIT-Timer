@@ -3,7 +3,8 @@ var cacheName = 'v1';
 
 // Default files to always cache
 var cacheFiles = [
-	
+	"/HIIT-Timer/audio/m1.mp3",
+     "/HIIT-Timer/audio/gongsound.mp3",
 
 ]
 
