@@ -1,11 +1,10 @@
-/* Das Einstellungsdiv ist am Anfang sichtbar und wird dann mit JS unsichtbar */ 
-
 #Einstellungsdiv {
-   max-width : 900px; margin: auto; max-height : 1500px;
+   max-width : auto; 
+   margin: auto;
    text-align: center;
-   background-color: rgba(12, 11, 11, 0.842);
+   background-color: rgba(63, 63, 63, 0.611);
    border-radius: 5%;border: none;
-   font-size: 10px; 
+   font-size: 20px; 
    color: rgba(255, 255, 255, 0.7);
    }
 
@@ -14,7 +13,7 @@
     flex-direction : row; 
     justify-content : center; 
     align-items : center;
-    width : 100%; height : 10%;
+    width : 100%; height : 40px;
     }
 
    .text {
@@ -26,13 +25,13 @@
      
     #eindauer,#einruhe,#einrunden {
      width : 50%; height : 100%;
-     margin : 0 auto;
+     margin : 5 auto;
      cursor : pointer;
   
     }
     #dauer,#ruhe,#runden {
       width : 10%;
-      margin : 0 auto;
+      margin :  auto;
     color: white
     }
 
@@ -40,7 +39,9 @@
  #startknopf{
     background-color: white;
     color: black;
-    height:90px; width:100px; margin: 30px;
+    height:90px; 
+    width:100px; 
+    margin: 30px;
     border-radius: 5%;
     border: none;
     cursor: pointer;
@@ -48,13 +49,15 @@
 
  #Medienwahl, #Fotomodus{
     background-color:white;
-
     border: none;
     max-width: 40%;
-    padding:.75em 1em .5em 1em;
-    float: left;
-    margin-left: 30px;
+    padding: 10px;
+    float: auto;
     margin-top: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+   
+   
     }
     
   option{
@@ -67,7 +70,7 @@
 /* Ab hier am Anfang unsichtbar */ 
 
 #zeigendiv {
-   margin-top: 30pt;
+   margin-top: 30px;
    text-align: center;
    display : flex;flex-direction : column; justify-content : space-between;
    align-items : center;border-radius: 5%;border: none;
