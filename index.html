@@ -8,7 +8,7 @@
 if (navigator.serviceWorker) {
   window.addEventListener('load', () => {
       navigator.serviceWorker
-          .register('/HIIT-Timer/sw2.js')
+          .register('/HIIT-Timer/sw.js')
           .then(reg => console.log('Service Worker registriert'))
           .catch(swErr => console.log(
                 `Service Worker Installationsfehler: ${swErr}}`));
