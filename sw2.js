@@ -5,10 +5,11 @@ var cacheName = 'v1';
 
 // Default files to always cache
 var cacheFiles = [
-	"/HIIT-Timer/index.html",
+	"./HIIT-Timer/index.html",
      "/HIIT-Timer/style.css",
 	"/HIIT-Timer/script.js",
 	"/HIIT-Timer/manifesst.json",
+	"/HIIT-Timer/sw.js",
 	
 
 ]
