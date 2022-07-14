@@ -1,15 +1,3 @@
-import {registerRoute} from 'workbox-routing';
-import {CacheFirst} from 'workbox-strategies';
-import {RangeRequestsPlugin} from 'workbox-range-requests';
-
-registerRoute(
-  ({url}) => url.pathname.endsWith('.mp3'),
-  new CacheFirst({
-    plugins: [
-      new RangeRequestsPlugin(),
-    ],
-  });
-);
 
 
 // Set a name for the current cache
@@ -17,8 +5,11 @@ var cacheName = 'v1';
 
 // Default files to always cache
 var cacheFiles = [
-	"/HIIT-Timer/audio/m1.mp3",
-     "/HIIT-Timer/audio/gongsound.mp3",
+	"/HIIT-Timer/index.html",
+     "/HIIT-Timer/style.css",
+	"/HIIT-Timer/script.js",
+	"/HIIT-Timer/manifesst.json",
+	
 
 ]
 
