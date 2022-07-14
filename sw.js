@@ -1,4 +1,4 @@
-var cacheName = 'geeks-cache-v1';
+var cacheName = 'hiit-cache-v1';
 var cacheAssets = [
  
     "/HIIT-Timer/index.html",
@@ -6,12 +6,6 @@ var cacheAssets = [
     "/HIIT-Timer/script.js",
      '/HIIT-Timer/sw.js',
 	'/HIIT-Timer/manifest.json',
-    "/HIIT-Timer/audio/m1.mp3",
-     "/HIIT-Timer/audio/gongsound.mp3",
-	 "/HIIT-Timer/audio/go1.mp3",
-	 "/HIIT-Timer/audio/go2.mp3",
-	 "/HIIT-Timer/audio/go3.mp3",
-	 "/HIIT-Timer/audio/go4.mp3",
 ];
 
 // Call install Event
@@ -50,7 +44,7 @@ self.addEventListener('activate', e => {
 	);
 })
 
-var cacheName = 'geeks-cache-v1';
+var cacheName = 'hiit-cache-v1';
 
 // Call Fetch Event
 self.addEventListener('fetch', e => {
