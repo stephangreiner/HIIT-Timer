@@ -1,4 +1,5 @@
-body{background-color: black}
+body{background-color: black; 
+     display : "block"}
 
 #Einstellungsdiv {
    max-width : auto; 
