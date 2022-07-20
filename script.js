@@ -71,8 +71,8 @@ function uhrwerk(arrPeriods, index) {
     ZA.innerHTML ="Noch  " + zeitunterschied + "s";
     RA.innerHTML ="Runde " + Math.floor(((index + 1) / 2)) + "/" + (arrPeriods.length - 1) / 2;
     BB.innerHTML = zeitunterschied;
-  // 5 Sekunden vor Zeitablauf verschwindet die Zeitanzeige
-    if (zeitunterschied < 5) {BB.innerHTML= ""}
+  // 3 Sekunden vor Zeitablauf verschwindet die Zeitanzeige
+    if (zeitunterschied < 3) {BB.innerHTML= ""}
   // Bei Zeitablauf wird das Intervall beendet und ein Index hochgezählt
     if(zeitunterschied == 0) {clearInterval(l);
     if(index < arrPeriods.length -1) {index++; uhrwerk(arrPeriods, index);} }
@@ -94,6 +94,7 @@ medienwahl.addEventListener("change", function() {
 })
 //  Bei der Hälfte der eingegebenen Vorlaufzeit wird die Camera ausgelöst wenn camera nicht an geht der Auslöser einfach  ins leerer kann
 function vorlauf(){
+    document.getElementById("zurueckknopf").style.display = "none"
     document.body.style.backgroundColor = "black";
     document.getElementById("Balkendiv").style.display = "none";
     TA.innerHTML = "gleich geht es los";
@@ -103,9 +104,10 @@ function aktiv(){
   balkenschrumpfer();
   // Erzeugt eine Zufallszahl zwischen 0 und 3. Wenn Zufallszahl 0 und die Camera noch an ist, dann mach bei Ende der häfteBelastungszeit ein Foto
   var fotorand = Math.floor(Math.random() * 4 );
-  if (fotorand == 0 && Streamansicht.srcObject != null) {setTimeout(function(){fotomachen()},
+  if (fotorand == 0 && Streamansicht.srcObject != null) {setTimeout(function(){fotomachen();},
   (belastungseingabe.value*1000/2)), setTimeout(function(){cameraStop()},belastungseingabe.value*1000)};
-   document.getElementById("zurueckknopf").style.display = "none"
+   document.getElementById("zurueckknopf").style.display = "none";
+     document.getElementById("herunterladenknopf").style.display = "none"
    document.body.style.backgroundImage = "none";
    document.body.style.backgroundColor = "#00ff00";
    document.getElementById("Balkendiv").style.display = "";
@@ -123,8 +125,12 @@ function ruhe(){
   //die Kamera wird mit der ersten Ruhephase gestoppt. Wenn sie nicht läuft, geht es ins leere. kann man sicher ebsser machen  
    balkenwachser(),
    document.getElementById('m1').pause();
-   document.body.style.background = "black";  
-   BB.style.color = "black";ZA.style.display = "none";TA.innerHTML = "Pause";
+   document.body.style.background = "black"; 
+   document.getElementById("herunterladenknopf").style.display = "none"; 
+   document.getElementById("zurueckknopf").style.display = "none";
+   BB.style.color = "black";
+   ZA.style.display = "none";
+   TA.innerHTML = "Pause";
    if (index % 2 == 0 &&  index == arrPeriods.length-3){vorletztepause()}
    else {normalepause()}  
 }
@@ -148,13 +154,15 @@ function vorletztepause(){
   else if (mediaV==6) {document.getElementById('m1').pause();}   
       }
 
-      // 
+ // Wenn Camera noch an aus machen      
 function ende(){ 
-  // Wenn Camera noch an aus machen
   if (Streamansicht.srcObject != null) {cameraStop()};
-   document.getElementById("zurueckknopf").style.display = "none";
+   document.getElementById("zurueckknopf").style.display = "";
+   document.getElementById("herunterladenknopf").style.display = ""; 
    document.body.style.backgroundColor = "blue";
-   BB.style.display = "none";TA.innerHTML = "Gratulation !!";ZA.style.display = "none";
+   BB.style.display = "none";
+   TA.innerHTML = "Gratulation !!";
+   ZA.style.display = "none";
    if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('endesound1').play()}
    else if (mediaV==3){document.getElementById('endesound2').play()}
@@ -169,14 +177,14 @@ function balkenschrumpfer() {
   var id = setInterval(was, belastungseingabe.value*10,1000);
   function was()
   {if (Ausganswert === 1) {clearInterval(id);} 
-  else { Ausganswert= Ausganswert-1; BB.style.width = Ausganswert + '%';}}
+  else { Ausganswert= Ausganswert-1; BB.style.width = Ausganswert + '%';BB.style.fontSize = "250%"}}
                      }
 function balkenwachser() {
   var Ausgangswert = 1;
   var id = setInterval(was, ausruheingabe.value*10,1000);
   function was() { 
   if (Ausgangswert === 100) {clearInterval(id);}
-  else {Ausgangswert = Ausgangswert+1}; BB.style.width = Ausgangswert + '%';}
+  else {Ausgangswert = Ausgangswert+1}; BB.style.width = Ausgangswert + '%';BB.style.fontSize = "250%"}
                     }
                 
 // Fotoapp____________________________________________
@@ -221,9 +229,9 @@ function fotomachen()  {
     // der Stream hat eine andere größe, als das Bild, was man davon machen will, deshab muss man gleichsetzen
     Bildcanvas.width = Streamansicht.videoWidth;
     Bildcanvas.height = Streamansicht.videoHeight;
-    Bildcanvas.getContext("2d").drawImage(Streamansicht, 0, 0);
-    
+    Bildcanvas.getContext("2d").drawImage(Streamansicht, 0, 0);   
 };
+
 //Zum Download data URL durch actet stream ersetzen. Da browser download nur über html link in body erlauben wird temporärer link erschaffen
 function bildherunterladen() {
 const canvas =  Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;

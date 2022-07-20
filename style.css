@@ -1,15 +1,18 @@
-html,body{background-color: black; 
-     display : block;
-     position : fixed;
-     overflow: hidden
+html,body{
+     width: 100%;
+     height: 100%;
+     margin: 0;
+     background-color: black; 
+     position: fixed;
     }
 
-#Einstellungsdiv { 
-   margin: 0px;
+#Einstellungsdiv {
+  width: 100%; 
+  height: 90%;
    text-align: center;
    background-color: rgba(63, 63, 63, 0.611);
-   border-radius: 5%;border: none;
-   font-size: 20px; 
+   border-radius: 5%;
+   border: none;
    color: rgba(255, 255, 255, 0.7);
    }
 
@@ -18,143 +21,129 @@ html,body{background-color: black;
     flex-direction : row; 
     justify-content : center; 
     align-items : center;
-    width : 100%; height : 40px;
+    width : 100%; 
+    padding-top: 1%;
+    padding-bottom: 1%;
     }
 
    .text {
      width : 30%;
-     margin : 0 auto;
      text-align: right;
      color: #ffffff;
      }
      
     #eindauer,#einruhe,#einrunden {
-     width : 50%; height : 100%;
-     margin : 5 auto;
+     width : 50%; height : 10%;
      cursor : pointer;
-  
     }
+
     #dauer,#ruhe,#runden {
       width : 10%;
-      margin :  auto;
-    color: white
+      color: white
     }
 
     
  #startknopf{
     background-color: white;
     color: black;
-    height:90px; 
-    width:100px; 
-    margin: 30px;
+    height:10%; 
+    width: 20%; 
+    margin: 5%;
+    padding: 4%;
     border-radius: 5%;
+    text-align: center;
     border: none;
     cursor: pointer;
    }
 
  #Medienwahl, #Fotomodus{
     background-color:white;
+    text-align: center;
     border: none;
-    max-width: 40%;
-    padding: 10px;
-    float: auto;
-    margin-top: 30px;
-    margin-left: 10px;
-    margin-right: 10px;
-   
-   
+    margin: 3%;
+    padding: 1%;
     }
     
-  option{
-    background-color: white
-   
-    }
+  option{background-color: white}
     
-
-
 /* Ab hier am Anfang unsichtbar */ 
-
 #zeigendiv {
-   margin-top: 30px;
-   text-align: center;
-   display : flex;flex-direction : column; justify-content : space-between;
-   align-items : center;border-radius: 5%;border: none;
+  width: 100%;
+  height: 80%;
+   display : flex;
+   flex-direction : column; 
+   justify-content : space-between;
+   align-items : center;
+   border-radius: 5%;
+   border: none;
    visibility: hidden;
    background-color: rgba(0, 0, 0, 0.129)
    }
 
  #Textanzeige {
    color: rgb(255, 255, 255);
-   margin-top: 50px; margin-bottom: 50px;
-   font-size: 40px;height: 20px;
+   margin: 5%
    }
 
- #Rundenanzeige {
+ #Rundenanzeige,#Zeitanzeige {
+  font-size: 150%;
   background-color: white;
-  border-radius : 2vmin;
-  margin-top: 20px;
-
-  font-size: 6vmin; text-align: center
+  border-radius : 10%;
+  text-align: center
  }
 
 
- #Zeitanzeige {
-   background-color: white;
-   margin : 5% auto;
-   border-radius : 2vmin;
-
-   font-size: 6vmin; text-align: center
-   }
 
  #zurückknopf {
-   background-color: rgba(0, 0, 0, 0.432); color: rgb(182, 182, 182) ;
-   margin-top: 20px; margin-bottom: 20px; 
-   height:50px;  width:100px;  
-   border-radius: 5%;border: none;
+   background-color: rgba(0, 0, 0, 0.432);
+   color: rgb(182, 182, 182) ;
+   margin-top: 2%;
+   margin-bottom: 2%; 
+   height: 10%; 
+   width:5%;  
+   border-radius: 5%;
+   border: none;
    cursor: pointer;
    }
 
 
  #Gesamtbalken {
    text-align: center;
-   display : flex; flex-direction : column; flex-direction: row; justify-content : space-between;
+   display : flex; 
+   flex-direction : column; 
+   flex-direction: row; 
+   justify-content : space-between;
    align-items : center;
-   width: 500px;;
+   background-color: rgba(87, 88, 89, 0.429);
+   width: 400px;
+   height: 3px;
    }
 
- #Balkenzeit {
-   font-size: 10vmin; 
+ #Balkenzeit { 
+  display: flex;
+  justify-content:center;
+  background-color: white;
+  border-radius : 10%;
+  vertical-align: middle;
+  margin: auto;
    align-items:center;
-   width: 500px;
-   height:200px;
-   background-color: rgb(255, 255, 255);
+   width: 400px;
+   height: 400px;
    margin: auto;
-   font-size: 140px;
+   padding: 3%
    }
 
  /* Foto */   
- /* Alle Knöpfe bis auf die mit Extraregeln wie Start wie folgt: */
-button {
+#Gesamtfotodiv{ width: 50% ;height: 40%; }
+#herunterladenknopf {
   background-color: #000000; 
   border: none;
   color: white;
-  padding: 15px 32px;
   text-align: center;
 }
-#Videoaufnahme{
- 
-   text-align: center;
-   display : flex;flex-direction : column; justify-content : space-between;
-
-}
+#Videoaufnahme{ text-align: center; display : flex; flex-direction : column; justify-content : space-between;}
 /* der Stream soll nicht angezeigt werden, Ansonsten mit der häfte der Defaulaulösung von 640/480 */
-#streamansicht{
-  display: none;
-}
-
+#streamansicht{ display: none;}
 /* größe des Anzeigendiv. Die Anzahl der Pixel richtet sich nach den Angaben bei contraints des Videos  */
-#bildcanvas
-{ width: 320px;
-  height: 240px;
-}
+#bildcanvas { width: 60%; height: 30%;}
   

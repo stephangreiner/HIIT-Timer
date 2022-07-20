@@ -43,8 +43,6 @@ if (navigator.serviceWorker) {
         <option value="2">Marniemedia</option>
         <option value="3">Musik</option>
       </select>
-   </div> 
-   <div >
     <select title ="Bildmachen" id="Fotomodus">
        <option value="1">ohne Foto</option>
        <option value="2">mit Foto</option>
@@ -62,7 +60,7 @@ if (navigator.serviceWorker) {
     </div>
     <div id ="Zeitanzeige"> </div>
     <div id ="Rundenanzeige"> </div>
-    <button id=zurueckknopf >zurück</button>
+    <button id="zurueckknopf" >zurück</button>
 
 
   <!-- Fotohtml -->
@@ -70,9 +68,8 @@ if (navigator.serviceWorker) {
     <!-- width and hight kann man hier hinzufügen,aber sobald video ankommt wird es in der Anzeige der contraints angzeigt -->
          <video id="streamansicht" autoplay></video>   	 
          <canvas id="bildcanvas"></canvas>
-     </div>
           <button id="herunterladenknopf" onclick=bildherunterladen() download="bild1.png" > herunterladen</button>   
-
+</div>
 </div>
 
 <div>
