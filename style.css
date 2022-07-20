@@ -1,7 +1,7 @@
 html,body{background-color: black; 
-     display : "block";
-     position : "fixed";
-     overflow: "hidden"
+     display : block;
+     position : fixed;
+     overflow: hidden
     }
 
 #Einstellungsdiv { 
