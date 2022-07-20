@@ -1,11 +1,11 @@
 html,body{background-color: black; 
      display : "block";
-     margin:0px;
-    padding:0px}
+     position : "fixed";
+     overflow: "hidden"
+    }
 
-#Einstellungsdiv {
-   max-width : auto; 
-   margin: auto;
+#Einstellungsdiv { 
+   margin: 0px;
    text-align: center;
    background-color: rgba(63, 63, 63, 0.611);
    border-radius: 5%;border: none;
