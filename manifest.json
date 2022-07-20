@@ -27,7 +27,7 @@
 
     ],
     "theme_color": "#DEDEDE",
-    "background_color": "#DDDDDD",
+    "background_color": "#FFFFFF",
     "start_url": "/HIIT-Timer/",
     "display": "standalone",
     "orientation": "portrait"
