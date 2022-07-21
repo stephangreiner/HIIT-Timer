@@ -1,6 +1,6 @@
 
 
-// Contanten zeigen lediglich auf html Elemente der Input von html 
+// Konstante zeigen lediglich auf html Elemente. Input von html 
 const belastungseingabe = document.getElementById('eindauer');
 const ausruheingabe = document.getElementById('einruhe');
 const rundeneingabe = document.getElementById('einrunden');
@@ -159,9 +159,10 @@ function ende(){
   if (Streamansicht.srcObject != null) {cameraStop()};
    document.getElementById("zurueckknopf").style.display = "";
    document.getElementById("herunterladenknopf").style.display = ""; 
+   document.getElementById("Balkendiv").style.display = "none";
    document.body.style.backgroundColor = "blue";
    BB.style.display = "none";
-   TA.innerHTML = "Gratulation !!";
+   TA.innerHTML = "";
    ZA.style.display = "none";
    if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('endesound1').play()}
@@ -233,13 +234,17 @@ function fotomachen()  {
 };
 
 //Zum Download data URL durch actet stream ersetzen. Da browser download nur über html link in body erlauben wird temporärer link erschaffen
+
 function bildherunterladen() {
+
 const canvas =  Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
-var l = document.createElement( 'a' );  
-  l.download = 'HIITBild.png'; 
-  l.href = canvas;   
-  document.body.appendChild( l );  
-  l.click();  
-  document.body.removeChild( l );
+var link = document.createElement( 'a' ); 
+var n = 1; 
+var n = n +1; 
+  link.download ='HIITBild'+n+".png";  
+  link.href = canvas;   
+  document.body.appendChild( link );  
+  link.click();  
+  document.body.removeChild( link );
  }
  
