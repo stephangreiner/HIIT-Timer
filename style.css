@@ -89,21 +89,16 @@ html,body{
   background-color: white;
   border-radius : 10%;
   text-align: center;
-  margin:"5%"
+  margin:5%
  }
 
 
-
- #zurückknopf {
+ #zurueckknopf,#herunterladenknopf {
    background-color: rgba(0, 0, 0, 0.432);
    color: rgb(182, 182, 182) ;
-   margin-top: 2%;
-   margin-bottom: 2%; 
-   height: 10%; 
-   width:5%;  
-   border-radius: 5%;
    border: none;
    cursor: pointer;
+
    }
 
 
