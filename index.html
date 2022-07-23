@@ -23,6 +23,16 @@ if (navigator.serviceWorker) {
 </head>
 <body>
  <div id='Einstellungsdiv'> 
+    <button id=startknopf onklick=runtabata()>los</button>
+    <select title ="Bildmachen" id="Fotomodus">
+       <option value="1">ohne Foto</option>
+       <option value="2">mit Foto</option>
+    </select>   
+      <select title ="audiowahl" id="Medienwahl">
+        <option value="1">Gong</option>
+        <option value="2">Marniemedia</option>
+        <option value="3">Musik</option>
+      </select>
     <div class='Zeilediv'>
        <span class='text'>Dauer:</span> 
        <input id='eindauer' type="range"> 
@@ -38,18 +48,8 @@ if (navigator.serviceWorker) {
        <input id='einrunden' type="range"> 
        <span id='runden'></span>
     </div>
-   <div >
-      <select title ="audiowahl" id="Medienwahl">
-        <option value="1">Gong</option>
-        <option value="2">Marniemedia</option>
-        <option value="3">Musik</option>
-      </select>
-    <select title ="Bildmachen" id="Fotomodus">
-       <option value="1">ohne Foto</option>
-       <option value="2">mit Foto</option>
-    </select>
-  </div> 
-  <button id=startknopf onklick=runtabata()>los</button>
+
+
 
 </div> 
   
