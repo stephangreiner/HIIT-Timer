@@ -29,7 +29,7 @@ html,body{
 
    .text {
      width : 20%;
-     text-align: right;
+     text-align: left;
      color: #ffffff;
      }
      
@@ -47,8 +47,8 @@ html,body{
  #startknopf{
     background-color: white;
     color: black;
-    height:10%; 
-    width: 20%; 
+    height:30%; 
+    width: 30%; 
     margin-top: 15%;
     padding: 4%;
     border-radius: 5%;
