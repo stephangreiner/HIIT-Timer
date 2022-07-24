@@ -20,7 +20,7 @@ html,body{
     #startknopf{
        background-color: #00ff00;
        color: black;
-       height:60%; 
+       height:80%; 
        width: 40%; 
        border-radius: 5%;
        text-align: center;
@@ -28,7 +28,7 @@ html,body{
        cursor: pointer;}
 
   #moduswahldiv {text-align: center;}
-    #Medienwahl, #Fotomodus{margin:5%;}
+    #Medienwahl, #Fotomodus{margin:5%;padding:5%}
       option{background-color: white}
 
  #zeitwahldivldiv {margin-bottom: 3%;width: 100%; }    
