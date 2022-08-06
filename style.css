@@ -106,11 +106,11 @@ html,body{
    }
 
  /* Foto */   
-#Gesamtfotodiv{ width: 70% ;height: 30%;text-align: center; }
+#Gesamtfotodiv{ width: 60% ; height: 40%;text-align: center; }
  /* bedeutungslos */   
 #Videoaufnahme{ display: none;}
 /* der Stream soll nicht angezeigt werden, Ansonsten mit der häfte der Defaulaulösung von 640/480 */
 #streamansicht{ display: none;}
 /* größe des Anzeigendiv. Die Anzahl der Pixel richtet sich nach den Angaben bei contraints des Videos  */
-#bildcanvas { width: 50%; height: 50%; display: flex;  margin: auto;}
+#bildcanvas { width: 50%; height: 70%; display: flex;  margin: auto;}
   
