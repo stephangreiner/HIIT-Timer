@@ -27,10 +27,13 @@ if (navigator.serviceWorker) {
        <button id=startknopf onklick=runtabata()>los</button>
     </div>
      <div id="moduswahldiv">
-         <select title ="Bildmachen" id="Fotomodus">
-               <option value="1">ohne Foto</option>
-               <option value="2">mit Foto</option>
-         </select>   
+  
+         Kamera:<label class ="switch">
+         <input type="checkbox" id="fotocheck" onclick="camera()">
+        <span class = "slider"></span>
+        
+        </label> 
+
       <select title ="audiowahl" id="Medienwahl">
             <option value="1">Gong</option>
             <option value="2">Marniemedia</option>

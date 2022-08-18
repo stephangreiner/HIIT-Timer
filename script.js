@@ -88,10 +88,11 @@ medienwahl.addEventListener("change", function() {
 const Foto = document.getElementById("Fotomodus");
 const GFD = document.getElementById("Gesamtfotodiv")
 GFD.style.display="none"
-Foto.addEventListener("change", function() {
-    if(Foto.value == "1")     {cameraStop(),GFD.style.display="none"}
-    else if(Foto.value == "2"){cameraStart(),GFD.style.display=""}
-                                           })
+function camera() {
+var checkBox = document.getElementById("fotocheck");
+if (checkBox.checked == true){cameraStart(),GFD.style.display="";}
+else {cameraStop(),GFD.style.display="none"   } }
+
 
 
 // zugriff auf camera und stream zur Streamansicht
