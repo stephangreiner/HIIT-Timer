@@ -27,6 +27,11 @@ html,body{
        border: none;
        cursor: pointer;}
 
+#moduswahldiv {margin: 3%}
+    /* für edge, firefox, chrome den dropdown Pfeil entfernen */
+    select::-ms-expand {display: none;}
+      select {-moz-appearance: none;-webkit-appearance: none;}
+    
        .switch {
         float: right;
         position: relative;
@@ -68,16 +73,7 @@ html,body{
         border-radius: 50%;
       }
   
-      select::-ms-expand {
-        display: none;
-    }
-    select {
-      /* for Firefox */
-      -moz-appearance: none;
-      /* for Chrome */
-      -webkit-appearance: none;
-    }
-    
+  
       
       input:checked + .slider {
         background-color:#00ff00;
@@ -96,7 +92,7 @@ html,body{
       
     
 
-  #moduswahldiv {text-align: center; color: #ffffff;}
+
     #Medienwahl {
         background-color: rgb(115, 115, 115);
         float: left;

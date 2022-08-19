@@ -77,9 +77,9 @@ function uhrwerk(arrPeriods, index) {
                                  }
 
 
-var mediaV = 1
+var mediaV = 10
 medienwahl.addEventListener("change", function() {
-    if(medienwahl.value == "0")     {mediaV = 0;}
+    if(medienwahl.value == "10")     {mediaV = 0;}
     else if(medienwahl.value == "1"){mediaV = 1;}
     else if(medienwahl.value == "2"){mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
     else if(medienwahl.value == "3"){mediaV = 6}
@@ -120,6 +120,7 @@ function vorlauf(){
 
   
 function aktiv(){
+  console.log("mediaV"+ mediaV)
   aktivbalkenschrumpfer(); aktivaudio()
    document.body.style.backgroundColor = "#00ff00";
    document.getElementById("zurueckknopf").style.display = "none";
@@ -163,45 +164,48 @@ function ende(){
    BB.style.display = "none";
    TA.innerHTML = "Super";
    ZA.style.display = "none";
-   if (mediaV==1){document.getElementById('gongsound').play();}
+   if (mediaV==0){console.log("mediaV = o")}
+   else if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('endesound1').play()}
    else if (mediaV==3){document.getElementById('endesound2').play()}
    else if (mediaV==4){document.getElementById('endesound3').play()}
    else if (mediaV==5){document.getElementById('endesound4').play()}
-   else{}
                    }
 
 
 
 function aktivaudio(){
-  if (mediaV==1){document.getElementById('gongsound').play();}
+  if  (mediaV==0){console.log("mediaV"+ mediaV)}
+   else if (mediaV==1){document.getElementById('gongsound').play();}
    else if (mediaV==2){document.getElementById('gosound1').play();}
    else if (mediaV==3){document.getElementById('gosound2').play();}
    else if (mediaV==4){document.getElementById('gosound3').play();}
    else if (mediaV==5){document.getElementById('gosound4').play();}
    else if (mediaV==6){document.getElementById('m1').play();}
-   else{}
+   else{console.log("mediaV"+ mediaV)}
 }
 
 function  ruheaudio(){
-  if (mediaV==1){document.getElementById('gongsound').play();}
+  if (mediaV==0){console.log("mediaV = 0")}
+  else if (mediaV==1){document.getElementById('gongsound').play();}
   else if (mediaV==2){document.getElementById('kurzepausesound1').play()}
   else if (mediaV==3){document.getElementById('kurzepausesound2').play()}
   else if (mediaV==4){document.getElementById('kurzepausesound3').play()}
   else if (mediaV==5){document.getElementById('kurzepausesound4').play()}
   else if (mediaV==6) {document.getElementById('m1').pause();}
-  else{}
+  else{console.log("mediaV"+ mediaV)}
                         }
 
 function vorletzteruheaudio(){
-  if (mediaV==1){document.getElementById('gongsound').play();}
+  if (mediaV==0){console.log("mediaV = 0")}
+  else if (mediaV==1){document.getElementById('gongsound').play();}
   else if (mediaV==2){document.getElementById('vor1').play();}
   else if (mediaV==3){document.getElementById('vor2').play();}
   else if (mediaV==4){document.getElementById('vor3').play();}
   else if (mediaV==5){document.getElementById('vor4').play();}
   else if (mediaV==5){document.getElementById('vor4').play();}
   else if (mediaV==6) {document.getElementById('m1').pause();} 
-  else{}  
+  else{console.log("mediaV"+ mediaV)}  
                         }
    
 
