@@ -79,7 +79,8 @@ function uhrwerk(arrPeriods, index) {
 
 var mediaV = 1
 medienwahl.addEventListener("change", function() {
-    if(medienwahl.value == "1"){mediaV = 1;}
+    if(medienwahl.value == "0")     {mediaV = 0;}
+    else if(medienwahl.value == "1"){mediaV = 1;}
     else if(medienwahl.value == "2"){mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
     else if(medienwahl.value == "3"){mediaV = 6}
 })
@@ -167,6 +168,7 @@ function ende(){
    else if (mediaV==3){document.getElementById('endesound2').play()}
    else if (mediaV==4){document.getElementById('endesound3').play()}
    else if (mediaV==5){document.getElementById('endesound4').play()}
+   else{}
                    }
 
 
@@ -178,6 +180,7 @@ function aktivaudio(){
    else if (mediaV==4){document.getElementById('gosound3').play();}
    else if (mediaV==5){document.getElementById('gosound4').play();}
    else if (mediaV==6){document.getElementById('m1').play();}
+   else{}
 }
 
 function  ruheaudio(){
@@ -187,6 +190,7 @@ function  ruheaudio(){
   else if (mediaV==4){document.getElementById('kurzepausesound3').play()}
   else if (mediaV==5){document.getElementById('kurzepausesound4').play()}
   else if (mediaV==6) {document.getElementById('m1').pause();}
+  else{}
                         }
 
 function vorletzteruheaudio(){
@@ -196,7 +200,8 @@ function vorletzteruheaudio(){
   else if (mediaV==4){document.getElementById('vor3').play();}
   else if (mediaV==5){document.getElementById('vor4').play();}
   else if (mediaV==5){document.getElementById('vor4').play();}
-  else if (mediaV==6) {document.getElementById('m1').pause();}   
+  else if (mediaV==6) {document.getElementById('m1').pause();} 
+  else{}  
                         }
    
 

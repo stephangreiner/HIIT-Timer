@@ -28,8 +28,8 @@ html,body{
        cursor: pointer;}
 
        .switch {
+        float: right;
         position: relative;
-        display: inline-block;
         width: 60px;
         height: 34px;
       }
@@ -41,14 +41,16 @@ html,body{
       }
       
       .slider {
+        background-color: rgb(115, 115, 115);
         border-radius: 34px;
         position: absolute;
         cursor: pointer;
+        text-align: right;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #ccc;
+        float: right;
         -webkit-transition: .4s;
         transition: .4s;
       }
@@ -60,19 +62,30 @@ html,body{
         width: 26px;
         left: 4px;
         bottom: 4px;
-        background-color: white;
+        background-color: rgb(255, 255, 255);
         -webkit-transition: .4s;
         transition: .4s;
         border-radius: 50%;
       }
+  
+      select::-ms-expand {
+        display: none;
+    }
+    select {
+      /* for Firefox */
+      -moz-appearance: none;
+      /* for Chrome */
+      -webkit-appearance: none;
+    }
+    
       
       input:checked + .slider {
-        background-color: #2196F3;
+        background-color:#00ff00;
         text-align: justify;
       }
       
       input:focus + .slider {
-        box-shadow: 0 0 1px #2196F3;
+        box-shadow: 0 0 1px #ee81ee;
       }
       
       input:checked + .slider:before {
@@ -84,9 +97,25 @@ html,body{
     
 
   #moduswahldiv {text-align: center; color: #ffffff;}
-    #Medienwahl, #Fotomodus{margin:5%;padding:2%;text-align: center;}
-      option{background-color: white}
-
+    #Medienwahl {
+        background-color: rgb(115, 115, 115);
+        float: left;
+      text-align: center;
+      border: none;
+      width: 60px;
+      height: 34px;
+     color: #ffffff; 
+     border-radius: 34px;
+        cursor: pointer;
+        top: 0%;
+        left: 0%;
+        right: 0%;
+        bottom: 0%;
+      
+       }
+    option {background-color: black;}
+     
+  
  #zeitwahldivldiv {margin-bottom: 3%;width: 100%; }    
        .Zeilediv {
             width : 100%; 
@@ -101,7 +130,8 @@ html,body{
                      color: #ffffff; }     
                    #eindauer,#einruhe,#einrunden {
                      width : 60%; 
-                     cursor : pointer;}
+                     cursor : pointer;
+                    color: antiquewhite;}
                    #dauer,#ruhe,#runden {
                      width : 10%;
                      color: white;
