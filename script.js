@@ -79,7 +79,7 @@ function uhrwerk(arrPeriods, index) {
 
 var mediaV = 10
 medienwahl.addEventListener("change", function() {
-    if(medienwahl.value == "10")    {mediaV = 0; }
+    if(medienwahl.value == "10")    {mediaV = 0; document.getElementById("Medienwahl").style.backgroundColor ="#737373"}
     else if(medienwahl.value == "1"){mediaV = 1;document.getElementById("Medienwahl").style.backgroundColor ="#00ff00"}
     else if(medienwahl.value == "2"){mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;document.getElementById("Medienwahl").style.backgroundColor ="#00ff00"}
     else if(medienwahl.value == "3"){mediaV = 6;document.getElementById("Medienwahl").style.backgroundColor ="#00ff00"}
