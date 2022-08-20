@@ -29,26 +29,20 @@ html,body{
 
 #moduswahldiv {margin: 3%}
     /* für edge, firefox, chrome den dropdown Pfeil entfernen */
-    select::-ms-expand {display: none;}
-      select {-moz-appearance: none;-webkit-appearance: none;}
+    
+   select {-moz-appearance: none;-webkit-appearance: none;}select::-ms-expand {display: none;}
     
        .switch {
         float: right;
         position: relative;
-        width: 60px;
+        width: 70px;
         height: 34px;
       }
-      
-      .switch input { 
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-      
-      .slider {
+           
+      .slider {        
         background-color: rgb(115, 115, 115);
-        border-radius: 34px;
         position: absolute;
+        border-radius: 34px;
         cursor: pointer;
         text-align: right;
         top: 0;
@@ -66,50 +60,41 @@ html,body{
         height: 26px;
         width: 26px;
         left: 4px;
+        right: 4px;
         bottom: 4px;
         background-color: rgb(255, 255, 255);
         -webkit-transition: .4s;
         transition: .4s;
         border-radius: 50%;
       }
-  
-  
+     
       
       input:checked + .slider {
         background-color:#00ff00;
         text-align: justify;
+        right: 14px;
+        left: -4px;
       }
       
-      input:focus + .slider {
-        box-shadow: 0 0 1px #ee81ee;
-      }
-      
-      input:checked + .slider:before {
-        -webkit-transform: translateX(26px);
-        -ms-transform: translateX(26px);
-        transform: translateX(26px);
-      }
+      input:checked + .slider:before {-webkit-transform: translateX(26px);-ms-transform: translateX(26px);transform: translateX(26px);}
       
     
 
 
     #Medienwahl {
         background-color: rgb(115, 115, 115);
-        float: left;
-      text-align: center;
-      border: none;
-      width: 60px;
-      height: 34px;
-     color: #ffffff; 
+         color: #000000;
+         cursor: pointer;
+         text-align: center;
+         border: none;
+         width: 70px;
+         height: 34px;
+     
      border-radius: 34px;
-        cursor: pointer;
-        top: 0%;
-        left: 0%;
-        right: 0%;
-        bottom: 0%;
+       float: left;  
       
        }
-    option {background-color: black;}
+    option {background-color:rgb(115, 115, 115);}
      
   
  #zeitwahldivldiv {margin-bottom: 3%;width: 100%; }    

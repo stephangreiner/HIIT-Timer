@@ -79,10 +79,10 @@ function uhrwerk(arrPeriods, index) {
 
 var mediaV = 10
 medienwahl.addEventListener("change", function() {
-    if(medienwahl.value == "10")     {mediaV = 0;}
-    else if(medienwahl.value == "1"){mediaV = 1;}
-    else if(medienwahl.value == "2"){mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;}
-    else if(medienwahl.value == "3"){mediaV = 6}
+    if(medienwahl.value == "10")    {mediaV = 0; }
+    else if(medienwahl.value == "1"){mediaV = 1;document.getElementById("Medienwahl").style.backgroundColor ="#00ff00"}
+    else if(medienwahl.value == "2"){mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;document.getElementById("Medienwahl").style.backgroundColor ="#00ff00"}
+    else if(medienwahl.value == "3"){mediaV = 6;document.getElementById("Medienwahl").style.backgroundColor ="#00ff00"}
 })
 
 
@@ -115,7 +115,7 @@ function vorlauf(){
       document.body.style.backgroundColor = "black";
       document.getElementById("zurueckknopf").style.display = "none"
       document.getElementById("Balkendiv").style.display = "none";
-      TA.innerHTML = "gleich geht es los";
+      TA.innerHTML = "";
                   }
 
   
