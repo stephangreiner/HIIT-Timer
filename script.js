@@ -1,12 +1,9 @@
-// Konstante zeigen lediglich auf html Elemente. Input von html 
-const belastungseingabe = document.getElementById('eindauer');
+const belastungseingabe = document.getElementById('eindauer');// Konstante zeigen lediglich auf html Elemente. Input von html 
 const ausruheingabe = document.getElementById('einruhe');
 const rundeneingabe = document.getElementById('einrunden');
-const medienwahl = document.getElementById("Medienwahl");
+const tonwahl = document.getElementById("tonwahl");
 
-
-// der Ausgang zu html 
-const ZA = document.getElementById('Zeitanzeige');
+const ZA = document.getElementById('Zeitanzeige');// der Ausgang zu html 
 const RA = document.getElementById('Rundenanzeige');
 const TA = document.getElementById('Textanzeige');
 const BB = document.getElementById("Balkenzeit")
@@ -32,9 +29,6 @@ window.onload = function(){
   rundeneingabe.oninput = function()     {document.getElementById('runden').innerHTML = rundeneingabe.value;};
                              };
 
-// Starten des Programms durch ausführen von Funktionen
-// Anzeige der eingegebenen Werte schon bevor Wertsetzenfunktion ausgeführt wird
-  // Grundanzeige vor Änderung der Variablen 
 
 startknopf.onclick = function() {
   runTabata( 5 , belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
@@ -77,13 +71,14 @@ function uhrwerk(arrPeriods, index) {
                                  }
 
 
-var mediaV = 10
-medienwahl.addEventListener("change", function() {
-    if(medienwahl.value == "10")    {mediaV = 0; document.getElementById("Medienwahl").style.backgroundColor ="#737373"}
-    else if(medienwahl.value == "1"){mediaV = 1;document.getElementById("Medienwahl").style.backgroundColor ="#00ff00"}
-    else if(medienwahl.value == "2"){mediaV = Math.floor(Math.random() * (5 - 1 + 1)) + 1;document.getElementById("Medienwahl").style.backgroundColor ="#00ff00"}
-    else if(medienwahl.value == "3"){mediaV = 6;document.getElementById("Medienwahl").style.backgroundColor ="#00ff00"}
-})
+var tonv = 10
+tonwahl.addEventListener("change", function() {
+    if(tonwahl.value == "10")    {tonv = 0; document.getElementById("tonwahl").style.backgroundColor ="#737373"}
+    else if(tonwahl.value == "1"){tonv = 1;document.getElementById("tonwahl").style.backgroundColor ="#00ff00"}
+    else if(tonwahl.value == "2"){tonv = 2;document.getElementById("tonwahl").style.backgroundColor ="#00ff00"}
+    else if(tonwahl.value == "3"){tonv = Math.floor(Math.random() * 4-0)+3;; document.getElementById("tonwahl").style.backgroundColor ="#00ff00";
+    console.log("tonverstestufe"+ tonv)}
+})    
 
 
 const Foto = document.getElementById("Fotomodus");
@@ -120,7 +115,7 @@ function vorlauf(){
 
   
 function aktiv(){
-  console.log("mediaV"+ mediaV)
+  console.log("tonv"+ tonv)
   aktivbalkenschrumpfer(); aktivaudio()
    document.body.style.backgroundColor = "#00ff00";
    document.getElementById("zurueckknopf").style.display = "none";
@@ -155,6 +150,7 @@ function ruhe(){
    else {ruheaudio()}  
                  }
 
+
 function ende(){ 
   if (Streamansicht.srcObject != null) {cameraStop()};
    document.getElementById("zurueckknopf").style.display = "";
@@ -164,50 +160,59 @@ function ende(){
    BB.style.display = "none";
    TA.innerHTML = "Super";
    ZA.style.display = "none";
-   if (mediaV==0){console.log("mediaV = o")}
-   else if (mediaV==1){document.getElementById('gongsound').play();}
-   else if (mediaV==2){document.getElementById('endesound1').play()}
-   else if (mediaV==3){document.getElementById('endesound2').play()}
-   else if (mediaV==4){document.getElementById('endesound3').play()}
-   else if (mediaV==5){document.getElementById('endesound4').play()}
+   
                    }
 
 
-
 function aktivaudio(){
-  if  (mediaV==0){console.log("mediaV"+ mediaV)}
-   else if (mediaV==1){document.getElementById('gongsound').play();}
-   else if (mediaV==2){document.getElementById('gosound1').play();}
-   else if (mediaV==3){document.getElementById('gosound2').play();}
-   else if (mediaV==4){document.getElementById('gosound3').play();}
-   else if (mediaV==5){document.getElementById('gosound4').play();}
-   else if (mediaV==6){document.getElementById('m1').play();}
-   else{console.log("mediaV"+ mediaV)}
+  if  (tonv > 2 && tonv < 8){tonv = Math.floor(Math.random() * 4-0)+3;}; // integeger zwichen 3 unf 6 inbegriffen
+   if      (tonv==0){console.log("tonv"+ tonv)}
+   else if (tonv==1){document.getElementById('gongsound').play();}
+   else if (tonv==2){document.getElementById('m1').play();}
+   else if (tonv==3){document.getElementById('gosound1').play();}
+   else if (tonv==4){document.getElementById('gosound2').play();}
+   else if (tonv==5){document.getElementById('gosound3').play();}
+   else if (tonv==6){document.getElementById('gosound4').play();}
+   else{console.log("tonv"+ tonv)}
 }
 
 function  ruheaudio(){
-  if (mediaV==0){console.log("mediaV = 0")}
-  else if (mediaV==1){document.getElementById('gongsound').play();}
-  else if (mediaV==2){document.getElementById('kurzepausesound1').play()}
-  else if (mediaV==3){document.getElementById('kurzepausesound2').play()}
-  else if (mediaV==4){document.getElementById('kurzepausesound3').play()}
-  else if (mediaV==5){document.getElementById('kurzepausesound4').play()}
-  else if (mediaV==6) {document.getElementById('m1').pause();}
-  else{console.log("mediaV"+ mediaV)}
+  if (tonv==0){console.log("jjjjjjjjjjjjj")}
+  else if (tonv==1){document.getElementById('gongsound').play();}
+  else if (tonv==2) {document.getElementById('m1').pause();}
+  else if (tonv==3){document.getElementById('kurzepausesound1').play()}
+  else if (tonv==4){document.getElementById('kurzepausesound2').play()}
+  else if (tonv==5){document.getElementById('kurzepausesound3').play()}
+  else if (tonv==6){document.getElementById('kurzepausesound4').play()}
+  else{console.log("tonv"+ tonv)}
                         }
 
+
 function vorletzteruheaudio(){
-  if (mediaV==0){console.log("mediaV = 0")}
-  else if (mediaV==1){document.getElementById('gongsound').play();}
-  else if (mediaV==2){document.getElementById('vor1').play();}
-  else if (mediaV==3){document.getElementById('vor2').play();}
-  else if (mediaV==4){document.getElementById('vor3').play();}
-  else if (mediaV==5){document.getElementById('vor4').play();}
-  else if (mediaV==5){document.getElementById('vor4').play();}
-  else if (mediaV==6) {document.getElementById('m1').pause();} 
-  else{console.log("mediaV"+ mediaV)}  
+  if (tonv==0){console.log("tonv = 0")}
+  else if (tonv==1){document.getElementById('gongsound').play();}
+  else if (tonv==2) {document.getElementById('m1').pause();} 
+  else if (tonv==3){document.getElementById('vor1').play();}
+  else if (tonv==4){document.getElementById('vor2').play();}
+  else if (tonv==5){document.getElementById('vor3').play();}
+  else if (tonv==6){document.getElementById('vor4').play();}
+  else{console.log("tonv"+ tonv)}  
                         }
    
+function endeaudio() {
+  if (tonv==0){console.log("tonv = o")}
+   else if (tonv==1){document.getElementById('gongsound').play();}
+   else if (tonv==2){document.getElementById('m1').pause();}
+   else if (tonv==2){document.getElementById('endesound1').play()}
+   else if (tonv==3){document.getElementById('endesound2').play()}
+   else if (tonv==4){document.getElementById('endesound3').play()}
+   else if (tonv==5){document.getElementById('endesound4').play()}
+
+}
+
+
+
+
 
 function aktivbalkenschrumpfer() {
   var Ausganswert = 100;
