@@ -71,7 +71,7 @@ function uhrwerk(arrPeriods, index) {
                                  }
 
 
-var tonv = 10
+var tonv = 20
 tonwahl.addEventListener("change", function() {
     if(tonwahl.value == "10")    {tonv = 0; document.getElementById("tonwahl").style.backgroundColor ="#737373"}
     else if(tonwahl.value == "1"){tonv = 1;document.getElementById("tonwahl").style.backgroundColor ="#00ff00"}
@@ -138,7 +138,6 @@ function aktiv(){
   }
   
 function ruhe(){
-
    ruhebalkenwachser(),
    document.getElementById('m1').pause();
    document.body.style.background = "black"; 
@@ -160,12 +159,11 @@ function ende(){
    BB.style.display = "none";
    TA.innerHTML = "Super";
    ZA.style.display = "none";
-   
                    }
 
 
 function aktivaudio(){
-  if  (tonv > 2 && tonv < 8){tonv = Math.floor(Math.random() * 4-0)+3;}; // integeger zwichen 3 unf 6 inbegriffen
+  if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 8-0)+3;console.log(tonv)}; // integeger zwichen 3 unf 6 inbegriffen
    if      (tonv==0){console.log("tonv"+ tonv)}
    else if (tonv==1){document.getElementById('gongsound').play();}
    else if (tonv==2){document.getElementById('m1').play();}
@@ -173,13 +171,18 @@ function aktivaudio(){
    else if (tonv==4){document.getElementById('gosound2').play();}
    else if (tonv==5){document.getElementById('gosound3').play();}
    else if (tonv==6){document.getElementById('gosound4').play();}
+   else if (tonv==7){document.getElementById('gosound5').play();}
+   else if (tonv==8){document.getElementById('gosound6').play();}
+   else if (tonv==9){document.getElementById('gosound7').play();}
+   else if (tonv==10){document.getElementById('gosound8').play();}
    else{console.log("tonv"+ tonv)}
 }
 
 function  ruheaudio(){
+  if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 4-0)+3;};
   if (tonv==0){console.log("jjjjjjjjjjjjj")}
   else if (tonv==1){document.getElementById('gongsound').play();}
-  else if (tonv==2) {document.getElementById('m1').pause();}
+  else if (tonv==2){document.getElementById('m1').pause();}
   else if (tonv==3){document.getElementById('kurzepausesound1').play()}
   else if (tonv==4){document.getElementById('kurzepausesound2').play()}
   else if (tonv==5){document.getElementById('kurzepausesound3').play()}
@@ -189,6 +192,7 @@ function  ruheaudio(){
 
 
 function vorletzteruheaudio(){
+  if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 5-0)+3;};
   if (tonv==0){console.log("tonv = 0")}
   else if (tonv==1){document.getElementById('gongsound').play();}
   else if (tonv==2) {document.getElementById('m1').pause();} 
@@ -196,22 +200,20 @@ function vorletzteruheaudio(){
   else if (tonv==4){document.getElementById('vor2').play();}
   else if (tonv==5){document.getElementById('vor3').play();}
   else if (tonv==6){document.getElementById('vor4').play();}
+  else if (tonv==7){document.getElementById('vor5').play();}
   else{console.log("tonv"+ tonv)}  
                         }
    
 function endeaudio() {
+  if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 4-0)+3;};
   if (tonv==0){console.log("tonv = o")}
    else if (tonv==1){document.getElementById('gongsound').play();}
    else if (tonv==2){document.getElementById('m1').pause();}
-   else if (tonv==2){document.getElementById('endesound1').play()}
-   else if (tonv==3){document.getElementById('endesound2').play()}
-   else if (tonv==4){document.getElementById('endesound3').play()}
-   else if (tonv==5){document.getElementById('endesound4').play()}
-
+   else if (tonv==3){document.getElementById('endesound1').play()}
+   else if (tonv==4){document.getElementById('endesound2').play()}
+   else if (tonv==5){document.getElementById('endesound3').play()}
+   else if (tonv==6){document.getElementById('endesound4').play()}
 }
-
-
-
 
 
 function aktivbalkenschrumpfer() {
