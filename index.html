@@ -33,7 +33,6 @@ if (navigator.serviceWorker) {
         <label class ="switch">
          <input type="checkbox" id="fotocheck" onclick="camera()">
         <span class = "slider"> <img id="fotobild" src="./bilder/fotosymbol.png" width="40%" height="100%"alt=" Kamera:"></span>
-        
         </label> 
 
       <select title ="audiowahl" id="tonwahl">
@@ -41,9 +40,8 @@ if (navigator.serviceWorker) {
             <option value="1">🔈Gong</option>
             <option value="2">🔈Musik</option>
             <option value="3">🔈Marnie</option>
-           
-        
       </select>
+
     </div>
     <div id = "zeitwahldiv">
     <div class='Zeilediv'>
@@ -65,31 +63,25 @@ if (navigator.serviceWorker) {
 
 
 </div> 
-  
-<div id = "zeigendiv">
-    <div id='Textanzeige'><h1></h1></div>
-    <div id="Balkendiv">
-      <div id="Gesamtbalken"></div> 
-      <div id="Balkenzeit"></div>
-    </div>
-    <div id ="Zeitanzeige"> </div>
-    <div id ="Rundenanzeige"> </div>
-   
-  <!-- Fotohtml -->
- 
-  <div id="Gesamtfotodiv">
-    <button id="herunterladenknopf" onclick=bildherunterladen() download="hiit.png" >Herunterladen</button>   
-    <!-- width and hight kann man hier hinzufügen,aber sobald video ankommt wird es in der Anzeige der contraints angzeigt -->
+    <div id = "zeigendiv">
+      <div id='Textanzeige'><h1></h1></div>
+      <div id="Balkendiv">
+         <div id="Gesamtbalken"></div> 
+        <div id="Balkenzeit"></div>
+      </div>
+      <div id ="Zeitanzeige"> </div>
+      <div id ="Rundenanzeige"> </div>
+      <div id="Gesamtfotodiv"> <!-- width and hight kann man hier hinzufügen,aber sobald video ankommt wird es in der Anzeige der contraints angzeigt -->
          <video id="streamansicht" autoplay></video>   	 
-         <canvas id="bildcanvas"></canvas>        
-</div>
+         <canvas id="bildcanvas"></canvas>   
+          <button id="herunterladenknopf" onclick=bildherunterladen() download="hiit.png" >Herunterladen</button>        
+      </div>
  <button id="zurueckknopf" >zurück</button>
 </div>
 
 <div>
-  <!--IDen und vorladen audio 1 die unterschiedlichen preload Einstellungen sind ein test -->
   <audio id="gongsound" src="audio/gongsound.mp3" type="audio/mpeg"  preload="auto" ></audio>
-  <!--IDen und vorladen audio 2 -->
+
   <audio id="gosound1" src="audio/go1.mp3" type="audio/mpeg" preload="auto"></audio>
   <audio id="gosound2" src="audio/go2.mp3" type="audio/mpeg" preload="auto"></audio>
   <audio id="gosound3" src="audio/go3.mp3" type="audio/mpeg" preload="auto"></audio>
@@ -99,8 +91,6 @@ if (navigator.serviceWorker) {
   <audio id="gosound7" src="audio/go7.mp3" type="audio/mpeg" preload="auto"></audio>
   <audio id="gosound8" src="audio/go8.mp3" type="audio/mpeg" preload="auto"></audio>
 
-
-  
   <audio id="kurzepausesound1" src="audio/kurzepause1.mp3" type="audio/mpeg" preload="none"></audio>
   <audio id="kurzepausesound2" src="audio/kurzepause2.mp3" type="audio/mpeg" preload="none"></audio>
   <audio id="kurzepausesound3" src="audio/kurzepause3.mp3" type="audio/mpeg" preload="none"></audio>
@@ -111,23 +101,16 @@ if (navigator.serviceWorker) {
   <audio id="endesound3" src="audio/ende3.mp3" type="audio/mpeg" preload="metadata"></audio> 
   <audio id="endesound4" src="audio/ende4.mp3" type="audio/mpeg" preload="metadata"></audio> 
 
-
   <audio id="vor1" src="audio/vor1.mp3" type="audio/mpeg" preload= "metadata"></audio>
   <audio id="vor2" src="audio/vor2.mp3" type="audio/mpeg" preload= "metadata"></audio>
   <audio id="vor3" src="audio/vor3.mp3" type="audio/mpeg" preload= "metadata"></audio>
   <audio id="vor4" src="audio/vor4.mp3" type="audio/mpeg" preload= "metadata"></audio>
   <audio id="vor5" src="audio/vor5.mp3" type="audio/mpeg" preload= "metadata"></audio>
-  <!--IDen und vorladen audio 3 -->
-  <audio loop id="m1" src="audio/m1.mp3" type="audio/mpeg" preload="none"></audio>
+ 
+  <audio loop id="m1" src="audio/m1.mp3" type="audio/mpeg" preload="none"></audio> <!--IDen und vorladen audio 3 -->
   
 </div>
 
-     
-
-
-
 <script type="text/JavaScript" src="script.js"></script>
-
 </body>
-
 </html>

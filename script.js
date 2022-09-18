@@ -151,6 +151,7 @@ function ruhe(){
 
 
 function ende(){ 
+  endeaudio();
   if (Streamansicht.srcObject != null) {cameraStop()};
    document.getElementById("zurueckknopf").style.display = "";
    document.getElementById("herunterladenknopf").style.display = ""; 
@@ -163,7 +164,7 @@ function ende(){
 
 
 function aktivaudio(){
-  if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 8-0)+3;console.log(tonv)}; // integeger zwichen 3 unf 6 inbegriffen
+  if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 8-0)+3;console.log("tonvaktiv"+ tonv)}; // integeger zwichen 3 unf 6 inbegriffen
    if      (tonv==0){console.log("tonv"+ tonv)}
    else if (tonv==1){document.getElementById('gongsound').play();}
    else if (tonv==2){document.getElementById('m1').play();}
