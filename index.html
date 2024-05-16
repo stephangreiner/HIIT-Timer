@@ -1,116 +1,111 @@
 <!DOCTYPE html>
-<html lang= "de">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/vnd.microsoft.icon" href="bilder/favicon.ico">
-        <link rel="manifest" href="./manifest.json" />
+    <link rel="manifest" href="./manifest.json" />
     <link rel="stylesheet" href="style.css">
-    <script>
-  
-if (navigator.serviceWorker) {
-  window.addEventListener('load', () => {
-      navigator.serviceWorker
-          .register('/HIIT-Timer/sw.js')
-          .then(reg => console.log('Service Worker registriert'))
-          .catch(swErr => console.log(
-                `Service Worker Installationsfehler: ${swErr}}`));
-    });
-}
-      </script>
-
     <title>HIIT</title>
+    <script>
+        if (navigator.serviceWorker) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker
+                    .register('/HIIT-Timer/sw.js')
+                    .then(reg => console.log('Service Worker registriert'))
+                    .catch(swErr => console.log(`Service Worker Installationsfehler: ${swErr}`));
+            });
+        }
+    </script>
 </head>
 <body>
-   <div id='Einstellungsdiv'> 
-    
-    
-    <div id=startdiv>
-       <button id=startknopf onklick=runtabata()>los</button>
-    </div>
-     <div id="moduswahldiv">
-     
-        <label class ="switch">
-         <input type="checkbox" id="fotocheck" onclick="camera()">
-        <span class = "slider"> <img id="fotobild" src="./bilder/fotosymbol.png" width="40%" height="100%"alt=" Kamera:"></span>
-        </label> 
-
-      <select title ="audiowahl" id="tonwahl">
-            <option value="10">🔇​</option>
-            <option value="1">🔈Gong</option>
-            <option value="2">🔈Musik</option>
-            <option value="3">🔈Marnie</option>
-      </select>
-
-    </div>
-    <div id = "zeitwahldiv">
-    <div class='Zeilediv'>
-       <span class='text'>Dauer:</span> 
-       <input id='eindauer' type="range"> 
-       <span id='dauer'></span>
-    </div>  
-    <div class='Zeilediv'>
-       <span class='text'> Pause: </span> 
-       <input id='einruhe' type="range"> 
-       <span id='ruhe'></span>
-    </div>
-    <div class='Zeilediv'>
-       <span class='text'> Runden: </span> 
-       <input id='einrunden' type="range"> 
-       <span id='runden'></span>
-    </div>
-  </div>
-
-
-</div> 
-    <div id = "zeigendiv">
-      <div id='Textanzeige'><h1></h1></div>
-      <div id="Balkendiv">
-         <div id="Gesamtbalken"></div> 
-        <div id="Balkenzeit"></div>
-      </div>
-      <div id ="Zeitanzeige"> </div>
-      <div id ="Rundenanzeige"> </div>
-      <div id="Gesamtfotodiv"> <!-- width and hight kann man hier hinzufügen,aber sobald video ankommt wird es in der Anzeige der contraints angzeigt -->
-         <video id="streamansicht" autoplay></video>   	 
-         <canvas id="bildcanvas"></canvas>   
-          <button id="herunterladenknopf" onclick=bildherunterladen() download="hiit.png" ><img src="./bilder/herunterladensymbol.png" width="50%" height="50%"alt="herunterladen"></button>        
-      </div>
- <button id="zurueckknopf" >zurück</button>
-</div>
-
-<div>
-  <audio id="gongsound" src="audio/gongsound.mp3" type="audio/mpeg"  preload="auto" ></audio>
-
-  <audio id="gosound1" src="audio/go1.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="gosound2" src="audio/go2.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="gosound3" src="audio/go3.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="gosound4" src="audio/go4.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="gosound5" src="audio/go5.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="gosound6" src="audio/go6.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="gosound7" src="audio/go7.mp3" type="audio/mpeg" preload="auto"></audio>
-  <audio id="gosound8" src="audio/go8.mp3" type="audio/mpeg" preload="auto"></audio>
-
-  <audio id="kurzepausesound1" src="audio/kurzepause1.mp3" type="audio/mpeg" preload="none"></audio>
-  <audio id="kurzepausesound2" src="audio/kurzepause2.mp3" type="audio/mpeg" preload="none"></audio>
-  <audio id="kurzepausesound3" src="audio/kurzepause3.mp3" type="audio/mpeg" preload="none"></audio>
-  <audio id="kurzepausesound4" src="audio/kurzepause4.mp3" type="audio/mpeg" preload="none"></audio>
-
-  <audio id="endesound1" src="audio/ende1.mp3" type="audio/mpeg" preload="metadata"></audio> 
-  <audio id="endesound2" src="audio/ende2.mp3" type="audio/mpeg" preload="metadata"></audio> 
-  <audio id="endesound3" src="audio/ende3.mp3" type="audio/mpeg" preload="metadata"></audio> 
-  <audio id="endesound4" src="audio/ende4.mp3" type="audio/mpeg" preload="metadata"></audio> 
-
-  <audio id="vor1" src="audio/vor1.mp3" type="audio/mpeg" preload= "metadata"></audio>
-  <audio id="vor2" src="audio/vor2.mp3" type="audio/mpeg" preload= "metadata"></audio>
-  <audio id="vor3" src="audio/vor3.mp3" type="audio/mpeg" preload= "metadata"></audio>
-  <audio id="vor4" src="audio/vor4.mp3" type="audio/mpeg" preload= "metadata"></audio>
-  <audio id="vor5" src="audio/vor5.mp3" type="audio/mpeg" preload= "metadata"></audio>
- 
-  <audio loop id="m1" src="audio/m1.mp3" type="audio/mpeg" preload="none"></audio> <!--IDen und vorladen audio 3 -->
-  
-</div>
-
-<script type="text/JavaScript" src="script.js"></script>
+    <header>
+        <h1>HIIT Timer</h1>
+    </header>
+    <main>
+        <section id="Einstellungsdiv">
+            <div id="startdiv">
+                <button id="startknopf" onclick="runtabata()">Los</button>
+            </div>
+            <div id="moduswahldiv">
+                <label class="switch">
+                    <input type="checkbox" id="fotocheck" onclick="camera()">
+                    <span class="slider">
+                        <img id="fotobild" src="./bilder/fotosymbol.png" width="40%" height="100%" alt="Kamera">
+                    </span>
+                </label>
+                <select title="audiowahl" id="tonwahl">
+                    <option value="10">🔇​</option>
+                    <option value="1">🔈Gong</option>
+                    <option value="2">🔈Musik</option>
+                    <option value="3">🔈Marnie</option>
+                </select>
+            </div>
+            <div id="zeitwahldiv">
+                <div class="Zeilediv">
+                    <span class="text">Dauer:</span>
+                    <input id="eindauer" type="range">
+                    <span id="dauer"></span>
+                </div>
+                <div class="Zeilediv">
+                    <span class="text">Pause:</span>
+                    <input id="einruhe" type="range">
+                    <span id="ruhe"></span>
+                </div>
+                <div class="Zeilediv">
+                    <span class="text">Runden:</span>
+                    <input id="einrunden" type="range">
+                    <span id="runden"></span>
+                </div>
+            </div>
+        </section>
+        <section id="zeigendiv">
+            <div id="Textanzeige">
+                <h1></h1>
+            </div>
+            <div id="Balkendiv">
+                <div id="Gesamtbalken"></div>
+                <div id="Balkenzeit"></div>
+            </div>
+            <div id="Zeitanzeige"></div>
+            <div id="Rundenanzeige"></div>
+            <div id="Gesamtfotodiv">
+                <video id="streamansicht" autoplay></video>
+                <canvas id="bildcanvas"></canvas>
+                <button id="herunterladenknopf" onclick="bildherunterladen()" download="hiit.png">
+                    <img src="./bilder/herunterladensymbol.png" width="50%" height="50%" alt="herunterladen">
+                </button>
+            </div>
+            <button id="zurueckknopf">zurück</button>
+        </section>
+    </main>
+    <footer>
+        <div>
+            <audio id="gongsound" src="audio/gongsound.mp3" type="audio/mpeg" preload="auto"></audio>
+            <audio id="gosound1" src="audio/go1.mp3" type="audio/mpeg" preload="auto"></audio>
+            <audio id="gosound2" src="audio/go2.mp3" type="audio/mpeg" preload="auto"></audio>
+            <audio id="gosound3" src="audio/go3.mp3" type="audio/mpeg" preload="auto"></audio>
+            <audio id="gosound4" src="audio/go4.mp3" type="audio/mpeg" preload="auto"></audio>
+            <audio id="gosound5" src="audio/go5.mp3" type="audio/mpeg" preload="auto"></audio>
+            <audio id="gosound6" src="audio/go6.mp3" type="audio/mpeg" preload="auto"></audio>
+            <audio id="gosound7" src="audio/go7.mp3" type="audio/mpeg" preload="auto"></audio>
+            <audio id="gosound8" src="audio/go8.mp3" type="audio/mpeg" preload="auto"></audio>
+            <audio id="kurzepausesound1" src="audio/kurzepause1.mp3" type="audio/mpeg" preload="none"></audio>
+            <audio id="kurzepausesound2" src="audio/kurzepause2.mp3" type="audio/mpeg" preload="none"></audio>
+            <audio id="kurzepausesound3" src="audio/kurzepause3.mp3" type="audio/mpeg" preload="none"></audio>
+            <audio id="kurzepausesound4" src="audio/kurzepause4.mp3" type="audio/mpeg" preload="none"></audio>
+            <audio id="endesound1" src="audio/ende1.mp3" type="audio/mpeg" preload="metadata"></audio>
+            <audio id="endesound2" src="audio/ende2.mp3" type="audio/mpeg" preload="metadata"></audio>
+            <audio id="endesound3" src="audio/ende3.mp3" type="audio/mpeg" preload="metadata"></audio>
+            <audio id="endesound4" src="audio/ende4.mp3" type="audio/mpeg" preload="metadata"></audio>
+            <audio id="vor1" src="audio/vor1.mp3" type="audio/mpeg" preload="metadata"></audio>
+            <audio id="vor2" src="audio/vor2.mp3" type="audio/mpeg" preload="metadata"></audio>
+            <audio id="vor3" src="audio/vor3.mp3" type="audio/mpeg" preload="metadata"></audio>
+            <audio id="vor4" src="audio/vor4.mp3" type="audio/mpeg" preload="metadata"></audio>
+            <audio id="vor5" src="audio/vor5.mp3" type="audio/mpeg" preload="metadata"></audio>
+            <audio loop id="m1" src="audio/m1.mp3" type="audio/mpeg" preload="none"></audio>
+        </div>
+    </footer>
+    <script type="text/JavaScript" src="script.js"></script>
 </body>
 </html>

@@ -248,18 +248,17 @@ function fotomachen()  {
 
 //Zum Download data URL durch actet stream ersetzen. Da browser download nur über html link in body erlauben wird temporärer link erschaffen
 function bildherunterladen() {
-    const canvas =  Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
-    var link = document.createElement( 'a' ); 
-    var d = new Date();
-     var ja = d.getFullYear();
-     var mo = d.getMonth()+1;
-     var ta= d.getDate();
-     var st= d.getHours();
-     var mi = d.getMinutes();
-  link.download ='HIIT_'+ta+"_"+mo+"_"+ja+"_"+st+"_"+mi+".png";  
-  link.href = canvas;   
-  document.body.appendChild(link);  
-  link.click();  
+  const dataUrl = Bildcanvas.toDataURL("image/png");
+  var link = document.createElement('a');
+  var d = new Date();
+  var ja = d.getFullYear();
+  var mo = d.getMonth()+1;
+  var ta = d.getDate();
+  var st = d.getHours();
+  var mi = d.getMinutes();
+  link.download = 'HIIT_'+ta+"_"+mo+"_"+ja+"_"+st+"_"+mi+".png";
+  link.href = dataUrl;
+  document.body.appendChild(link);
+  link.click();
   document.body.removeChild(link);
-                                }
- 
+}
