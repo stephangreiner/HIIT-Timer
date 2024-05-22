@@ -1,2 +1,84 @@
-if(!self.define){let e,i={};const r=(r,d)=>(r=new URL(r+".js",d).href,i[r]||new Promise((i=>{if("document"in self){const e=document.createElement("script");e.src=r,e.onload=i,document.head.appendChild(e)}else e=r,importScripts(r),i()})).then((()=>{let e=i[r];if(!e)throw new Error(`Module ${r} didn’t register its module`);return e})));self.define=(d,o)=>{const a=e||("document"in self?document.currentScript.src:"")||location.href;if(i[a])return;let u={};const c=e=>r(e,a),f={module:{uri:a},exports:u,require:c};i[a]=Promise.all(d.map((e=>f[e]||c(e)))).then((e=>(o(...e),u)))}}define(["./workbox-9d23c35a"],(function(e){"use strict";self.addEventListener("message",(e=>{e.data&&"SKIP_WAITING"===e.data.type&&self.skipWaiting()})),e.precacheAndRoute([{url:"audio/ende1.mp3",revision:"e66d1b7fe4b67fa1ab95e885c8f7e65f"},{url:"audio/ende2.mp3",revision:"aa998dfb0cb620c8fa310d4fb7cae935"},{url:"audio/ende3.mp3",revision:"1f8b0bdf3d86571a1e658491d769b8ea"},{url:"audio/ende4.mp3",revision:"1f8b0bdf3d86571a1e658491d769b8ea"},{url:"audio/go1.mp3",revision:"a94b31d6edf3099594a40ba7f439195b"},{url:"audio/go2.mp3",revision:"689be3313701b195690ef20c79677ffb"},{url:"audio/go3.mp3",revision:"bb678b31bc170361a088e0d8f51a8cbf"},{url:"audio/go4.mp3",revision:"502681695b619961a632985023f65ffe"},{url:"audio/gongsound.mp3",revision:"ea87cdd814d376170570dc4629c01241"},{url:"audio/kurzepause1.mp3",revision:"66c1679e443378dc7816c1c8a51bce5a"},{url:"audio/kurzepause2.mp3",revision:"64e0cd983144a7d495050dbb53b46b48"},{url:"audio/kurzepause3.mp3",revision:"90ba5f56794967fa384ad43dd420d2a7"},{url:"audio/kurzepause4.mp3",revision:"5f4572c51024b6e62a7df25ec379814e"},{url:"audio/m1.mp3",revision:"ee031b640fa8f668c3078336277a4840"},{url:"audio/vor1.mp3",revision:"27d4d11b1f30735a2351d425881e5652"},{url:"audio/vor2.mp3",revision:"b467d0efa46aa1c2ee3f34a355360bf1"},{url:"audio/vor3.mp3",revision:"9221c895a9ac48892c4af94bca78d376"},{url:"audio/vor4.mp3",revision:"5b2ebfb25052434557e8bbd64ec3f61c"},{url:"audio/vor5.mp3",revision:"5febb58760d20486b720d874920fa36d"},{url:"bilder/favicon.ico",revision:"14f319248d0929cefc5769a2c74b57e2"},{url:"bilder/HIIT250x250.png",revision:"94a2321f5bc1b7637b89c6c027a4261f"},{url:"bilder/HIIT400x400.png",revision:"a227e1c2cee7f804dca23afc975ef0e2"},{url:"bilder/HIIT48x48.png",revision:"7ba97f2bf3ce4d57a545310603cab4be"},{url:"index.html",revision:"d38dba795581ce7ec3ef418e53eceeac"},{url:"manifest.json",revision:"91d93d807f62e1088fa571cfa30f5246"},{url:"script.js",revision:"54d14e8bdc79ac44deadd5cd53764e94"},{url:"style.css",revision:"83452d6558e9c639e9528f01cf3e5bbd"}],{ignoreURLParametersMatching:[/^utm_/,/^fbclid$/]})}));
-//# sourceMappingURL=sw.js.map
+
+
+// Set a name for the current cache
+
+var cacheName = 'Kniebv1';
+var cacheAssets = [
+
+];
+
+// Call install Event
+	// Wait until promise is finished
+	// When everything is set
+self.addEventListener('install', e => {
+	e.waitUntil(
+		caches.open(cacheName)
+		.then(cache => {
+			console.log(`Service Worker: Caching Files: ${cache}`);
+			cache.addAll(cacheAssets)			
+				.then(() => self.skipWaiting())
+		})
+	);
+})
+
+// Call Activate Event
+// Clean up old caches by looping through all of the
+	// caches and deleting any old caches or caches that
+	// are not defined in the list
+self.addEventListener('activate', e => {
+	console.log('Service Worker: Activated');
+	e.waitUntil(
+		caches.keys().then(cacheNames => {
+			return Promise.all(
+				cacheNames.map(
+					cache => {
+						if (cache !== cacheName) {
+							console.log('Service Worker: Clearing Old Cache');
+							return caches.delete(cache);
+						}
+					}
+				)
+			)
+		})
+	);
+})
+
+var cacheName = 'Kniebv1';
+
+// Call Fetch Event
+	// The response is a stream and in order the browser
+			// to consume the response and in the same time the
+			// cache consuming the response it needs to be
+			// cloned in order to have two streams.
+// Open cache
+	// Add response to cache
+
+self.addEventListener('fetch', e => {
+	console.log('Service Worker: Fetching');
+	e.respondWith(
+		fetch(e.request)
+		.then(res => {	
+			const resClone = res.clone();	
+			caches.open(cacheName)
+				.then(cache => {		
+					cache.put(e.request, resClone);
+				});
+			return res;
+		}).catch(
+			err => caches.match(e.request)
+			.then(res => res)
+		)
+	);
+});
+
+self.addEventListener('push', event => {
+	const options = {
+	  body: event.data ? event.data.text() : 'Default body',
+	  icon: 'favicon-16x16.png',
+	  badge: 'favicon-16x16.png'
+	};
+	event.waitUntil(
+	  self.registration.showNotification('Push Notification', options)
+	);
+  });
+  
