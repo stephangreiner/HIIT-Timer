@@ -76,8 +76,7 @@ tonwahl.addEventListener("change", function() {
     if(tonwahl.value == "10")    {tonv = 0; document.getElementById("tonwahl").style.backgroundColor ="#737373"}
     else if(tonwahl.value == "1"){tonv = 1;document.getElementById("tonwahl").style.backgroundColor ="#00ff00"}
     else if(tonwahl.value == "2"){tonv = 2;document.getElementById("tonwahl").style.backgroundColor ="#00ff00"}
-    else if(tonwahl.value == "3"){tonv = Math.floor(Math.random() * 4-0)+3;; document.getElementById("tonwahl").style.backgroundColor ="#00ff00";
-    console.log("tonverstestufe"+ tonv)}
+    else if(tonwahl.value == "3"){tonv = Math.floor(Math.random() * 4-0)+3;; document.getElementById("tonwahl").style.backgroundColor ="#00ff00"; }
 })    
 
 
@@ -115,7 +114,7 @@ function vorlauf(){
 
   
 function aktiv(){
-  console.log("tonv"+ tonv)
+  console.log("aktivtonv"+ tonv)
   aktivbalkenschrumpfer(); aktivaudio()
    document.body.style.backgroundColor = "#00ff00";
    document.getElementById("zurueckknopf").style.display = "none";
@@ -145,7 +144,7 @@ function ruhe(){
    BB.style.color = "black";
    ZA.style.display = "none";
    TA.innerHTML = "Pause";
-   if (index % 2 == 0 &&  index == arrPeriods.length-3){vorletzteruheaudio(),console.log("vorl" + arrPeriods.length-3)}
+   if (index % 2 == 0 &&  index == arrPeriods.length-3){vorletzteruheaudio(),console.log("vorletzteRundeaaPerriods" + arrPeriods.length-3)}
    else {ruheaudio()}  
                  }
 
@@ -164,7 +163,7 @@ function ende(){
 
 
 function aktivaudio(){
-  if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 11-0)+3;console.log("tonvaktiv"+ tonv)}; // integeger zwichen 3 unf 6 inbegriffen
+  if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 11-0)+3;console.log("tonvaktiv"+ tonv)}; // integeger zwichen 3 unf 9 inbegriffen
    if      (tonv==0){console.log("tonv"+ tonv)}
    else if (tonv==1){document.getElementById('gongsound').play();}
    else if (tonv==2){document.getElementById('m1').play();}
@@ -186,24 +185,24 @@ function aktivaudio(){
 
 function  ruheaudio(){
   if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 8-0)+3;};
-  if (tonv==0){console.log("jjjjjjjjjjjjj")}
+  if (tonv==0){console.log("ruhetonv==0!")}
   else if (tonv==1){document.getElementById('gongsound').play();}
   else if (tonv==2){document.getElementById('m1').pause();}
   else if (tonv==3){document.getElementById('kurzepausesound1').play()}
   else if (tonv==4){document.getElementById('kurzepausesound2').play()}
   else if (tonv==5){document.getElementById('kurzepausesound3').play()}
   else if (tonv==6){document.getElementById('kurzepausesound4').play()}
-  else if (tonv==3){document.getElementById('kurzepausesound5').play()}
-  else if (tonv==4){document.getElementById('kurzepausesound6').play()}
-  else if (tonv==5){document.getElementById('kurzepausesound7').play()}
-  else if (tonv==6){document.getElementById('kurzepausesound8').play()}
-  else{console.log("tonv"+ tonv)}
+  else if (tonv==7){document.getElementById('kurzepausesound5').play()}
+  else if (tonv==8){document.getElementById('kurzepausesound6').play()}
+  else if (tonv==9){document.getElementById('kurzepausesound7').play()}
+  else if (tonv==10){document.getElementById('kurzepausesound8').play()}
+  else{console.log("errorruheRundelogtonv"+ tonv)}
                         }
 
 
 function vorletzteruheaudio(){
   if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 6-0)+3;};
-  if (tonv==0){console.log("tonv = 0")}
+  if (tonv==0){console.log("tonv == 0")}
   else if (tonv==1){document.getElementById('gongsound').play();}
   else if (tonv==2) {document.getElementById('m1').pause();} 
   else if (tonv==3){document.getElementById('vor1').play();}
@@ -212,12 +211,12 @@ function vorletzteruheaudio(){
   else if (tonv==6){document.getElementById('vor4').play();}
   else if (tonv==7){document.getElementById('vor5').play();}
   else if (tonv==8){document.getElementById('vor6').play();}
-  else{console.log("tonv"+ tonv)}  
+  else{console.log("errorverltztelogtonv"+ tonv)}  
                         }
    
 function endeaudio() {
   if  (tonv > 2 && tonv < 18){tonv = Math.floor(Math.random() * 4-0)+3;};
-  if (tonv==0){console.log("tonv = o")}
+  if (tonv==0){console.log("endetonv == o")}
    else if (tonv==1){document.getElementById('gongsound').play();}
    else if (tonv==2){document.getElementById('m1').pause();}
    else if (tonv==3){document.getElementById('endesound1').play()}
