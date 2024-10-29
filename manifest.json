@@ -1,29 +1,24 @@
 {
-    "name": "HIIT",
-    "short_name": "HIIT",
-    "version":1,
-    "icons": [
+  "name": "nur10 Exercise Tracker",
+  "short_name": "nur10",
+  "description": "A lightweight exercise tracker for squats, pull-ups, push-ups, and back extensions.",
+  "version": "1.0.0",
+  "icons": [
       {
-        "src": "./bilder/HIIT48x48.png",
-        "sizes": "32x32",
-        "type": "image/png"
+          "src": "./media/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
       },
       {
-        "src": "./bilder/HIIT250x250.png",
-        "sizes": "192x192",
-        "type": "image/png" 
-      },  
-          {
-        "src": "./bilder/HIIT400x400.png",
-        "sizes": "512x512",
-        "type": "image/png" 
+          "src": "./media/android-chrome-512x512.png",
+          "sizes": "512x512",
+          "type": "image/png"
       }
-
-
-    ],
-    "theme_color": "#000000",
-    "background_color": "#000000",
-    "start_url": "/HIIT-Timer/",
-    "display": "standalone",
-    "orientation": "portrait"
-  }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "start_url": "/nur10/?source=pwa",
+  "scope": "/nur10/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

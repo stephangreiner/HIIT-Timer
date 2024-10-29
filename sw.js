@@ -1,2 +1,64 @@
-if(!self.define){let e,i={};const r=(r,d)=>(r=new URL(r+".js",d).href,i[r]||new Promise((i=>{if("document"in self){const e=document.createElement("script");e.src=r,e.onload=i,document.head.appendChild(e)}else e=r,importScripts(r),i()})).then((()=>{let e=i[r];if(!e)throw new Error(`Module ${r} didn’t register its module`);return e})));self.define=(d,o)=>{const a=e||("document"in self?document.currentScript.src:"")||location.href;if(i[a])return;let u={};const c=e=>r(e,a),f={module:{uri:a},exports:u,require:c};i[a]=Promise.all(d.map((e=>f[e]||c(e)))).then((e=>(o(...e),u)))}}define(["./workbox-9d23c35a"],(function(e){"use strict";self.addEventListener("message",(e=>{e.data&&"SKIP_WAITING"===e.data.type&&self.skipWaiting()})),e.precacheAndRoute([{url:"audio/ende1.mp3",revision:"e66d1b7fe4b67fa1ab95e885c8f7e65f"},{url:"audio/ende2.mp3",revision:"aa998dfb0cb620c8fa310d4fb7cae935"},{url:"audio/ende3.mp3",revision:"1f8b0bdf3d86571a1e658491d769b8ea"},{url:"audio/ende4.mp3",revision:"1f8b0bdf3d86571a1e658491d769b8ea"},{url:"audio/go1.mp3",revision:"a94b31d6edf3099594a40ba7f439195b"},{url:"audio/go2.mp3",revision:"689be3313701b195690ef20c79677ffb"},{url:"audio/go3.mp3",revision:"bb678b31bc170361a088e0d8f51a8cbf"},{url:"audio/go4.mp3",revision:"502681695b619961a632985023f65ffe"},{url:"audio/gongsound.mp3",revision:"ea87cdd814d376170570dc4629c01241"},{url:"audio/kurzepause1.mp3",revision:"66c1679e443378dc7816c1c8a51bce5a"},{url:"audio/kurzepause2.mp3",revision:"64e0cd983144a7d495050dbb53b46b48"},{url:"audio/kurzepause3.mp3",revision:"90ba5f56794967fa384ad43dd420d2a7"},{url:"audio/kurzepause4.mp3",revision:"5f4572c51024b6e62a7df25ec379814e"},{url:"audio/m1.mp3",revision:"ee031b640fa8f668c3078336277a4840"},{url:"audio/vor1.mp3",revision:"27d4d11b1f30735a2351d425881e5652"},{url:"audio/vor2.mp3",revision:"b467d0efa46aa1c2ee3f34a355360bf1"},{url:"audio/vor3.mp3",revision:"9221c895a9ac48892c4af94bca78d376"},{url:"audio/vor4.mp3",revision:"5b2ebfb25052434557e8bbd64ec3f61c"},{url:"audio/vor5.mp3",revision:"5febb58760d20486b720d874920fa36d"},{url:"bilder/favicon.ico",revision:"14f319248d0929cefc5769a2c74b57e2"},{url:"bilder/HIIT250x250.png",revision:"94a2321f5bc1b7637b89c6c027a4261f"},{url:"bilder/HIIT400x400.png",revision:"a227e1c2cee7f804dca23afc975ef0e2"},{url:"bilder/HIIT48x48.png",revision:"7ba97f2bf3ce4d57a545310603cab4be"},{url:"index.html",revision:"d38dba795581ce7ec3ef418e53eceeac"},{url:"manifest.json",revision:"91d93d807f62e1088fa571cfa30f5246"},{url:"script.js",revision:"54d14e8bdc79ac44deadd5cd53764e94"},{url:"style.css",revision:"83452d6558e9c639e9528f01cf3e5bbd"}],{ignoreURLParametersMatching:[/^utm_/,/^fbclid$/]})}));
-//# sourceMappingURL=sw.js.map
+const CACHE_VERSION = 'v1';
+const CACHE_NAME = `Knieb-${CACHE_VERSION}`;
+const CACHE_ASSETS = [
+    '/',                    // Root URL
+    '/index.html',          // Main HTML
+    '/manifest.json',       // Manifest
+    '/script.js',           // Main JavaScript
+    '/style.css',           // CSS (if applicable)
+    '/media/favicon.ico',   // Favicon
+    '/media/flach.png',     // Image for Squats
+    '/media/hoch.png',      // Image for Pull-Ups
+    '/media/quer.png',      // Image for Back Extensions
+    '/media/LiegeS.png'     // Image for Push-Ups
+];
+
+// Install Event: Caches specified assets
+self.addEventListener('install', async (event) => {
+    console.log(`Service Worker: Installing, caching assets`);
+    event.waitUntil(
+        (async () => {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.addAll(CACHE_ASSETS);
+            await self.skipWaiting();
+            console.log('Service Worker: Cached all assets');
+        })().catch(error => console.error('Install failed:', error))
+    );
+});
+
+// Activate Event: Deletes old caches
+self.addEventListener('activate', async (event) => {
+    console.log('Service Worker: Activated');
+    event.waitUntil(
+        (async () => {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+                cacheNames.map(name => {
+                    if (name !== CACHE_NAME) {
+                        console.log(`Service Worker: Clearing old cache: ${name}`);
+                        return caches.delete(name);
+                    }
+                })
+            );
+            await self.clients.claim(); // Immediately activate the new cache
+        })().catch(error => console.error('Activate failed:', error))
+    );
+});
+
+// Fetch Event: Serves from cache first, then network if unavailable
+self.addEventListener('fetch', async (event) => {
+    console.log(`Service Worker: Fetching ${event.request.url}`);
+    event.respondWith(
+        (async () => {
+            try {
+                const response = await fetch(event.request);
+                const cache = await caches.open(CACHE_NAME);
+                cache.put(event.request, response.clone());
+                return response;
+            } catch (error) {
+                const cachedResponse = await caches.match(event.request);
+                return cachedResponse || new Response("Offline", { status: 503 });
+            }
+        })()
+    );
+});
