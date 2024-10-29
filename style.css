@@ -1,323 +1,211 @@
-:root {
-  --lfarbe: rgb(238, 255, 86);
-  --kfarbe: rgb(255, 0, 0);
-  --kzfarbe: rgb(55, 255, 0);
-  --rhfarbe: rgb(0, 255, 238);
-}
+html,body{
+     width: 100%;
+     height: 100%;
+     background-color: black; 
+      /* feste Postion kein scrollen -> geeignet für flexbox divs -> relative größenangaben */
+     position: fixed;
+     margin: 0;}
 
-
-/* Global Styles */
-body {
-  background-color: rgb(0, 0, 0);
-  border-radius: 50%;
-  position: fixed;
+#Einstellungsdiv {
+  width: 100%;
   height: 100%;
+  margin: 0%;
+    /* ist flexbox div -> besondere Angaben */
+  display : flex; 
+      flex-direction : column; 
+      justify-content:space-evenly; 
+      align-content: space-between;}
+
+ #startdiv {text-align: center;height: 20%;}                 
+    #startknopf{
+       background-color: #00ff00;
+       color: black;
+       height:90%; 
+       width: 30%; 
+       border-radius: 5%;
+       text-align: center;
+       border: none;
+       cursor: pointer;}
+
+#moduswahldiv {
   width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/* Start Division */
-#startdiv {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  border-radius: 50%;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  align-items: center;
-}
-
-/* Input Range Styles */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  cursor: pointer;
-  width: 25rem;
-}
-
-/* Chrome, Safari, Opera, and Edge Chromium styles */
-input[type="range"]::-webkit-slider-runnable-track {
-  background-color: rgb(115, 115, 115);
-  height: 0.2rem;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  margin-top: -5px;
-  background-color: rgb(115, 115, 115);
-  border-radius: 0.5rem;
-  height: 1rem;
-  width: 1rem;
-}
-
-/* Range Division */
-#rangediv {
-  width: 50%;
-}
-
-/* Modifier Division */
-#mod {
-  width: 100%;
-  display: flex;
+  height: 7% ;
+  display:flex;
   flex-direction: row;
-  justify-content: space-between;
-}
-
-/* Datalist */
-datalist {
-  margin-top: -1rem;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-
-/* Option Colors */
-#o1 { color: var(--kfarbe); }
-#o2 { color: var(--kzfarbe); }
-#o3 { color: var(--rhfarbe);}
-#o4 { color: var(--lfarbe); }
-
-/* Start Button */
-#startb {
-  background-color: var(--kfarbe);;
-  text-align: center;
-  border-radius: 50%;
-  border: none;
-  padding: 3%;
-}
-
-/* Wrapper Division */
-#wdiv {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-}
-
-/* State Button */
-#sta_b {
-  background-color: #a99c9c7c;
-  opacity: 0.5;
-}
-/* State Division */
-/* State Division */
-#sta_div {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  background-color: #000000;
-  border-radius: 50%;
-  height: 100%;
-  width: 100%;
-  color: white;
-}
-
-/* Date Input */
-#datum {
-  border: none;
-  text-align: center;
-  font-size: 1.5rem;
-  padding: 0.5rem;
-}
-
-/* Table Wrapper for Scrolling */
-.table-wrapper {
-  overflow-x: auto;
-  width: 100%;
-  margin: 5%;
-}
-
-/* Tables */
-#tabel{
-  text-align: center;
-  font-size: medium;
-  width: 100%;
-  max-width: 100%;
-  border-collapse: collapse;
-}
-#table2 {
-  text-align: center;
-  font-size: medium;
-  width: 100%;
-  max-width: 100%;
-  border-collapse: collapse;
-}
-
-tbody {
-  width: 100%;
-}
-
-td, th {
-
-  border: 1px solid #333;
-}
-
-td:nth-child(1) {
-  width: 15%;
-}
-
-td:nth-child(2) {
-  background-color: var(--kfarbe);
-  color: #000000;
-}
-
-td:nth-child(3) {
-  background-color: var(--kzfarbe);
-  color: #000000;
-}
-
-td:nth-child(4) {
-  background-color: var(--rhfarbe);
-  color: #000000;
-}
-
-td:nth-child(5) {
-  background-color: var(--lfarbe);
-  color: #000000;
-}
-
-#tabel tr:nth-child(2) {
-  font-size: xx-large;
-  padding: 2%;
-}
-
-#tabel tr:nth-child(1) img {
-  width: 30px;
-  height: 30px;
-}
-
-
-/* View Button */
-#ansichtw {
-  background-color: rgb(115, 115, 115);
-  color: #000000;
-  cursor: pointer;
-  text-align: center;
-  border: none;
-  width: 18%;
-  height: 90%;
-  border-radius: 5%;
-  margin: 3%;
-}
-
-/* Tone Button */
-#tonb {
-  background-color: rgb(115, 115, 115);
-  width: 18%;
-  height: 90%;
-  color: #000000;
-  cursor: pointer;
-  text-align: center;
-  border: none;
-  border-radius: 50%;
-  margin: 3%;
-}
-
-/* Active Canvas Division */
-#aktivcanvasdiv {
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Canvas Text Styles */
-#KB { font-size: xx-large; }
-#GLW, #GLW_B { color: rgb(42, 112, 165); }
-#GSW, #GSW_B { color: rgb(217, 114, 40); }
-
-/* Active Division */
-#aktivdiv {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: flex-end;
-  justify-content: flex-end;
-}
-
-/* One Button */
-#oneb {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  border: none;
-  border-radius: 50%;
-  align-items: center;
-}
-
-/* Number Display */
-#Anzahl {
-  color: rgb(255, 255, 255);
-  font-size: 400%;
-}
-
-/* Fixed Back Button */
-.zurueck {
-  position: fixed;
-  height: 2rem;
-  width: 2rem;
-}
-
-/* Push-up Section */
-#Ldiv {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: var(--lfarbe);
-  align-items: flex-end;
-  justify-content: flex-end;
-}
-
-/* Push-up Button */
-#LieB {
-  background-color: var(--lfarbe);
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  border: none;
-  border-radius: 50%;
-  align-items: center;
-}
-
-/* Push-up Text */
-#LieA {
-  color: black;
-  font-size: 300%;
-}
-
-.symbol_KB {
-width:20px;
-height:20px; 
-background-color: var(--kfarbe);
-border-radius: 50%;}
-
-.symbol_KZ {
-  width:20px;
-  height:20px; 
-  background-color: var(--kzfarbe);
-  border-radius: 50%;}
-
-.symbol_RH {
-    width:20px;
-    height:20px; 
-    background-color: var(--rhfarbe);
-    border-radius: 50%;}
+  justify-content: space-between}
+  
     
-.symbol_L {
-      width:20px;
-      height:20px; 
-      background-color: var(--lfarbe);
-      border-radius: 50%;}
+   select {-moz-appearance: none;-webkit-appearance: none;}select::-ms-expand {display: none;}
+    
+       .switch {
+        position: relative;
+        width: 20%;
+        height: 100%;
+        margin-left:3%;
+        margin-right:3%
+      }
+          
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .slider {        
+        background-color: rgb(115, 115, 115);
+        position: absolute;
+        border-radius: 4%;
+        cursor: pointer;
+        text-align: right;
+        height: 100%;
+        width: 100%;
+        top: 0%;
+        left: 0%;
+        right: 0%;
+        bottom: 0%;
+      
+      }
+      
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 80%;
+        width: 40%;
+        left: 3%;
+        right: 3%;
+        bottom: 10%;
+        top: 10%;
+        background-color: rgb(255, 255, 255);
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%;
+      }
+     
+      
+      input:checked + .slider {
+        background-color:#00ff00;
+        text-align: justify;
+        height: 100%;
+        width: 100%;
+        right: 0%;
+        left: 0%;
+      }
+      
+      #fotobild{
+       
+          margin: 5%;
+        height: 90%;
+        width: 40%;
+       
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(130%);
+        -ms-transform: translateX(130%);
+        transform: translateX(130%);}
+      
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+
+
+    #tonwahl {
+        background-color: rgb(115, 115, 115);
+         color: #000000;
+         cursor: pointer;
+         text-align: center;
+         border: none;
+         width: 20%;
+         height: 100%;
+        border-radius: 4%; 
+        margin-left:3%;
+        margin-right:3% 
+      
+       }
+    option {background-color:rgb(115, 115, 115);}
+     
+  
+ #zeitwahldivldiv {margin-bottom: 3%;width: 100%; }    
+       .Zeilediv {
+            width : 100%; 
+             margin: 3%;
+             display : flex; 
+               flex-direction : row; 
+               justify-content : space-evenly; 
+               align-items: stretch;}
+                  .text {
+                     width : 20%;
+                     text-align: left;
+                     color: #ffffff; }     
+                   #eindauer,#einruhe,#einrunden {
+                     width : 60%; 
+                     cursor : pointer;
+                    color: antiquewhite;}
+                   #dauer,#ruhe,#runden {
+                     width : 10%;
+                     color: white;
+                     text-align: center}
+
+    
+  
+/* Ab hier am Anfang unsichtbar */ 
+#zeigendiv {
+   width: 100%;
+   height: 80%;
+   display: flex;
+   flex-direction : column; 
+   justify-content : space-between;
+   align-items : center;
+   border-radius: 5%;
+   border: none;
+   visibility: hidden;
+   }
+
+ #Textanzeige {
+   color: rgb(255, 255, 255);
+   margin-top: 5%
+   }
+
+ #Rundenanzeige,#Zeitanzeige {
+  font-size: 150%;
+  background-color: white;
+  border-radius : 10%;
+  text-align: center;
+  margin:5%
+ }
+
+ #zurueckknopf,#herunterladenknopf {
+   background-color: rgba(0, 0, 0, 0.432);
+   color: rgb(182, 182, 182) ;
+   border: none;
+   cursor: pointer;
+   }
+   
+ #Gesamtbalken {
+   display : flex; 
+   flex-direction: row; 
+   align-items : center;
+   background-color: rgba(87, 88, 89, 0.429);
+   width: 340px;
+   height: 0px;
+   }
+
+ #Balkenzeit { 
+  display: flex;
+  justify-content:center;
+  background-color: white;
+   align-items:center;
+   width: 340px;
+   height: 300px;
+   margin: auto;
+   }
+
+ /* Foto */   
+#Gesamtfotodiv{ width: 60% ; height: 40%;text-align: center; }
+ /* bedeutungslos */   
+#Videoaufnahme{ display: none;}
+/* der Stream soll nicht angezeigt werden, Ansonsten mit der häfte der Defaulaulösung von 640/480 */
+#streamansicht{ display: none;}
+/* größe des Anzeigendiv. Die Anzahl der Pixel richtet sich nach den Angaben bei contraints des Videos  */
+#bildcanvas { width: 50%; height: 70%; display: flex;  margin: auto;}
+  
