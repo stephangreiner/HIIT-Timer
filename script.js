@@ -2,6 +2,8 @@ const belastungseingabe = document.getElementById('eindauer'); // Eingabe-Elemen
 const ausruheingabe = document.getElementById('einruhe');
 const rundeneingabe = document.getElementById('einrunden');
 const tonwahl = document.getElementById("tonwahl");
+const startknopf = document.getElementById("startknopf");
+const zurueckknopf = document.getElementById("zurueckknopf");
 
 const ZA = document.getElementById('Zeitanzeige'); // Ausgabe-Elemente
 const RA = document.getElementById('Rundenanzeige');
