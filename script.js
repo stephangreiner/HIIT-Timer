@@ -4,6 +4,11 @@ const rundeneingabe = document.getElementById('einrunden');
 const tonwahl = document.getElementById("tonwahl");
 const startknopf = document.getElementById("startknopf");
 const zurueckknopf = document.getElementById("zurueckknopf");
+const fotoordnerknopf = document.getElementById("fotoordnerknopf");
+const fotoordnerinhalt = document.getElementById("fotoordnerinhalt");
+const fotoordnerliste = document.getElementById("fotoordnerliste");
+const fotoordnerleeren = document.getElementById("fotoordnerleeren");
+const fotoSpeicherKey = "hiitFotoOrdner";
 
 const ZA = document.getElementById('Zeitanzeige'); // Ausgabe-Elemente
 const RA = document.getElementById('Rundenanzeige');
@@ -37,6 +42,20 @@ window.onload = function() {
   rundeneingabe.oninput = function() {
     document.getElementById('runden').innerHTML = rundeneingabe.value;
   };
+
+  fotoordnerinhalt.style.display = "none";
+  renderFotoordner();
+};
+
+fotoordnerknopf.onclick = function() {
+  const istSichtbar = fotoordnerinhalt.style.display === "block";
+  fotoordnerinhalt.style.display = istSichtbar ? "none" : "block";
+  fotoordnerknopf.textContent = istSichtbar ? "📁 Foto-Ordner öffnen" : "📁 Foto-Ordner schließen";
+};
+
+fotoordnerleeren.onclick = function() {
+  localStorage.removeItem(fotoSpeicherKey);
+  renderFotoordner();
 };
 
 startknopf.onclick = function() {
@@ -446,7 +465,67 @@ function fotomachen() {
   Bildcanvas.width = Streamansicht.videoWidth;
   Bildcanvas.height = Streamansicht.videoHeight;
   Bildcanvas.getContext("2d").drawImage(Streamansicht, 0, 0);
+  bildImFotoordnerSpeichern();
   cameraStop();
+}
+
+function bildImFotoordnerSpeichern() {
+  const bild = Bildcanvas.toDataURL("image/png");
+  const ordner = ladeFotoordner();
+  ordner.unshift({
+    zeitstempel: new Date().toISOString(),
+    bild
+  });
+
+  localStorage.setItem(fotoSpeicherKey, JSON.stringify(ordner.slice(0, 40)));
+  renderFotoordner();
+}
+
+function ladeFotoordner() {
+  const roh = localStorage.getItem(fotoSpeicherKey);
+  if (!roh) {
+    return [];
+  }
+
+  try {
+    const inhalt = JSON.parse(roh);
+    return Array.isArray(inhalt) ? inhalt : [];
+  } catch (error) {
+    console.error("Foto-Ordner konnte nicht geladen werden", error);
+    return [];
+  }
+}
+
+function renderFotoordner() {
+  const ordner = ladeFotoordner();
+  fotoordnerliste.innerHTML = "";
+
+  if (!ordner.length) {
+    fotoordnerliste.innerHTML = "<p>Noch keine Fotos vorhanden.</p>";
+    return;
+  }
+
+  ordner.forEach(function(eintrag, index) {
+    const element = document.createElement("div");
+    element.className = "fotoeintrag";
+
+    const bild = document.createElement("img");
+    bild.src = eintrag.bild;
+    bild.alt = `Training Foto ${index + 1}`;
+
+    const zeit = document.createElement("p");
+    zeit.textContent = new Date(eintrag.zeitstempel).toLocaleString("de-DE");
+
+    const download = document.createElement("a");
+    download.href = eintrag.bild;
+    download.download = `HIIT_Foto_${index + 1}.png`;
+    download.textContent = "Download";
+
+    element.appendChild(bild);
+    element.appendChild(zeit);
+    element.appendChild(download);
+    fotoordnerliste.appendChild(element);
+  });
 }
 
 function bildherunterladen() {

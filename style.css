@@ -125,7 +125,7 @@ html,body{
     option {background-color:rgb(115, 115, 115);}
      
   
- #zeitwahldivldiv {margin-bottom: 3%;width: 100%; }    
+#zeitwahldivldiv {margin-bottom: 3%;width: 100%; }    
        .Zeilediv {
             width : 100%; 
              margin: 3%;
@@ -145,6 +145,70 @@ html,body{
                      width : 10%;
                      color: white;
                      text-align: center}
+
+#fotoordnerbereich {
+  width: 94%;
+  margin: 0 auto;
+}
+
+#fotoordnerknopf,
+#fotoordnerleeren {
+  background-color: #00ff00;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+#fotoordnerknopf {
+  width: 100%;
+}
+
+#fotoordnerinhalt {
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 8px;
+  max-height: 210px;
+  overflow-y: auto;
+}
+
+#fotoordnerkopf {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 8px;
+}
+
+#fotoordnerliste {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+}
+
+.fotoeintrag {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 5px;
+  padding: 6px;
+  color: white;
+  font-size: 12px;
+}
+
+.fotoeintrag img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.fotoeintrag p {
+  margin: 6px 0;
+}
+
+.fotoeintrag a {
+  color: #00ff00;
+  text-decoration: none;
+}
 
     
   
