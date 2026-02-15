@@ -4,11 +4,10 @@ const rundeneingabe = document.getElementById('einrunden');
 const tonwahl = document.getElementById("tonwahl");
 const startknopf = document.getElementById("startknopf");
 const zurueckknopf = document.getElementById("zurueckknopf");
-const fotoordnerknopf = document.getElementById("fotoordnerknopf");
-const fotoordnerinhalt = document.getElementById("fotoordnerinhalt");
-const fotoordnerliste = document.getElementById("fotoordnerliste");
-const fotoordnerleeren = document.getElementById("fotoordnerleeren");
-const fotoSpeicherKey = "hiitFotoOrdner";
+const kameramodus = document.getElementById("kameramodus");
+const mehrfachdownloadbereich = document.getElementById("mehrfachdownloadbereich");
+const mehrfachdownloadliste = document.getElementById("mehrfachdownloadliste");
+let sessionFotos = [];
 
 const ZA = document.getElementById('Zeitanzeige'); // Ausgabe-Elemente
 const RA = document.getElementById('Rundenanzeige');
@@ -43,22 +42,13 @@ window.onload = function() {
     document.getElementById('runden').innerHTML = rundeneingabe.value;
   };
 
-  fotoordnerinhalt.style.display = "none";
-  renderFotoordner();
-};
-
-fotoordnerknopf.onclick = function() {
-  const istSichtbar = fotoordnerinhalt.style.display === "block";
-  fotoordnerinhalt.style.display = istSichtbar ? "none" : "block";
-  fotoordnerknopf.textContent = istSichtbar ? "📁 Foto-Ordner öffnen" : "📁 Foto-Ordner schließen";
-};
-
-fotoordnerleeren.onclick = function() {
-  localStorage.removeItem(fotoSpeicherKey);
-  renderFotoordner();
+  mehrfachdownloadbereich.style.display = "none";
+  kameramodus.value = "zufall";
 };
 
 startknopf.onclick = function() {
+  sessionFotos = [];
+  renderMehrfachDownloads();
   runTabata(5, belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
   document.getElementById('zeigendiv').style.visibility = 'visible';
   document.getElementById("Einstellungsdiv").style.display = "none";
@@ -144,7 +134,6 @@ tonwahl.addEventListener("change", function() {
   }
 });
 
-const Foto = document.getElementById("Fotomodus");
 const GFD = document.getElementById("Gesamtfotodiv");
 GFD.style.display = "none";
 
@@ -172,7 +161,10 @@ function cameraStart() {
 }
 
 function cameraStop() {
-  track.stop();
+  if (track) {
+    track.stop();
+    track = null;
+  }
   Streamansicht.srcObject = null;
 }
 
@@ -209,13 +201,12 @@ function aktiv() {
 
   console.log(Streamansicht.srcObject);
 
-  if (fotorand === 0 && Streamansicht.srcObject !== null) {
+  const sollFotoMachen = Streamansicht.srcObject !== null && (kameramodus.value === "alle" || fotorand === 0);
+
+  if (sollFotoMachen) {
     setTimeout(function() {
       fotomachen();
     }, (belastungseingabe.value * 1000) / 2);
-    setTimeout(function() {
-      cameraStop();
-    }, belastungseingabe.value * 1000);
   }
 }
 
@@ -241,6 +232,7 @@ function ende() {
   if (Streamansicht.srcObject !== null) {
     cameraStop();
   }
+  renderMehrfachDownloads();
   document.getElementById("zurueckknopf").style.display = "";
   document.getElementById("herunterladenknopf").style.display = "";
   document.getElementById("Balkendiv").style.display = "none";
@@ -462,73 +454,44 @@ const Streamansicht = document.getElementById("streamansicht");
 const Bildcanvas = document.getElementById("bildcanvas");
 
 function fotomachen() {
-  Bildcanvas.width = Streamansicht.videoWidth;
-  Bildcanvas.height = Streamansicht.videoHeight;
-  Bildcanvas.getContext("2d").drawImage(Streamansicht, 0, 0);
-  bildImFotoordnerSpeichern();
-  cameraStop();
-}
-
-function bildImFotoordnerSpeichern() {
-  const bild = Bildcanvas.toDataURL("image/png");
-  const ordner = ladeFotoordner();
-  ordner.unshift({
-    zeitstempel: new Date().toISOString(),
-    bild
-  });
-
-  localStorage.setItem(fotoSpeicherKey, JSON.stringify(ordner.slice(0, 40)));
-  renderFotoordner();
-}
-
-function ladeFotoordner() {
-  const roh = localStorage.getItem(fotoSpeicherKey);
-  if (!roh) {
-    return [];
-  }
-
-  try {
-    const inhalt = JSON.parse(roh);
-    return Array.isArray(inhalt) ? inhalt : [];
-  } catch (error) {
-    console.error("Foto-Ordner konnte nicht geladen werden", error);
-    return [];
-  }
-}
-
-function renderFotoordner() {
-  const ordner = ladeFotoordner();
-  fotoordnerliste.innerHTML = "";
-
-  if (!ordner.length) {
-    fotoordnerliste.innerHTML = "<p>Noch keine Fotos vorhanden.</p>";
+  if (!Streamansicht.videoWidth || !Streamansicht.videoHeight) {
     return;
   }
 
-  ordner.forEach(function(eintrag, index) {
-    const element = document.createElement("div");
-    element.className = "fotoeintrag";
+  Bildcanvas.width = Streamansicht.videoWidth;
+  Bildcanvas.height = Streamansicht.videoHeight;
+  Bildcanvas.getContext("2d").drawImage(Streamansicht, 0, 0);
+  sessionFotos.push({
+    zeitstempel: new Date().toISOString(),
+    bild: Bildcanvas.toDataURL("image/png")
+  });
+}
 
-    const bild = document.createElement("img");
-    bild.src = eintrag.bild;
-    bild.alt = `Training Foto ${index + 1}`;
+function renderMehrfachDownloads() {
+  mehrfachdownloadliste.innerHTML = "";
 
-    const zeit = document.createElement("p");
-    zeit.textContent = new Date(eintrag.zeitstempel).toLocaleString("de-DE");
+  if (!sessionFotos.length) {
+    mehrfachdownloadbereich.style.display = "none";
+    return;
+  }
 
-    const download = document.createElement("a");
-    download.href = eintrag.bild;
-    download.download = `HIIT_Foto_${index + 1}.png`;
-    download.textContent = "Download";
+  mehrfachdownloadbereich.style.display = "block";
+  sessionFotos.forEach(function(eintrag, index) {
+    const link = document.createElement("a");
+    const zeit = new Date(eintrag.zeitstempel);
+    const stempel = `${zeit.getHours()}_${zeit.getMinutes()}_${zeit.getSeconds()}`;
 
-    element.appendChild(bild);
-    element.appendChild(zeit);
-    element.appendChild(download);
-    fotoordnerliste.appendChild(element);
+    link.className = "mehrfachdownloadlink";
+    link.href = eintrag.bild;
+    link.download = `HIIT_Session_${index + 1}_${stempel}.png`;
+    link.textContent = `Download Foto ${index + 1}`;
+
+    mehrfachdownloadliste.appendChild(link);
   });
 }
 
 function bildherunterladen() {
+
   const canvas = Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
   const link = document.createElement('a');
   const d = new Date();

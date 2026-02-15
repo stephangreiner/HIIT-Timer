@@ -7,15 +7,18 @@
         <link rel="manifest" href="./manifest.json" />
     <link rel="stylesheet" href="style.css">
     <script>
-  
 if (navigator.serviceWorker) {
-  window.addEventListener('load', () => {
-      navigator.serviceWorker
-          .register('/HIIT-Timer/sw.js')
-          .then(reg => console.log('Service Worker registriert'))
-          .catch(swErr => console.log(
-                `Service Worker Installationsfehler: ${swErr}}`));
-    });
+  window.addEventListener('load', async () => {
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(registrations.map(reg => reg.unregister()));
+
+    if (window.caches) {
+      const cacheKeys = await caches.keys();
+      await Promise.all(cacheKeys.map(key => caches.delete(key)));
+    }
+
+    console.log('Service Worker deaktiviert für stabile Vorschau');
+  });
 }
       </script>
 
@@ -28,7 +31,7 @@ if (navigator.serviceWorker) {
     <div id=startdiv>
        <button id=startknopf onclick=runtabata()>los</button>
     </div>
-     <div id="moduswahldiv">
+    <div id="moduswahldiv">
      
         <label class ="switch">
          <input type="checkbox" id="fotocheck" onclick="camera()">
@@ -40,6 +43,11 @@ if (navigator.serviceWorker) {
             <option value="1">🔈Gong</option>
             <option value="2">🔈Musik</option>
             <option value="3">🔈Liebe Schätze</option>
+      </select>
+
+      <select title="kameramodus" id="kameramodus">
+            <option value="zufall">📷 Zufallsfoto</option>
+            <option value="alle">📷 Jede Session</option>
       </select>
 
     </div>
@@ -60,19 +68,6 @@ if (navigator.serviceWorker) {
        <span id='runden'></span>
     </div>
     </div>
-
-    <div id="fotoordnerbereich">
-      <button id="fotoordnerknopf" type="button">📁 Foto-Ordner öffnen</button>
-      <div id="fotoordnerinhalt">
-        <div id="fotoordnerkopf">
-          <span>Gespeicherte Trainingsfotos</span>
-          <button id="fotoordnerleeren" type="button">Alle löschen</button>
-        </div>
-        <div id="fotoordnerliste"></div>
-      </div>
-    </div>
-
-
 </div> 
     <div id = "zeigendiv">
       <div id='Textanzeige'><h1></h1></div>
@@ -86,6 +81,10 @@ if (navigator.serviceWorker) {
          <video id="streamansicht" autoplay></video>   	 
          <canvas id="bildcanvas"></canvas>   
           <button id="herunterladenknopf" onclick=bildherunterladen() download="hiit.png" ><img src="./bilder/herunterladensymbol.png" width="50%" height="50%"alt="herunterladen"></button>        
+      </div>
+      <div id="mehrfachdownloadbereich">
+        <h3>Aufgenommene Fotos</h3>
+        <div id="mehrfachdownloadliste"></div>
       </div>
  <button id="zurueckknopf" >zurück</button>
 </div>
