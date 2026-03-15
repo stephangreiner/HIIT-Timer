@@ -150,9 +150,9 @@ html,body{
 #mehrfachdownloadbereich {
   display: none;
   width: 90%;
-  max-height: 140px;
+  max-height: 260px;
   overflow-y: auto;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   border-radius: 8px;
   padding: 10px;
@@ -169,12 +169,28 @@ html,body{
   gap: 8px;
 }
 
+.mehrfachfotokachel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 120px;
+}
+
+.mehrfachfotovorschau {
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .mehrfachdownloadlink {
   color: #00ff00;
   text-decoration: none;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 4px;
   padding: 4px 8px;
+  text-align: center;
 }
 
     

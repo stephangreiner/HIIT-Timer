@@ -7,6 +7,7 @@ const zurueckknopf = document.getElementById("zurueckknopf");
 const kameramodus = document.getElementById("kameramodus");
 const mehrfachdownloadbereich = document.getElementById("mehrfachdownloadbereich");
 const mehrfachdownloadliste = document.getElementById("mehrfachdownloadliste");
+const fotoueberschrift = document.getElementById("fotoueberschrift");
 let sessionFotos = [];
 
 const ZA = document.getElementById('Zeitanzeige'); // Ausgabe-Elemente
@@ -88,7 +89,7 @@ function uhrwerk(arrPeriods, index) {
       BB.innerHTML = "";
     }
 
-    if (zeitunterschied === 0) {
+    if (zeitunterschied <= 0) {
       clearInterval(l);
       if (index < arrPeriods.length - 1) {
         index++;
@@ -204,10 +205,23 @@ function aktiv() {
   const sollFotoMachen = Streamansicht.srcObject !== null && (kameramodus.value === "alle" || fotorand === 0);
 
   if (sollFotoMachen) {
+    const aktivzeitInMs = Number(belastungseingabe.value) * 1000;
+    const fotoverzoegerung = zufallsFotoZeitpunkt(aktivzeitInMs);
+
     setTimeout(function() {
       fotomachen();
-    }, (belastungseingabe.value * 1000) / 2);
+    }, fotoverzoegerung);
   }
+}
+
+function zufallsFotoZeitpunkt(aktivzeitInMs) {
+  if (!aktivzeitInMs || aktivzeitInMs <= 1200) {
+    return Math.max(100, aktivzeitInMs / 2);
+  }
+
+  const min = 500;
+  const max = aktivzeitInMs - 500;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function ruhe() {
@@ -465,28 +479,58 @@ function fotomachen() {
     zeitstempel: new Date().toISOString(),
     bild: Bildcanvas.toDataURL("image/png")
   });
+
+  renderMehrfachDownloads();
 }
 
 function renderMehrfachDownloads() {
   mehrfachdownloadliste.innerHTML = "";
+  const herunterladenknopf = document.getElementById("herunterladenknopf");
 
   if (!sessionFotos.length) {
     mehrfachdownloadbereich.style.display = "none";
+    if (fotoueberschrift) {
+      fotoueberschrift.textContent = "Aufgenommene Fotos";
+    }
+    Bildcanvas.style.display = "flex";
+    herunterladenknopf.style.display = "";
     return;
   }
 
   mehrfachdownloadbereich.style.display = "block";
+  if (fotoueberschrift) {
+    fotoueberschrift.textContent = `Aufgenommene Fotos (${sessionFotos.length})`;
+  }
+
+  if (sessionFotos.length > 1) {
+    Bildcanvas.style.display = "none";
+    herunterladenknopf.style.display = "none";
+  } else {
+    Bildcanvas.style.display = "flex";
+    herunterladenknopf.style.display = "";
+  }
+
   sessionFotos.forEach(function(eintrag, index) {
+    const kachel = document.createElement("div");
+    const bild = document.createElement("img");
     const link = document.createElement("a");
     const zeit = new Date(eintrag.zeitstempel);
     const stempel = `${zeit.getHours()}_${zeit.getMinutes()}_${zeit.getSeconds()}`;
+
+    kachel.className = "mehrfachfotokachel";
+
+    bild.className = "mehrfachfotovorschau";
+    bild.src = eintrag.bild;
+    bild.alt = `Foto ${index + 1}`;
 
     link.className = "mehrfachdownloadlink";
     link.href = eintrag.bild;
     link.download = `HIIT_Session_${index + 1}_${stempel}.png`;
     link.textContent = `Download Foto ${index + 1}`;
 
-    mehrfachdownloadliste.appendChild(link);
+    kachel.appendChild(bild);
+    kachel.appendChild(link);
+    mehrfachdownloadliste.appendChild(kachel);
   });
 }
 
