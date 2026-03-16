@@ -151,8 +151,12 @@ function camera() {
 function cameraStart() {
   navigator.mediaDevices
     .getUserMedia(constraints)
-    .then(function(stream) {
+    .then(async function(stream) {
       track = stream.getTracks()[0];
+      await setupKameraQualitaet(track);
+      if (typeof ImageCapture !== "undefined") {
+        imageCapture = new ImageCapture(track);
+      }
       Streamansicht.srcObject = stream;
     })
     .catch(function(error) {
@@ -165,6 +169,7 @@ function cameraStop() {
     track.stop();
     track = null;
   }
+  imageCapture = null;
   Streamansicht.srcObject = null;
 }
 
@@ -456,27 +461,97 @@ function ruhebalkenwachser() {
 // Video-Stream Einstellungen
 const constraints = {
   video: {
-    width: { ideal: 3840 },
-    height: { ideal: 2160 },
+    width: { ideal: 3840, max: 3840 },
+    height: { ideal: 2160, max: 2160 },
     facingMode: "user"
   },
   audio: false
 };
 let track = null;
+let imageCapture = null;
 const Streamansicht = document.getElementById("streamansicht");
 const Bildcanvas = document.getElementById("bildcanvas");
 
-function fotomachen() {
+
+function setupKameraQualitaet(videotrack) {
+  try {
+    const faehigkeiten = videotrack.getCapabilities();
+    const erweiterteEinstellungen = [];
+
+    if (faehigkeiten.focusMode && faehigkeiten.focusMode.includes("continuous")) {
+      erweiterteEinstellungen.push({ focusMode: "continuous" });
+    }
+
+    if (faehigkeiten.exposureMode && faehigkeiten.exposureMode.includes("continuous")) {
+      erweiterteEinstellungen.push({ exposureMode: "continuous" });
+    }
+
+    if (faehigkeiten.whiteBalanceMode && faehigkeiten.whiteBalanceMode.includes("continuous")) {
+      erweiterteEinstellungen.push({ whiteBalanceMode: "continuous" });
+    }
+
+    if (faehigkeiten.sharpness && typeof faehigkeiten.sharpness.max === "number") {
+      erweiterteEinstellungen.push({ sharpness: faehigkeiten.sharpness.max });
+    }
+
+    if (faehigkeiten.contrast && typeof faehigkeiten.contrast.max === "number") {
+      erweiterteEinstellungen.push({ contrast: faehigkeiten.contrast.max });
+    }
+
+    if (faehigkeiten.saturation && typeof faehigkeiten.saturation.max === "number") {
+      erweiterteEinstellungen.push({ saturation: faehigkeiten.saturation.max });
+    }
+
+    if (erweiterteEinstellungen.length > 0) {
+      videotrack.applyConstraints({ advanced: erweiterteEinstellungen });
+    }
+  } catch (error) {
+    console.log("Kamera-Optimierung nicht vollständig verfügbar", error);
+  }
+}
+
+function blobZuDataUrl(blob) {
+  return new Promise(function(resolve, reject) {
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      resolve(reader.result);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function fotomachen() {
   if (!Streamansicht.videoWidth || !Streamansicht.videoHeight) {
     return;
   }
 
+  if (imageCapture) {
+    try {
+      const fotoBlob = await imageCapture.takePhoto();
+      const bildDataUrl = await blobZuDataUrl(fotoBlob);
+      sessionFotos.push({
+        zeitstempel: new Date().toISOString(),
+        bild: bildDataUrl,
+        dateiEndung: "jpg"
+      });
+      return;
+    } catch (error) {
+      console.log("Fallback auf Canvas-Aufnahme", error);
+    }
+  }
+
   Bildcanvas.width = Streamansicht.videoWidth;
   Bildcanvas.height = Streamansicht.videoHeight;
-  Bildcanvas.getContext("2d").drawImage(Streamansicht, 0, 0);
+  const context = Bildcanvas.getContext("2d");
+  context.imageSmoothingEnabled = true;
+  context.imageSmoothingQuality = "high";
+  context.clearRect(0, 0, Bildcanvas.width, Bildcanvas.height);
+  context.drawImage(Streamansicht, 0, 0, Bildcanvas.width, Bildcanvas.height);
   sessionFotos.push({
     zeitstempel: new Date().toISOString(),
-    bild: Bildcanvas.toDataURL("image/png")
+    bild: Bildcanvas.toDataURL("image/png"),
+    dateiEndung: "png"
   });
 }
 
@@ -504,7 +579,7 @@ function renderMehrfachDownloads() {
 
     link.className = "mehrfachdownloadlink";
     link.href = eintrag.bild;
-    link.download = `HIIT_Session_${index + 1}_${stempel}.png`;
+    link.download = `HIIT_Session_${index + 1}_${stempel}.${eintrag.dateiEndung || "png"}`;
     link.textContent = `Download Foto ${index + 1}`;
 
     kachel.appendChild(bild);
