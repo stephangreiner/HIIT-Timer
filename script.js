@@ -149,19 +149,38 @@ function camera() {
 }
 
 function cameraStart() {
-  navigator.mediaDevices
-    .getUserMedia(constraints)
-    .then(async function(stream) {
-      track = stream.getTracks()[0];
-      await setupKameraQualitaet(track);
-      if (typeof ImageCapture !== "undefined") {
-        imageCapture = new ImageCapture(track);
-      }
-      Streamansicht.srcObject = stream;
-    })
-    .catch(function(error) {
-      console.error("Etwas hat nicht geklappt", error);
+  startKameraStream().catch(function(error) {
+    console.error("Etwas hat nicht geklappt", error);
+  });
+}
+
+async function startKameraStream() {
+  const stream = await navigator.mediaDevices.getUserMedia(constraints);
+  const videotrack = stream.getVideoTracks()[0];
+  const kameraeinstellungen = videotrack.getSettings();
+
+  if (kameraeinstellungen.facingMode !== "user" && navigator.mediaDevices.enumerateDevices) {
+    stream.getTracks().forEach(function(mediatrack) {
+      mediatrack.stop();
     });
+
+    const optimierteConstraints = await holeOptimierteFrontkameraConstraints();
+    const frontkameraStream = await navigator.mediaDevices.getUserMedia(optimierteConstraints);
+    track = frontkameraStream.getVideoTracks()[0];
+    await setupKameraQualitaet(track);
+    if (typeof ImageCapture !== "undefined") {
+      imageCapture = new ImageCapture(track);
+    }
+    Streamansicht.srcObject = frontkameraStream;
+    return;
+  }
+
+  track = videotrack;
+  await setupKameraQualitaet(track);
+  if (typeof ImageCapture !== "undefined") {
+    imageCapture = new ImageCapture(track);
+  }
+  Streamansicht.srcObject = stream;
 }
 
 function cameraStop() {
@@ -461,9 +480,9 @@ function ruhebalkenwachser() {
 // Video-Stream Einstellungen
 const constraints = {
   video: {
-    width: { ideal: 3840, max: 3840 },
-    height: { ideal: 2160, max: 2160 },
-    facingMode: "user"
+    width: { ideal: 3840 },
+    height: { ideal: 2160 },
+    facingMode: { ideal: "user" }
   },
   audio: false
 };
@@ -553,6 +572,37 @@ async function fotomachen() {
     bild: Bildcanvas.toDataURL("image/png"),
     dateiEndung: "png"
   });
+}
+
+async function holeOptimierteFrontkameraConstraints() {
+  const geraete = await navigator.mediaDevices.enumerateDevices();
+  const videogeraete = geraete.filter(function(geraet) {
+    return geraet.kind === "videoinput";
+  });
+
+  const frontkameraRegex = /(front|user|facetime|selfie|vorder|frontal)/i;
+  const weitwinkelRegex = /(wide|ultra|0\.5|weit)/i;
+
+  const frontkameras = videogeraete.filter(function(geraet) {
+    return frontkameraRegex.test(geraet.label);
+  });
+
+  const bevorzugteFrontkamera = frontkameras.find(function(geraet) {
+    return weitwinkelRegex.test(geraet.label);
+  }) || frontkameras[0];
+
+  if (bevorzugteFrontkamera) {
+    return {
+      video: {
+        deviceId: { exact: bevorzugteFrontkamera.deviceId },
+        width: { ideal: 3840 },
+        height: { ideal: 2160 }
+      },
+      audio: false
+    };
+  }
+
+  return constraints;
 }
 
 function renderMehrfachDownloads() {
