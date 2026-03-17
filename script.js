@@ -7,6 +7,7 @@ const zurueckknopf = document.getElementById("zurueckknopf");
 const kameramodus = document.getElementById("kameramodus");
 const mehrfachdownloadbereich = document.getElementById("mehrfachdownloadbereich");
 const mehrfachdownloadliste = document.getElementById("mehrfachdownloadliste");
+const fotoueberschrift = document.getElementById("fotoueberschrift");
 let sessionFotos = [];
 
 const ZA = document.getElementById('Zeitanzeige'); // Ausgabe-Elemente
@@ -572,6 +573,8 @@ async function fotomachen() {
     bild: Bildcanvas.toDataURL("image/png"),
     dateiEndung: "png"
   });
+
+  renderMehrfachDownloads();
 }
 
 async function holeOptimierteFrontkameraConstraints() {
@@ -607,13 +610,31 @@ async function holeOptimierteFrontkameraConstraints() {
 
 function renderMehrfachDownloads() {
   mehrfachdownloadliste.innerHTML = "";
+  const herunterladenknopf = document.getElementById("herunterladenknopf");
 
   if (!sessionFotos.length) {
     mehrfachdownloadbereich.style.display = "none";
+    if (fotoueberschrift) {
+      fotoueberschrift.textContent = "Aufgenommene Fotos";
+    }
+    Bildcanvas.style.display = "flex";
+    herunterladenknopf.style.display = "";
     return;
   }
 
   mehrfachdownloadbereich.style.display = "block";
+  if (fotoueberschrift) {
+    fotoueberschrift.textContent = `Aufgenommene Fotos (${sessionFotos.length})`;
+  }
+
+  if (sessionFotos.length > 1) {
+    Bildcanvas.style.display = "none";
+    herunterladenknopf.style.display = "none";
+  } else {
+    Bildcanvas.style.display = "flex";
+    herunterladenknopf.style.display = "";
+  }
+
   sessionFotos.forEach(function(eintrag, index) {
     const kachel = document.createElement("div");
     const bild = document.createElement("img");
