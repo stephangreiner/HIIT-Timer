@@ -18,7 +18,6 @@ ZA.innerHTML = "-----";
 RA.innerHTML = '0 / 0';
 
 window.onload = function() {
-  document.getElementById("herunterladenknopf").style.display = "none";
   belastungseingabe.min = 1;
   ausruheingabe.min = 1;
   rundeneingabe.min = 1;
@@ -271,7 +270,6 @@ function ende() {
   }
   renderMehrfachDownloads();
   document.getElementById("zurueckknopf").style.display = "";
-  document.getElementById("herunterladenknopf").style.display = "";
   document.getElementById("Balkendiv").style.display = "none";
   document.body.style.backgroundColor = "blue";
   BB.style.display = "none";
@@ -618,6 +616,7 @@ function renderMehrfachDownloads() {
     const kachel = document.createElement("div");
     const bild = document.createElement("img");
     const link = document.createElement("a");
+    const linkBild = document.createElement("img");
     const zeit = new Date(eintrag.zeitstempel);
     const stempel = `${zeit.getHours()}_${zeit.getMinutes()}_${zeit.getSeconds()}`;
 
@@ -630,27 +629,16 @@ function renderMehrfachDownloads() {
     link.className = "mehrfachdownloadlink";
     link.href = eintrag.bild;
     link.download = `HIIT_Session_${index + 1}_${stempel}.${eintrag.dateiEndung || "png"}`;
-    link.textContent = `Download Foto ${index + 1}`;
+    link.setAttribute("aria-label", `Foto ${index + 1} herunterladen`);
 
+    linkBild.src = "./bilder/herunterladensymbol.png";
+    linkBild.alt = `Download Foto ${index + 1}`;
+    linkBild.width = 28;
+    linkBild.height = 28;
+
+    link.appendChild(linkBild);
     kachel.appendChild(bild);
     kachel.appendChild(link);
     mehrfachdownloadliste.appendChild(kachel);
   });
-}
-
-function bildherunterladen() {
-
-  const canvas = Bildcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-  const link = document.createElement('a');
-  const d = new Date();
-  const ja = d.getFullYear();
-  const mo = d.getMonth() + 1;
-  const ta = d.getDate();
-  const st = d.getHours();
-  const mi = d.getMinutes();
-  link.download = `HIIT_${ta}_${mo}_${ja}_${st}_${mi}.png`;
-  link.href = canvas;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 }
