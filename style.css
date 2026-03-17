@@ -149,63 +149,73 @@ html,body{
 
 #mehrfachdownloadbereich {
   display: none;
-  width: 90%;
-  max-height: 140px;
-  overflow-y: auto;
-  background: rgba(0, 0, 0, 0.35);
+  width: 96%;
+  flex: 1;
+  background: rgba(0, 0, 0, 0.28);
   color: white;
-  border-radius: 8px;
-  padding: 10px;
+  border-radius: 14px;
+  padding: 8px;
+  box-sizing: border-box;
 }
 
 #mehrfachdownloadbereich h3 {
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
   font-size: 16px;
+  text-align: center;
 }
 
 #mehrfachdownloadliste {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
 }
 
 .mehrfachfotokachel {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  width: 120px;
+  align-items: center;
+  gap: 4px;
 }
 
 .mehrfachfotovorschau {
-  width: 120px;
-  height: 90px;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .mehrfachdownloadlink {
-  color: #00ff00;
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  padding: 4px 8px;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
 }
 
-    
-  
+.mehrfachdownloadlink img {
+  width: 18px;
+  height: 18px;
+}
+
+
 /* Ab hier am Anfang unsichtbar */ 
 #zeigendiv {
    width: 100%;
-   height: 80%;
+   height: 100%;
    display: flex;
-   flex-direction : column; 
-   justify-content : space-between;
+   flex-direction : column;
+   justify-content : flex-start;
    align-items : center;
+   gap: 8px;
    border-radius: 5%;
    border: none;
    visibility: hidden;
+   box-sizing: border-box;
+   padding: 6px 0 12px;
    }
 
  #Textanzeige {
@@ -221,7 +231,7 @@ html,body{
   margin:5%
  }
 
- #zurueckknopf,#herunterladenknopf {
+ #zurueckknopf {
    background-color: rgba(0, 0, 0, 0.432);
    color: rgb(182, 182, 182) ;
    border: none;
@@ -248,7 +258,7 @@ html,body{
    }
 
  /* Foto */   
-#Gesamtfotodiv{ width: 60% ; height: 40%;text-align: center; }
+#Gesamtfotodiv{ width: 60% ; height: 18%;text-align: center; }
  /* bedeutungslos */   
 #Videoaufnahme{ display: none;}
 /* der Stream soll nicht angezeigt werden, Ansonsten mit der häfte der Defaulaulösung von 640/480 */
@@ -256,3 +266,15 @@ html,body{
 /* größe des Anzeigendiv. Die Anzahl der Pixel richtet sich nach den Angaben bei contraints des Videos  */
 #bildcanvas { width: 50%; height: 70%; display: flex;  margin: auto;}
   
+
+@media (max-width: 420px) {
+  #mehrfachdownloadliste {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .mehrfachdownloadlink {
+    width: 30px;
+    height: 30px;
+  }
+}
