@@ -2,12 +2,18 @@ const belastungseingabe = document.getElementById('eindauer'); // Eingabe-Elemen
 const ausruheingabe = document.getElementById('einruhe');
 const rundeneingabe = document.getElementById('einrunden');
 const tonwahl = document.getElementById("tonwahl");
+const musikupload = document.getElementById("musikupload");
+const musikuploadbereich = document.getElementById("musikuploadbereich");
+const musikdateiname = document.getElementById("musikdateiname");
 const startknopf = document.getElementById("startknopf");
 const zurueckknopf = document.getElementById("zurueckknopf");
 const kameramodus = document.getElementById("kameramodus");
 const mehrfachdownloadbereich = document.getElementById("mehrfachdownloadbereich");
 const mehrfachdownloadliste = document.getElementById("mehrfachdownloadliste");
 let sessionFotos = [];
+const standardMusik = document.getElementById('m1');
+const customMusic = document.getElementById('customMusic');
+let customMusicUrl = "";
 
 const ZA = document.getElementById('Zeitanzeige'); // Ausgabe-Elemente
 const RA = document.getElementById('Rundenanzeige');
@@ -43,6 +49,7 @@ window.onload = function() {
 
   mehrfachdownloadbereich.style.display = "none";
   kameramodus.value = "zufall";
+  updateMusikUploadSichtbarkeit();
 };
 
 startknopf.onclick = function() {
@@ -131,7 +138,42 @@ tonwahl.addEventListener("change", function() {
       tonwahl.style.backgroundColor = "#00ff00";
       break;
   }
+
+  updateMusikUploadSichtbarkeit();
 });
+
+musikupload.addEventListener("change", function(event) {
+  const datei = event.target.files && event.target.files[0];
+
+  if (!datei) {
+    resetCustomMusic();
+    return;
+  }
+
+  if (customMusicUrl) {
+    URL.revokeObjectURL(customMusicUrl);
+  }
+
+  customMusicUrl = URL.createObjectURL(datei);
+  customMusic.src = customMusicUrl;
+  customMusic.load();
+  musikdateiname.textContent = datei.name;
+});
+
+function updateMusikUploadSichtbarkeit() {
+  musikuploadbereich.style.display = tonwahl.value === "2" ? "flex" : "none";
+}
+
+function resetCustomMusic() {
+  if (customMusicUrl) {
+    URL.revokeObjectURL(customMusicUrl);
+  }
+
+  customMusicUrl = "";
+  customMusic.removeAttribute("src");
+  customMusic.load();
+  musikdateiname.textContent = "Keine Datei ausgewählt";
+}
 
 const GFD = document.getElementById("Gesamtfotodiv");
 GFD.style.display = "none";
@@ -248,7 +290,8 @@ function zufallsFotoZeitpunkt(aktivzeitInMs) {
 
 function ruhe() {
   ruhebalkenwachser();
-  document.getElementById('m1').pause();
+  standardMusik.pause();
+  customMusic.pause();
   document.body.style.background = "black";
   document.getElementById("zurueckknopf").style.display = "none";
   BB.style.color = "black";
@@ -291,7 +334,13 @@ function aktivaudio() {
       document.getElementById('gongsound').play();
       break;
     case 2:
-      document.getElementById('m1').play();
+      if (customMusicUrl) {
+        customMusic.currentTime = 0;
+        customMusic.play();
+      } else {
+        standardMusik.currentTime = 0;
+        standardMusik.play();
+      }
       break;
     case 3:
       document.getElementById('gosound1').play();
@@ -345,7 +394,8 @@ function ruheaudio() {
       document.getElementById('gongsound').play();
       break;
     case 2:
-      document.getElementById('m1').pause();
+      standardMusik.pause();
+      customMusic.pause();
       break;
     case 3:
       document.getElementById('kurzepausesound1').play();
@@ -390,7 +440,8 @@ function vorletzteruheaudio() {
       document.getElementById('gongsound').play();
       break;
     case 2:
-      document.getElementById('m1').pause();
+      standardMusik.pause();
+      customMusic.pause();
       break;
     case 3:
       document.getElementById('vor1').play();
@@ -429,7 +480,8 @@ function endeaudio() {
       document.getElementById('gongsound').play();
       break;
     case 2:
-      document.getElementById('m1').pause();
+      standardMusik.pause();
+      customMusic.pause();
       break;
     case 3:
       document.getElementById('endesound1').play();

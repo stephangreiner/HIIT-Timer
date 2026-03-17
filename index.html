@@ -51,6 +51,11 @@ if (navigator.serviceWorker) {
       </select>
 
     </div>
+    <div id="musikuploadbereich">
+      <label for="musikupload" id="musikuploadlabel">🎵 Eigenes Lied (für aktive Phase)</label>
+      <input id="musikupload" type="file" accept="audio/*">
+      <span id="musikdateiname">Keine Datei ausgewählt</span>
+    </div>
     <div id = "zeitwahldiv">
     <div class='Zeilediv'>
        <span class='text'>Dauer:</span> 
@@ -126,6 +131,7 @@ if (navigator.serviceWorker) {
   <audio id="vor6" src="audio/vor6.mp3" type="audio/mpeg" preload= "metadata"></audio>
 
   <audio loop id="m1" src="audio/m1.mp3" type="audio/mpeg" preload="none"></audio> <!--IDen und vorladen audio 3 -->
+  <audio loop id="customMusic" preload="metadata"></audio>
   
 </div>
 
