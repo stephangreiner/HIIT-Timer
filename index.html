@@ -32,11 +32,6 @@ if (navigator.serviceWorker) {
        <button id=startknopf onclick=runtabata()>los</button>
     </div>
     <div id="moduswahldiv">
-     
-        <label class ="switch">
-         <input type="checkbox" id="fotocheck" onclick="camera()">
-        <span class = "slider"> <img id="fotobild" src="./bilder/fotosymbol.png" width="40%" height="100%"alt=" Kamera:"></span>
-        </label> 
 
       <select title ="audiowahl" id="tonwahl">
             <option value="10">🔇​</option>
@@ -46,8 +41,9 @@ if (navigator.serviceWorker) {
       </select>
 
       <select title="kameramodus" id="kameramodus">
-            <option value="zufall">📷 Zufallsfoto</option>
-            <option value="alle">📷 Jede Session</option>
+            <option value="aus">Keine Bilder</option>
+            <option value="video-zufall">🎥 Zufalls-Video-Session</option>
+            <option value="foto-alle">📷 Jede Session Foto</option>
       </select>
 
     </div>
@@ -87,7 +83,7 @@ if (navigator.serviceWorker) {
          <canvas id="bildcanvas"></canvas>
       </div>
       <div id="mehrfachdownloadbereich">
-        <h3>Aufgenommene Fotos</h3>
+        <h3>Aufgenommene Medien</h3>
         <div id="mehrfachdownloadliste"></div>
       </div>
  <button id="zurueckknopf" >zurück</button>
