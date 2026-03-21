@@ -10,10 +10,11 @@ const zurueckknopf = document.getElementById("zurueckknopf");
 const kameramodus = document.getElementById("kameramodus");
 const mehrfachdownloadbereich = document.getElementById("mehrfachdownloadbereich");
 const mehrfachdownloadliste = document.getElementById("mehrfachdownloadliste");
-let sessionFotos = [];
+let sessionMedien = [];
 const standardMusik = document.getElementById('m1');
 const customMusic = document.getElementById('customMusic');
 let customMusicUrl = "";
+let zufallsVideoRunde = null;
 
 const ZA = document.getElementById('Zeitanzeige'); // Ausgabe-Elemente
 const RA = document.getElementById('Rundenanzeige');
@@ -48,14 +49,24 @@ window.onload = function() {
   };
 
   mehrfachdownloadbereich.style.display = "none";
-  kameramodus.value = "zufall";
+  kameramodus.value = "aus";
   updateMusikUploadSichtbarkeit();
 };
 
 startknopf.onclick = function() {
-  sessionFotos = [];
+  sessionMedien = [];
+  zufallsVideoRunde = kameramodus.value === "video-zufall"
+    ? Math.max(1, Math.floor(Math.random() * Number(rundeneingabe.value)) + 1)
+    : null;
+  stoppeVideoAufnahme();
   renderMehrfachDownloads();
   runTabata(5, belastungseingabe.value, ausruheingabe.value, rundeneingabe.value);
+  if (kameramodus.value !== "aus") {
+    cameraStart();
+    GFD.style.display = "";
+  } else {
+    GFD.style.display = "none";
+  }
   document.getElementById('zeigendiv').style.visibility = 'visible';
   document.getElementById("Einstellungsdiv").style.display = "none";
 };
@@ -178,17 +189,6 @@ function resetCustomMusic() {
 const GFD = document.getElementById("Gesamtfotodiv");
 GFD.style.display = "none";
 
-function camera() {
-  const checkBox = document.getElementById("fotocheck");
-  if (checkBox.checked) {
-    cameraStart();
-    GFD.style.display = "";
-  } else {
-    cameraStop();
-    GFD.style.display = "none";
-  }
-}
-
 function cameraStart() {
   startKameraStream().catch(function(error) {
     console.error("Etwas hat nicht geklappt", error);
@@ -225,6 +225,7 @@ async function startKameraStream() {
 }
 
 function cameraStop() {
+  stoppeVideoAufnahme();
   if (track) {
     track.stop();
     track = null;
@@ -250,23 +251,13 @@ function aktiv() {
   BB.style.color = "black";
   ZA.style.display = "none";
   TA.innerHTML = "GO !!";
-  let fotorand = 6;
   let runde = Math.floor((index + 1) / 2);
-  let Gesamtrunde = (arrPeriods.length - 1) / 2;
   console.log("laufende " + runde);
-  console.log("arrplang" + Gesamtrunde);
-
-  if (runde === Gesamtrunde) {
-    fotorand = 0;
-    console.log("fotorandgesetzt:" + fotorand);
-  } else {
-    fotorand = Math.floor(Math.random() * 4);
-    console.log("fotorandzufall:" + fotorand);
-  }
-
   console.log(Streamansicht.srcObject);
 
-  const sollFotoMachen = Streamansicht.srcObject !== null && (kameramodus.value === "alle" || fotorand === 0);
+  const streamAktiv = Streamansicht.srcObject !== null;
+  const sollFotoMachen = streamAktiv && kameramodus.value === "foto-alle";
+  const sollVideoMachen = streamAktiv && kameramodus.value === "video-zufall" && runde === zufallsVideoRunde;
 
   if (sollFotoMachen) {
     const aktivzeitInMs = Number(belastungseingabe.value) * 1000;
@@ -275,6 +266,10 @@ function aktiv() {
     setTimeout(function() {
       fotomachen();
     }, fotoverzoegerung);
+  }
+
+  if (sollVideoMachen) {
+    starteVideoAufnahme(runde);
   }
 }
 
@@ -289,6 +284,7 @@ function zufallsFotoZeitpunkt(aktivzeitInMs) {
 }
 
 function ruhe() {
+  stoppeVideoAufnahme();
   ruhebalkenwachser();
   standardMusik.pause();
   customMusic.pause();
@@ -308,6 +304,7 @@ function ruhe() {
 
 function ende() {
   endeaudio();
+  stoppeVideoAufnahme();
   if (Streamansicht.srcObject !== null) {
     cameraStop();
   }
@@ -538,6 +535,9 @@ const constraints = {
 };
 let track = null;
 let imageCapture = null;
+let mediaRecorder = null;
+let videoChunks = [];
+let laufendeVideoRunde = null;
 const Streamansicht = document.getElementById("streamansicht");
 const Bildcanvas = document.getElementById("bildcanvas");
 
@@ -599,9 +599,10 @@ async function fotomachen() {
     try {
       const fotoBlob = await imageCapture.takePhoto();
       const bildDataUrl = await blobZuDataUrl(fotoBlob);
-      sessionFotos.push({
+      sessionMedien.push({
+        typ: "foto",
         zeitstempel: new Date().toISOString(),
-        bild: bildDataUrl,
+        url: bildDataUrl,
         dateiEndung: "jpg"
       });
       return;
@@ -617,11 +618,86 @@ async function fotomachen() {
   context.imageSmoothingQuality = "high";
   context.clearRect(0, 0, Bildcanvas.width, Bildcanvas.height);
   context.drawImage(Streamansicht, 0, 0, Bildcanvas.width, Bildcanvas.height);
-  sessionFotos.push({
+  sessionMedien.push({
+    typ: "foto",
     zeitstempel: new Date().toISOString(),
-    bild: Bildcanvas.toDataURL("image/png"),
+    url: Bildcanvas.toDataURL("image/png"),
     dateiEndung: "png"
   });
+}
+
+function starteVideoAufnahme(runde) {
+  if (!Streamansicht.srcObject || typeof MediaRecorder === "undefined" || mediaRecorder) {
+    return;
+  }
+
+  const unterstuetzterTyp = holeVideoMimeType();
+  videoChunks = [];
+  laufendeVideoRunde = runde;
+
+  try {
+    mediaRecorder = unterstuetzterTyp
+      ? new MediaRecorder(Streamansicht.srcObject, { mimeType: unterstuetzterTyp })
+      : new MediaRecorder(Streamansicht.srcObject);
+  } catch (error) {
+    console.log("Videoaufnahme konnte nicht gestartet werden", error);
+    mediaRecorder = null;
+    laufendeVideoRunde = null;
+    return;
+  }
+
+  mediaRecorder.ondataavailable = function(event) {
+    if (event.data && event.data.size > 0) {
+      videoChunks.push(event.data);
+    }
+  };
+
+  mediaRecorder.onstop = function() {
+    if (!videoChunks.length) {
+      mediaRecorder = null;
+      laufendeVideoRunde = null;
+      return;
+    }
+
+    const mimeType = mediaRecorder.mimeType || unterstuetzterTyp || "video/webm";
+    const videoBlob = new Blob(videoChunks, { type: mimeType });
+    const videoUrl = URL.createObjectURL(videoBlob);
+    sessionMedien.push({
+      typ: "video",
+      zeitstempel: new Date().toISOString(),
+      url: videoUrl,
+      dateiEndung: mimeType.includes("mp4") ? "mp4" : "webm",
+      runde: laufendeVideoRunde
+    });
+    renderMehrfachDownloads();
+    mediaRecorder = null;
+    laufendeVideoRunde = null;
+    videoChunks = [];
+  };
+
+  mediaRecorder.start();
+}
+
+function stoppeVideoAufnahme() {
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    mediaRecorder.stop();
+  }
+}
+
+function holeVideoMimeType() {
+  if (typeof MediaRecorder === "undefined" || !MediaRecorder.isTypeSupported) {
+    return "";
+  }
+
+  const kandidatentypen = [
+    "video/webm;codecs=vp9",
+    "video/webm;codecs=vp8",
+    "video/webm"
+  ];
+
+  return kandidatentypen.find(function(typ) {
+    return MediaRecorder.isTypeSupported(typ);
+  }) || "";
 }
 
 async function holeOptimierteFrontkameraConstraints() {
@@ -658,38 +734,53 @@ async function holeOptimierteFrontkameraConstraints() {
 function renderMehrfachDownloads() {
   mehrfachdownloadliste.innerHTML = "";
 
-  if (!sessionFotos.length) {
+  if (!sessionMedien.length) {
     mehrfachdownloadbereich.style.display = "none";
     return;
   }
 
   mehrfachdownloadbereich.style.display = "block";
-  sessionFotos.forEach(function(eintrag, index) {
+  sessionMedien.forEach(function(eintrag, index) {
     const kachel = document.createElement("div");
-    const bild = document.createElement("img");
     const link = document.createElement("a");
     const linkBild = document.createElement("img");
     const zeit = new Date(eintrag.zeitstempel);
     const stempel = `${zeit.getHours()}_${zeit.getMinutes()}_${zeit.getSeconds()}`;
+    const vorschau = eintrag.typ === "video"
+      ? document.createElement("video")
+      : document.createElement("img");
+    const dateinameBasis = eintrag.typ === "video"
+      ? `HIIT_Video_Runde_${eintrag.runde || index + 1}_${stempel}`
+      : `HIIT_Foto_${index + 1}_${stempel}`;
 
     kachel.className = "mehrfachfotokachel";
 
-    bild.className = "mehrfachfotovorschau";
-    bild.src = eintrag.bild;
-    bild.alt = `Foto ${index + 1}`;
+    if (eintrag.typ === "video") {
+      vorschau.className = "mehrfachvideovorschau";
+      vorschau.src = eintrag.url;
+      vorschau.muted = true;
+      vorschau.playsInline = true;
+      vorschau.controls = true;
+      vorschau.preload = "metadata";
+      vorschau.setAttribute("aria-label", `Video Runde ${eintrag.runde || index + 1}`);
+    } else {
+      vorschau.className = "mehrfachfotovorschau";
+      vorschau.src = eintrag.url;
+      vorschau.alt = `Foto ${index + 1}`;
+    }
 
     link.className = "mehrfachdownloadlink";
-    link.href = eintrag.bild;
-    link.download = `HIIT_Session_${index + 1}_${stempel}.${eintrag.dateiEndung || "png"}`;
-    link.setAttribute("aria-label", `Foto ${index + 1} herunterladen`);
+    link.href = eintrag.url;
+    link.download = `${dateinameBasis}.${eintrag.dateiEndung || (eintrag.typ === "video" ? "webm" : "png")}`;
+    link.setAttribute("aria-label", `${eintrag.typ === "video" ? "Video" : "Foto"} ${index + 1} herunterladen`);
 
     linkBild.src = "./bilder/herunterladensymbol.png";
-    linkBild.alt = `Download Foto ${index + 1}`;
+    linkBild.alt = `Download ${eintrag.typ === "video" ? "Video" : "Foto"} ${index + 1}`;
     linkBild.width = 28;
     linkBild.height = 28;
 
     link.appendChild(linkBild);
-    kachel.appendChild(bild);
+    kachel.appendChild(vorschau);
     kachel.appendChild(link);
     mehrfachdownloadliste.appendChild(kachel);
   });
