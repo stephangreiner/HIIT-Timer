@@ -332,7 +332,6 @@ function aktivaudio() {
       break;
     case 2:
       if (customMusicUrl) {
-        customMusic.currentTime = 0;
         customMusic.play();
       } else {
         standardMusik.currentTime = 0;
