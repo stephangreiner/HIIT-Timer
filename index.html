@@ -2,7 +2,7 @@
 <html lang= "de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link rel="icon" type="image/vnd.microsoft.icon" href="bilder/favicon.ico">
         <link rel="manifest" href="./manifest.json" />
     <link rel="stylesheet" href="style.css">
@@ -45,6 +45,9 @@ if (navigator.serviceWorker) {
             <option value="video-zufall">🎥 Zufalls-Video-Session</option>
             <option value="foto-alle">📷 Jede Session Foto</option>
       </select>
+
+      <button class="watch-cycle-btn" id="tonwahl-cycle" data-select="tonwahl" type="button">🔇</button>
+      <button class="watch-cycle-btn" id="kameramodus-cycle" data-select="kameramodus" type="button">Keine Bilder</button>
 
     </div>
     <div id="musikuploadbereich">

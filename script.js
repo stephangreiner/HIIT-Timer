@@ -157,6 +157,7 @@ window.onload = function() {
   mehrfachdownloadbereich.style.display = "none";
   GFD.style.display = "none";
   updateMusikUploadSichtbarkeit();
+  setupCycleButtons();
 };
 
 // --- Controls ---
@@ -264,6 +265,26 @@ musikupload.addEventListener("change", function(event) {
 
 function updateMusikUploadSichtbarkeit() {
   musikuploadbereich.style.display = tonwahl.value === "2" ? "flex" : "none";
+}
+
+function setupCycleButtons() {
+  document.querySelectorAll('.watch-cycle-btn').forEach(function(btn) {
+    const select = document.getElementById(btn.dataset.select);
+    if (!select) return;
+
+    function syncBtn() {
+      btn.textContent = select.options[select.selectedIndex].text;
+      btn.classList.toggle('watch-active', select.selectedIndex !== 0);
+    }
+
+    syncBtn();
+    select.addEventListener('change', syncBtn);
+
+    btn.addEventListener('click', function() {
+      select.selectedIndex = (select.selectedIndex + 1) % select.options.length;
+      select.dispatchEvent(new Event('change'));
+    });
+  });
 }
 
 function resetCustomMusic() {

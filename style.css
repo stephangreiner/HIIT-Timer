@@ -230,4 +230,120 @@ html,body{
 #streamansicht{ display: none;}
 /* größe des Anzeigendiv. Die Anzahl der Pixel richtet sich nach den Angaben bei contraints des Videos  */
 #bildcanvas { width: 50%; height: 70%; display: flex;  margin: auto;}
-  
+
+/* Cycling buttons: hidden by default, shown on watch via media query */
+.watch-cycle-btn {
+  display: none;
+  background-color: rgb(115, 115, 115);
+  color: #000000;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 13px;
+  padding: 6px 14px;
+  min-height: 36px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 82%;
+}
+.watch-cycle-btn:active { opacity: 0.7; }
+.watch-cycle-btn.watch-active {
+  background-color: #00ff00;
+  color: black;
+}
+
+/* Pixel Watch 4 / small round screen (~384 × 384 px) */
+@media (max-width: 420px) {
+
+  #Einstellungsdiv {
+    overflow-y: auto;
+    /* fallback padding for round-screen safe zone */
+    padding: 36px 30px;
+    /* honour WearOS safe-area insets when available */
+    padding: max(36px, env(safe-area-inset-top))
+             max(30px, env(safe-area-inset-right))
+             max(36px, env(safe-area-inset-bottom))
+             max(30px, env(safe-area-inset-left));
+    box-sizing: border-box;
+  }
+
+  #startdiv {
+    height: auto;
+    padding: 6px 0;
+  }
+
+  #startknopf {
+    width: 55%;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  #moduswahldiv {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Hide native selects — their OS popup is far too large on a watch */
+  #tonwahl,
+  #kameramodus {
+    display: none;
+  }
+
+  /* Show tap-to-cycle buttons instead */
+  .watch-cycle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+  }
+
+  .Zeilediv {
+    margin: 1% 0;
+  }
+
+  /* Timer screen: safe zone + tighter spacing */
+  #zeigendiv {
+    padding: 36px 24px;
+    padding: max(36px, env(safe-area-inset-top))
+             max(24px, env(safe-area-inset-right))
+             max(36px, env(safe-area-inset-bottom))
+             max(24px, env(safe-area-inset-left));
+    box-sizing: border-box;
+    gap: 4px;
+  }
+
+  #Textanzeige {
+    margin-top: 0;
+  }
+
+  #Textanzeige h1 {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  #Rundenanzeige,
+  #Zeitanzeige {
+    font-size: 110%;
+    margin: 2%;
+  }
+
+  /* Progress bar: was fixed 300 px — far too tall for a 384 px screen */
+  #Balkenzeit {
+    height: 90px;
+  }
+
+  #Balkendiv {
+    width: 72%;
+    max-width: none;
+  }
+
+  #Gesamtfotodiv {
+    width: 75%;
+    height: 20%;
+  }
+}
+
