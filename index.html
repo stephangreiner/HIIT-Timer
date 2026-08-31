@@ -7,17 +7,11 @@
         <link rel="manifest" href="./manifest.json" />
     <link rel="stylesheet" href="style.css">
     <script>
-if (navigator.serviceWorker) {
-  window.addEventListener('load', async () => {
-    const registrations = await navigator.serviceWorker.getRegistrations();
-    await Promise.all(registrations.map(reg => reg.unregister()));
-
-    if (window.caches) {
-      const cacheKeys = await caches.keys();
-      await Promise.all(cacheKeys.map(key => caches.delete(key)));
-    }
-
-    console.log('Service Worker deaktiviert für stabile Vorschau');
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {
+      // Service Worker nicht verfügbar – App läuft trotzdem online
+    });
   });
 }
       </script>

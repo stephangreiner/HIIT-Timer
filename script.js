@@ -36,6 +36,8 @@ let imageCapture = null;
 let mediaRecorder = null;
 let videoChunks = [];
 let laufendeVideoRunde = null;
+let barRafId = null;
+let phasenEnde = 0;
 
 // --- Audio ID arrays (replaces switch-case blocks) ---
 const goSounds    = ['gosound1','gosound2','gosound3','gosound4','gosound5',
@@ -199,7 +201,9 @@ function runTabata(warmupSec, dauer, ruheSec, runden) {
 function uhrwerk(idx) {
   currentIndex = idx;
   lastBeepSecond = -1;
+  stopBarAnimation();
   const dann = Date.now() + arrPeriods[currentIndex] * 1000;
+  phasenEnde = dann;
 
   const l = setInterval(function() {
     const zeitunterschied = Math.round((dann - Date.now()) / 1000) + 1;
@@ -306,7 +310,7 @@ function vorlauf() {
 }
 
 function aktiv() {
-  aktivbalkenschrumpfer();
+  startBarAnimation(Number(arrPeriods[currentIndex]), "shrink");
   aktivaudio();
   document.body.style.backgroundColor = "#00ff00";
   document.getElementById("zurueckknopf").style.display = "none";
@@ -331,7 +335,7 @@ function aktiv() {
 
 function ruhe() {
   stoppeVideoAufnahme();
-  ruhebalkenwachser();
+  startBarAnimation(Number(arrPeriods[currentIndex]), "grow");
   standardMusik.pause();
   customMusic.pause();
   document.body.style.background = "black";
@@ -349,6 +353,7 @@ function ruhe() {
 
 function ende() {
   endeaudio();
+  stopBarAnimation();
   stoppeVideoAufnahme();
   if (Streamansicht.srcObject !== null) {
     cameraStop();
@@ -407,31 +412,42 @@ function endeaudio() {
   }
 }
 
-// --- Progress bar animations ---
-function aktivbalkenschrumpfer() {
-  let ausgangswert = 100;
-  const id = setInterval(function() {
-    if (ausgangswert === 1) {
-      clearInterval(id);
+// --- Progress bar animation ---
+// Driven by requestAnimationFrame off the same phase-end timestamp as the
+// countdown, so the bar can never drift out of sync with the displayed time.
+// mode "shrink" (active phase) runs 100% -> 0%, "grow" (rest phase) 0% -> 100%.
+function startBarAnimation(totalSec, mode) {
+  stopBarAnimation();
+  BB.style.fontSize = "300%";
+
+  if (!totalSec || totalSec <= 0) {
+    BB.style.width = mode === "grow" ? "100%" : "0%";
+    return;
+  }
+
+  function frame() {
+    const verbleibend = (phasenEnde - Date.now()) / 1000;
+    const anteilVerbleibend = Math.min(1, Math.max(0, verbleibend / totalSec));
+    const breite = mode === "grow"
+      ? (1 - anteilVerbleibend) * 100
+      : anteilVerbleibend * 100;
+    BB.style.width = breite + "%";
+
+    if (verbleibend > 0) {
+      barRafId = requestAnimationFrame(frame);
     } else {
-      ausgangswert -= 1;
-      BB.style.width = ausgangswert + '%';
-      BB.style.fontSize = "300%";
+      barRafId = null;
     }
-  }, belastungseingabe.value * 10);
+  }
+
+  barRafId = requestAnimationFrame(frame);
 }
 
-function ruhebalkenwachser() {
-  let ausgangswert = 1;
-  const id = setInterval(function() {
-    if (ausgangswert === 100) {
-      clearInterval(id);
-    } else {
-      ausgangswert += 1;
-      BB.style.width = ausgangswert + '%';
-      BB.style.fontSize = "300%";
-    }
-  }, ausruheingabe.value * 10);
+function stopBarAnimation() {
+  if (barRafId !== null) {
+    cancelAnimationFrame(barRafId);
+    barRafId = null;
+  }
 }
 
 // --- Camera ---
@@ -528,12 +544,16 @@ function zufallsFotoZeitpunkt(aktivzeitInMs) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function blobZuDataUrl(blob) {
-  return new Promise(function(resolve, reject) {
-    const reader = new FileReader();
-    reader.onloadend = function() { resolve(reader.result); };
-    reader.onerror = reject;
-    reader.readAsDataURL(blob);
+// Store a captured photo as an object URL rather than a base64 data URL.
+// Full-resolution PNG data URLs held in memory for every round add up to
+// many MB and can crash the tab on a phone; a JPEG blob + object URL keeps
+// memory low while staying downloadable and previewable.
+function speichereFoto(blob, dateiEndung) {
+  sessionMedien.push({
+    typ: "foto",
+    zeitstempel: new Date().toISOString(),
+    url: URL.createObjectURL(blob),
+    dateiEndung: dateiEndung
   });
 }
 
@@ -543,13 +563,7 @@ async function fotomachen() {
   if (imageCapture) {
     try {
       const fotoBlob = await imageCapture.takePhoto();
-      const bildDataUrl = await blobZuDataUrl(fotoBlob);
-      sessionMedien.push({
-        typ: "foto",
-        zeitstempel: new Date().toISOString(),
-        url: bildDataUrl,
-        dateiEndung: "jpg"
-      });
+      speichereFoto(fotoBlob, fotoBlob.type && fotoBlob.type.includes("png") ? "png" : "jpg");
       return;
     } catch (err) {
       // fallback to canvas
@@ -563,12 +577,11 @@ async function fotomachen() {
   context.imageSmoothingQuality = "high";
   context.clearRect(0, 0, Bildcanvas.width, Bildcanvas.height);
   context.drawImage(Streamansicht, 0, 0, Bildcanvas.width, Bildcanvas.height);
-  sessionMedien.push({
-    typ: "foto",
-    zeitstempel: new Date().toISOString(),
-    url: Bildcanvas.toDataURL("image/png"),
-    dateiEndung: "png"
+
+  const canvasBlob = await new Promise(function(resolve) {
+    Bildcanvas.toBlob(resolve, "image/jpeg", 0.92);
   });
+  if (canvasBlob) speichereFoto(canvasBlob, "jpg");
 }
 
 function starteVideoAufnahme(runde) {
