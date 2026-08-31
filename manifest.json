@@ -1,7 +1,8 @@
 {
     "name": "HIIT",
     "short_name": "HIIT",
-    "version":1,
+    "id": "/HIIT-Timer/",
+    "scope": "/HIIT-Timer/",
     "icons": [
       {
         "src": "./bilder/HIIT48x48.png",
@@ -11,15 +12,13 @@
       {
         "src": "./bilder/HIIT250x250.png",
         "sizes": "192x192",
-        "type": "image/png" 
-      },  
-          {
+        "type": "image/png"
+      },
+      {
         "src": "./bilder/HIIT400x400.png",
-        "sizes": "512x512",
-        "type": "image/png" 
+        "sizes": "400x400",
+        "type": "image/png"
       }
-
-
     ],
     "theme_color": "#000000",
     "background_color": "#000000",

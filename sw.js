@@ -1,2 +1,85 @@
-if(!self.define){let e,i={};const r=(r,d)=>(r=new URL(r+".js",d).href,i[r]||new Promise((i=>{if("document"in self){const e=document.createElement("script");e.src=r,e.onload=i,document.head.appendChild(e)}else e=r,importScripts(r),i()})).then((()=>{let e=i[r];if(!e)throw new Error(`Module ${r} didn’t register its module`);return e})));self.define=(d,o)=>{const a=e||("document"in self?document.currentScript.src:"")||location.href;if(i[a])return;let u={};const c=e=>r(e,a),f={module:{uri:a},exports:u,require:c};i[a]=Promise.all(d.map((e=>f[e]||c(e)))).then((e=>(o(...e),u)))}}define(["./workbox-9d23c35a"],(function(e){"use strict";self.addEventListener("message",(e=>{e.data&&"SKIP_WAITING"===e.data.type&&self.skipWaiting()})),e.precacheAndRoute([{url:"audio/ende1.mp3",revision:"e66d1b7fe4b67fa1ab95e885c8f7e65f"},{url:"audio/ende2.mp3",revision:"aa998dfb0cb620c8fa310d4fb7cae935"},{url:"audio/ende3.mp3",revision:"1f8b0bdf3d86571a1e658491d769b8ea"},{url:"audio/ende4.mp3",revision:"1f8b0bdf3d86571a1e658491d769b8ea"},{url:"audio/go1.mp3",revision:"a94b31d6edf3099594a40ba7f439195b"},{url:"audio/go2.mp3",revision:"689be3313701b195690ef20c79677ffb"},{url:"audio/go3.mp3",revision:"bb678b31bc170361a088e0d8f51a8cbf"},{url:"audio/go4.mp3",revision:"502681695b619961a632985023f65ffe"},{url:"audio/gongsound.mp3",revision:"ea87cdd814d376170570dc4629c01241"},{url:"audio/kurzepause1.mp3",revision:"66c1679e443378dc7816c1c8a51bce5a"},{url:"audio/kurzepause2.mp3",revision:"64e0cd983144a7d495050dbb53b46b48"},{url:"audio/kurzepause3.mp3",revision:"90ba5f56794967fa384ad43dd420d2a7"},{url:"audio/kurzepause4.mp3",revision:"5f4572c51024b6e62a7df25ec379814e"},{url:"audio/m1.mp3",revision:"ee031b640fa8f668c3078336277a4840"},{url:"audio/vor1.mp3",revision:"27d4d11b1f30735a2351d425881e5652"},{url:"audio/vor2.mp3",revision:"b467d0efa46aa1c2ee3f34a355360bf1"},{url:"audio/vor3.mp3",revision:"9221c895a9ac48892c4af94bca78d376"},{url:"audio/vor4.mp3",revision:"5b2ebfb25052434557e8bbd64ec3f61c"},{url:"audio/vor5.mp3",revision:"5febb58760d20486b720d874920fa36d"},{url:"bilder/favicon.ico",revision:"14f319248d0929cefc5769a2c74b57e2"},{url:"bilder/HIIT250x250.png",revision:"94a2321f5bc1b7637b89c6c027a4261f"},{url:"bilder/HIIT400x400.png",revision:"a227e1c2cee7f804dca23afc975ef0e2"},{url:"bilder/HIIT48x48.png",revision:"7ba97f2bf3ce4d57a545310603cab4be"},{url:"index.html",revision:"d38dba795581ce7ec3ef418e53eceeac"},{url:"manifest.json",revision:"91d93d807f62e1088fa571cfa30f5246"},{url:"script.js",revision:"54d14e8bdc79ac44deadd5cd53764e94"},{url:"style.css",revision:"83452d6558e9c639e9528f01cf3e5bbd"}],{ignoreURLParametersMatching:[/^utm_/,/^fbclid$/]})}));
-//# sourceMappingURL=sw.js.map
+// Schlanker, selbst gepflegter Service Worker für die HIIT-Timer-PWA.
+// Strategie: Stale-While-Revalidate – Anfragen werden sofort aus dem Cache
+// beantwortet (offline-fähig) und im Hintergrund aktualisiert, sodass ein
+// Update spätestens beim nächsten Start greift. Cache-Version erhöhen, um
+// bei Bedarf alle alten Einträge zu verwerfen.
+const CACHE = 'hiit-v1';
+
+const CORE_ASSETS = [
+  './',
+  './index.html',
+  './style.css',
+  './script.js',
+  './manifest.json',
+  './bilder/favicon.ico',
+  './bilder/HIIT48x48.png',
+  './bilder/HIIT250x250.png',
+  './bilder/HIIT400x400.png',
+  './bilder/herunterladensymbol.png',
+  './audio/gongsound.mp3',
+  './audio/m1.mp3',
+  './audio/go1.mp3', './audio/go2.mp3', './audio/go3.mp3', './audio/go4.mp3',
+  './audio/go5.mp3', './audio/go6.mp3', './audio/go7.mp3', './audio/go8.mp3',
+  './audio/go9.mp3', './audio/go10.mp3', './audio/go11.mp3',
+  './audio/kurzepause1.mp3', './audio/kurzepause2.mp3', './audio/kurzepause3.mp3',
+  './audio/kurzepause4.mp3', './audio/kurzepause5.mp3', './audio/kurzepause6.mp3',
+  './audio/kurzepause7.mp3', './audio/kurzepause8.mp3',
+  './audio/vor1.mp3', './audio/vor2.mp3', './audio/vor3.mp3',
+  './audio/vor4.mp3', './audio/vor5.mp3', './audio/vor6.mp3',
+  './audio/ende1.mp3', './audio/ende2.mp3', './audio/ende3.mp3', './audio/ende4.mp3'
+];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE)
+      // Einzeln hinzufügen, damit eine fehlende Datei nicht die
+      // gesamte Installation scheitern lässt.
+      .then((cache) => Promise.allSettled(
+        CORE_ASSETS.map((url) => cache.add(url))
+      ))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(
+        keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))
+      ))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+self.addEventListener('fetch', (event) => {
+  const request = event.request;
+
+  // Nur eigene GET-Anfragen behandeln; alles andere (z. B. Blob-/Kamera-
+  // Streams, fremde Hosts) unangetastet ans Netz durchreichen.
+  if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) {
+    return;
+  }
+
+  event.respondWith(
+    caches.open(CACHE).then((cache) =>
+      cache.match(request).then((cached) => {
+        const netzwerk = fetch(request)
+          .then((antwort) => {
+            if (antwort && antwort.status === 200) {
+              cache.put(request, antwort.clone());
+            }
+            return antwort;
+          })
+          .catch(() => cached);
+
+        return cached || netzwerk;
+      })
+    )
+  );
+});
